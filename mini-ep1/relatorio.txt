@@ -1,0 +1,29 @@
+Relatório mini EP1
+------------------
+
+Daniel Sakuma
+N USP: 5619562
+16/03/2018
+
+O programa escolhido foi a soma de elementos de uma matriz. Row-major e column-major são duas
+maneiras de armazenar matrizes em um armazenamento linear como a RAM. Num armazenamento
+row-major os elementos consecutivos de uma linha ficam próximos um ao outro na memória,
+e o mesmo para colunas no formato column-major. 
+
+Dependendo se acessamos a informação através de linhas ou colunas podemos podemos ver uma
+sensível diferneça na velocidade de processamento devido ao princíipo da localidade espacial 
+de cache, que diz que há uma probabilidade de acesso maior para dados e instruções em endereços
+próximos àqueles acessados recentemente. Isso porque vetores e matrizes são armazenados em 
+sequência de acordo com seus índices e elementos próximos tem a chance maior de irem juntos
+para o cache se estiverem no mesmo bloco de memória.
+
+Esse programa executa a soma dos elementos de uma matriz de duas maneiras. A primeira, faz a soma
+percorrendo a matriz através das colunas. A segunda maneira é mais otimizada e faz a soma percorrendo
+através das linhas. A linguagem C armazena a matriz em memória de maneira row-major, assim a segunda
+execução tira proveito do princípio da localidade espacial de cache. 
+
+O tempos abaixo são o exemplo de uma saída da execução desse programa. Podemos ver que fazendo a soma
+percorrendo em row major, temos uma diminuição em 23% no tempo. 
+
+Column-Major: 0.430241 seconds
+Row-Major: 0.336897 seconds
