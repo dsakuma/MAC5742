@@ -1,0 +1,19 @@
+Relatório mini EP1
+------------------
+
+Daniel Sakuma
+N USP: 5619562
+25/03/2018
+
+O programa escolhido foi 
+
+Dependendo se acessamos 
+
+Esse programa executa a 
+
+O tempos abaixo são o exemplo de uma saída da execução desse programa. Podemos ver que fazendoa
+
+
+patternFirstHalfTrueLastHalfFalse: 0.232785 seconds
+patternOnlyOdd: 0.340404 seconds
+patternRand: 1.562779 seconds
