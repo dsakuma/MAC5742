@@ -1,19 +1,35 @@
 Relatório mini EP1
+Relatório mini EP1
 ------------------
 
 Daniel Sakuma
 N USP: 5619562
 25/03/2018
 
-O programa escolhido foi 
+O programa escolhido foi a comparação de tempo de uma iteração sobre três tipos de condições 'if'
+diferentes. O programa passa por cada tipo de iteração 1 bilhão de vezes e faz uma operação simples
+de atribuição toda a vez que a condição for verdadeira.
 
-Dependendo se acessamos 
+A performance de uma condição if depende se a mesma possui um padrão previsível. Isso ocorre devido
+ao Branch Prediction, que são um conjunto de técnicas do processador que tenta identificar para qual
+caminho um branch seguirá antes de identificá-lo definitivamente. Se o programa possui um padrão
+simples, a lógica de branch prediction do processador irá identificá-lo mais facilmente, por outro
+lado, se o for imprevisível, o programa não poderá se beneficiar dessa técnica.
 
-Esse programa executa a 
+Esse programa executa 1 bilhão de iterações sobre três condições diferentes. Abaixo os tipos de
+condições e os tempos obtidos por cada um numa execução desse programa:
 
-O tempos abaixo são o exemplo de uma saída da execução desse programa. Podemos ver que fazendoa
+Condição 1) Primeiros 500 milhões de iteração True e outros 500 milhões False
+Tempo: 2.445986 segundos
 
+Condição 2) Iteração ímpar True, iteração par False
+Tempo: 3.431222 segundos
 
-patternFirstHalfTrueLastHalfFalse: 0.232785 seconds
-patternOnlyOdd: 0.340404 seconds
-patternRand: 1.562779 seconds
+Condição 3) Condição aleatória
+Tempo: 15.619755 segundos
+
+Podemos observar que a condição 3 (aleatória) leva 6 vezes mais tempo que executar que a condição 1.
+O que era esperado, pois a condição aleatória não se benefícia do Branch Prediction. Além disso,
+vemos que a condição 2 é um pouco mais lenta que a condição 1. Lembrando que o programa foi feito
+de modo que cada tipo de iteração entrasse cerca de metade das vezes na condição if, para uma
+comparação justa.
