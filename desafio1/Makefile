@@ -1,7 +1,11 @@
-# build an executable named myprog from myprog.c
-all: program.c
-	gcc -g -Wall -o program program.c
-	./program
+OUTPUT=desafio1
+
+CC=gcc
+CC_OPT=-std=c11
+
+all: $(OUTPUT).c
+	$(CC) -o $(OUTPUT) $(CC_OPT) $(OUTPUT).c
+	./$(OUTPUT)
 
 clean:
-	-rm -f program
+	-rm -f $(OUTPUT)
