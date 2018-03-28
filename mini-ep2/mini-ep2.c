@@ -11,6 +11,7 @@ void *sapo(void *threadid){
     long tid = threadid;
     int i;
     for(i = 0; i< 300; i++){
+      usleep(rand()%100);
       printf("O sapo %d tentando pular!\n", tid);
     }
     pthread_exit(NULL);
@@ -19,7 +20,8 @@ void *sapo(void *threadid){
 
 int main(int argc, char *argv[]){
     int lagoa[n_pedras];
-
+    int seed = time(NULL);
+    srand(seed);
     pthread_t threads[2];
     int error_code;
     long t;
