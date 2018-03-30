@@ -7,6 +7,9 @@
 #define NUM_EACH_FROG_TYPE 2
 #define NUM_THREADS 4
 
+
+char** globalArray;
+
 struct frog
 {
     int p;//position
@@ -120,6 +123,16 @@ void testInitializeStringLake2(int numFrogs){
   strcpy(arrayStringLake[0], "M-1");
 }
 
+void testChangeArray(){
+  int numStringsInputted = 2;
+  globalArray = malloc(sizeof(char*)*numStringsInputted);
+  for(int i=0; i < numStringsInputted;i++){
+    globalArray[i] = malloc(256*sizeof(char));
+  }
+
+  globalArray[0] = "c-1";
+  printf("%s\n", globalArray[0]);
+}
 
 int main(int argc, char *argv[]){
   printf("TEST PROGRAM STARTED...\n");
@@ -129,7 +142,9 @@ int main(int argc, char *argv[]){
   // testChar();
   // testArrayEmptyString();
   // testInitializeStringLake(2);
-  testInitializeStringLake2(2);
+  // testInitializeStringLake2(2);
+  testChangeArray();
+  printf("%s\n", globalArray[0]);
   printf("TEST PROGRAM FINISHED.\n");
 };
 
