@@ -13,7 +13,7 @@ struct frog
     char type;
 };
 
-struct frog lake[(NUM_EACH_FROG_TYPE*2)+1];
+struct frog structLake[(NUM_EACH_FROG_TYPE*2)+1];
 
 void testRand(){
   int i;
@@ -30,43 +30,112 @@ void testRand(){
 }
 
 void testArray(){
-  int _lake[10];
+  int arrayLake[10];
   for(int i=0; i < 10; i++){
-    _lake[i] = 0;
+    arrayLake[i] = 0;
   }
 
   for(int i=0; i < 10; i++){
-    printf("%d\n", _lake[i]);
+    printf("%d\n", arrayLake[i]);
   }
 }
 
 void testInitializeLake(){
    for(int i = 0; i < 5; i++)
    {
-      lake[i].p = 0;
-      lake[i].type = 'M';
+      structLake[i].p = 0;
+      structLake[i].type = 'M';
    }
 
    for(int i = 0; i < 5; i++)
    {
-      printf("%c-%d\n", lake[i].type, lake[i].p);
+      printf("%c-%d\n", structLake[i].type, structLake[i].p);
    }
 }
 
+void testChar(){
+  char s[12];
+  sprintf(s, "M_%d", 1);
+  printf ("%s\n", s);
+  printf("%c\n", s[0]);
 
+}
+
+void testArrayEmptyString(){
+  char *arrayStringLake[5];
+  for(int i = 0; i < 5; i++)
+  {
+     if(i==2){
+       arrayStringLake[i] = "_";
+     }
+     else{
+       arrayStringLake[i] = "Teste";
+     }
+   }
+  for(int i = 0; i < 5; i++)
+  {
+     printf("%s\n", arrayStringLake[i]);
+  }
+}
+
+void testInitializeStringLake(int numFrogs){
+  int lakeSize = (numFrogs * 2) + 1;
+  printf("lakeSize: %d\n", lakeSize);
+  char *arrayStringLake[lakeSize];
+
+  char m[12];
+  char f[12];
+  for(int i = 0; i < numFrogs; i++)
+  {
+    sprintf(m, "M-%d", i+1);
+    sprintf(f, "F-%d", i+1);
+
+    printf("Passo: %d\n", i);
+    printf("valor m: %s\n", m);
+    printf("valor f: %s\n", f);
+
+    arrayStringLake[i] = m;
+    arrayStringLake[lakeSize-1-i]= f;
+  }
+  arrayStringLake[numFrogs] = "_";
+  for(int i = 0; i < lakeSize; i++)
+  {
+     printf("%s\n", arrayStringLake[i]);
+  }
+}
+
+void testInitializeStringLake2(int numFrogs){
+  int lakeSize = (numFrogs * 2) + 1;
+  char arrayStringLake[lakeSize][50];
+  for(int i = 0; i < numFrogs; i++)
+  {
+    sprintf(arrayStringLake[i], "%c-%d", 'M', i+1);
+    sprintf(arrayStringLake[lakeSize-1-i], "%c-%d", 'F', i+1);
+  }
+  strcpy(arrayStringLake[numFrogs], "_");
+  for(int i = 0; i < lakeSize; i++)
+  {
+     printf("%s\n", arrayStringLake[i]);
+  }
+  strcpy(arrayStringLake[0], "M-1");
+}
 
 
 int main(int argc, char *argv[]){
-  printf("Test programm started...\n");
+  printf("TEST PROGRAM STARTED...\n");
   // testRand();
   // testArray();
-  testInitializeLake();
-  printf("Test programm finished.\n");
+  // testInitializeLake();
+  // testChar();
+  // testArrayEmptyString();
+  // testInitializeStringLake(2);
+  testInitializeStringLake2(2);
+  printf("TEST PROGRAM FINISHED.\n");
 };
 
 
 
-// pthread_create(&threads[i], NULL, frog, (void *)(*(lake+i)));
+// pthread_create(&threads[i], NULL, frog, (void *)(*(structLake+i)));
 
 //deixar arbitro pro fim
 
