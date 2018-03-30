@@ -3,38 +3,70 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-#define n_pedras 5
-int contador = 0;
+
+#define NUM_STONES 5
+#define NUM_EACH_FROG_TYPE 2
+#define NUM_THREADS 4
+int counter = 0;
 
 
-void *sapo(void *threadid){
-    long tid = threadid;
-    int i;
-    for(i = 0; i< 300; i++){
-      usleep(rand()%100);
-      printf("O sapo %d tentando pular!\n", tid);
-    }
-    pthread_exit(NULL);
+struct body
+{
+    double p[3];//position
+    char type;
 };
+
+struct body bodies[(NUM_EACH_FROG_TYPE*2)+1];
+
+
+// struct thread_data{
+//     int	thread_id;
+//     int type;
+//     int position;
+// };
+//
+// struct thread_data thread_data_array[NUM_THREADS];
+
+
+void *frog(void *threadid){
+  long tid = threadid;
+  int i;
+  for(i = 0; i< 10; i++){
+    usleep(rand()%100);
+    printf("O sapo %ld tentando pular!\n", tid);
+  }
+  pthread_exit(NULL);
+};
+
+void seedRand() {
+  // Seeding the random number generator used by rand()
+  int seed = time(NULL);
+  srand(seed);
+}
 
 
 int main(int argc, char *argv[]){
-    int lagoa[n_pedras];
-    int seed = time(NULL);
-    srand(seed);
-    pthread_t threads[2];
-    int error_code;
-    long t;
-    for(t = 0;t < 2; t++){
-        printf("In main: creating thread %ld\n", t);
-        error_code = pthread_create(&threads[t], NULL,
-                                    sapo, (void *) t);
-        if (error_code){
-            printf("ERROR; return code from pthread_create() is %d\n", error_code);
-            exit(-1);
-        };
-    };
-    pthread_exit(NULL);
+  printf("Initializing...\n");
+  seedRand();
+
+  // Initialializng lake
+  int lagoa[NUM_STONES];
+
+  // Initializing threads
+  pthread_t threads[2];
+  int error_code;
+  // long t;
+  for(long t = 0;t < 1; t++){
+      error_code = pthread_create(&threads[t], NULL, frog, (void *) t);
+      if (error_code){
+          printf("ERROR; return code from pthread_create() is %d\n", error_code);
+          exit(-1);
+      };
+  };
+
+  // Finishing threads
+  pthread_exit(NULL);
+  printf("Finished.\n");
 };
 
 

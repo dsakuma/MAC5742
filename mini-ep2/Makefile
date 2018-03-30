@@ -10,6 +10,6 @@ all: $(OUTPUT).c
 clean:
 	-rm -f $(OUTPUT)
 
-runTest: test.c
-	$(CC) -o test $(CC_OPT) test.c
-	./test
+sandbox: sandbox.c
+	$(CC) -o sandbox $(CC_OPT) sandbox.c
+	./sandbox
