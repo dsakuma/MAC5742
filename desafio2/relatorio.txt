@@ -1,6 +1,30 @@
-Relatório Mini EP2
-------------------
+Relatório Desafio EP2
+=====================
+
+1. Aluno
+--------
 
 Daniel Sakuma
 N USP: 5619562
-04/04/2018
+
+
+2. Como compilar e rodar
+------------------------
+
+Para compilar e rodar, digite:
+
+  $ make
+
+
+3. Descrição da implementação
+-----------------------------
+
+...
+
+
+4. Resultados
+-------------
+
+Time elapsed: 21.735716 seconds
+
+Time elapsed: 37.248286 seconds

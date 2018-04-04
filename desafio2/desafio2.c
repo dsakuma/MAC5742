@@ -4,7 +4,7 @@
 #include <pthread.h>
 
 #define NUM_THREADS 8
-#define NUM_OPS 10000000
+#define NUM_OPS 100000000
 pthread_mutex_t lock;
 
 void *simpleCalcs(void *threadid){
@@ -16,7 +16,6 @@ void *simpleCalcs(void *threadid){
    int b = 0;
    int c = 0;
    while(counter < NUM_OPS){
-     // printf("running %d\n", counter);
      a = rand();
      b = rand();
      c = a + b;
