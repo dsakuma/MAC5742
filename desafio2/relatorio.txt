@@ -19,11 +19,17 @@ Para compilar e rodar, digite:
 3. Descrição da implementação
 -----------------------------
 
-O que foi feito...
+O HyperThreading é uma tecnologia que faz com que cada núcleo do processador possa executar mais
+de um thread de uma única vez, através da duplicação dos registradores e/ou as memórias cache de
+primeiro nível.
 
-Para forçar o uso da FPU, o programa inicializa 8 threads e executa um laço por 100 milhões
-que contém operações aritméticas simples. As operações envolvem números aleatóerios e apenas
-4 variáveis. Segue o código:
+Esse programa implementa um caso que quando executado em modo simples é mais rápido do que utilizando
+o HyperThreading. Para isso, o programa foi implementado de maneira a focar o processamento no uso
+da FPU e a não depender depender dos registradores e memóerias cache duplicadas.
+
+A abordagem utilizada foi a inicialização de 8 threads que e executa um laço que contém operações
+aritméticas simples por 100 milhões de vezes. As operações envolvem números aleatóerios e apenas
+4 variáveis. Segue o código contido no laço:
 
   while(counter < NUM_OPS){
     a = rand();
@@ -34,12 +40,12 @@ que contém operações aritméticas simples. As operações envolvem números a
   };
 
 
-
 4. Resultados
 -------------
 
 O teste foi realizado em um processador Intel Core i5-7360U. Esse processador contém 2 núcleos
-e 4 threads. Desabilitando o HyperThreading, foi tempo de execução foi 44% menor.
+e 4 threads. Desabilitando o HyperThreading, o tempo de execução foi 44% menor, um resultado esperado,
+já que esse programa não se benefifica dessa tecnologia.
 
 Saída do programa com a execução com HyperThreading:
 
