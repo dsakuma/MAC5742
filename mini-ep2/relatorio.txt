@@ -5,3 +5,37 @@ Daniel Sakuma
 N USP: 5619562
 28/03/2018
 
+
+O programa foi implementado para parar no momento que ocorrer um deadlock. O número de sapos é
+configurável via constante chamada 'NUM_FROGS'. Com esse parâmetro igual a 3, teremos 3 sapos e 3
+rãs. A solução adotada foi o colocar o trecho do código que verifica o contador para deadlock e
+tenta fazer o pulo dentro de um lock:
+
+pthread_mutex_lock(&lock);
+if(counter < MAX_JUMPS){
+  position = tryJump(position);
+  counter++;
+};
+pthread_mutex_unlock(&lock);
+
+O código não gera nenhum caso de sapo que "some", ou sapo duplicado. Porém ocorre segmentation fault
+algumas vezes quando e não consegui detectar o problema.
+
+Com três sapos macho e três sapos fêmea, o programa conseguiu fazer 2 movimentos. Porém atingiu
+o máximo de 100 pulos que foi estipulado ocmo maximo para um deadlock.
+
+O sapo F-3 pulando 1, no counter 1!
+O sapo F-1 pulando 2, no counter 2!
+Ocorreu um deadlock
+[M-1] [M-2] [M-3] [F-3] [F-1] [F-2] [_]
+
+
+Com seis sapos macho e seis sapos fêmea, o programa conseguiu fazer 4 movimentos. Porém atingiu
+o máximo de 100 pulos que foi estipulado ocmo maximo para um deadlock.
+
+O sapo F-5 pulando 2, no counter 0!
+O sapo F-3 pulando 2, no counter 13!
+O sapo F-2 pulando 1, no counter 14!
+O sapo F-1 pulando 1, no counter 17!
+Ocorreu um deadlock
+[M-1] [M-2] [M-3] [M-4] [M-5] [M-6] [F-5] [F-6] [F-3] [F-4] [F-2] [F-1] [_]
