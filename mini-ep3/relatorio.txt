@@ -1,0 +1,35 @@
+MAC5742 - Desafio EP2
+=====================
+
+1. Aluno
+--------
+
+Daniel Sakuma
+N USP: 5619562
+
+
+2. Como compilar e rodar
+------------------------
+
+Para compilar e rodar, digite:
+
+  $ chmod +x contention.sh
+  $ ./contention.sh <SIZE_VECTOR> <NUM_THREADS>
+
+
+3. Descrição do programa
+------------------------
+
+//Neste mini EP vocês devem entender o que o código fornecido no 'contention.sh' faz, testar com
+//alguns tamanhos de vetores e alguns números de threads.
+
+
+4. Resultados
+-------------
+
+o que foi feito
+o que foi coletado
+
+
+5. Instruções para openmp no OSX
+--------------------------------
