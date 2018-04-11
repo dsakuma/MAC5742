@@ -33,3 +33,12 @@ o que foi coletado
 
 5. Instruções para openmp no OSX
 --------------------------------
+
+  $ brew install libomp
+
+
+6. Alterações no contention.sh
+------------------------------
+
+  O contention.sh foi alterado para conseguir compilar tanto no OSX quanto no Linux.
+  O número de execuções para cada IF foi aumentado para 50, para ter resultados mais significativos.
