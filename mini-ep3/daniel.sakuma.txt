@@ -1,5 +1,5 @@
-MAC5742 - Desafio EP2
-=====================
+MAC5742 - Relatório Mini EP3
+============================
 
 1. Aluno
 --------
@@ -8,12 +8,14 @@ Daniel Sakuma
 N USP: 5619562
 
 
-2. Arquivos
------------
-
-- contention.sh
-- call_contention.sh
-- ascii-histogram.js
+2. Conteúdo do diretório
+------------------------
+.
+|-- contention.sh           - o arquivo fornecido com o EP.
+|-- call_contention.sh      - shell script que gera os dados para este relatório.
+|-- daniel.sakuma.txt       - este arquivo.
+`-- utils
+    `-- ascii-histogram.js   - gerador de histogramas em ascii.
 
 
 3. Como compilar e rodar
@@ -39,11 +41,15 @@ Para rodar o call_contention:
 
 O contention.sh gera um código em C que implementa uma técnica que reduz a requisição de acesso à
 seção crítica. Essa técnica consiste em adicionar a condicional 'if' antes de uma thread tentar
-acessá-la.
+acessá-la. Além disso, o contention.sh imprime o tempo de execução com diferentes números de IF,
+no caso de 0 à 9.
 
-Foi implementado um shell script que gera dados para um histograma com os valores obtidos no contention.sh
-com diferentes números de threads e tamanho de vetores. A idéia é avaliar se a técnica é efetiva,
-executando-a em diferentes cenários e qual é o número de ideal de ifs para melhorar a performance do programa.
+Para este trabalho, foi implementado um shell script que gera dados para um histograma com os
+valores obtidos no contention.sh com diferentes números de threads e tamanho de vetores. A idéia é
+avaliar se a técnica é efetiva, executando-a em diferentes cenários e tentar descobrir qual é o
+número de ideal de ifs para melhorar a performance do programa.
+
+O ascii-histogram.js foi utilizado para gerar os histogramas desse relatório.
 
 Obs: Foram feitas pequenas alterações no contention.sh para o programa compilar tanto no OSX quanto no
 Linux.
@@ -82,7 +88,7 @@ e outro com os piores.
           9 | ====================================                         | 75
 
 
-          IF| Teste 1: Piores   resultados                                 | QTD
+          IF| Teste 1: Piores resultados                                   | QTD
           --|--------------------------------------------------------------|----
           0 | ============================================================ | 124
           1 | ==================================================           | 103
@@ -186,4 +192,13 @@ e outro com os piores.
           9 | ===============================================              | 97
 
 
-A ideia do Teste 1 e 2, foi comparar a variação do número de threads
+A ideia do Testes 1 e 2, foi comparar a variação do número de threads de 1000 para 500, quando o tamanho
+do vetor tem um tamanho fixo de 1 milhão. Não foi possível determinar um número ideal de IFs, porém
+os piores resultados foram nos casos em que o programa não colocou IFs.
+
+Nos Testes 3 e 4, foram repetidos os testes anteriores, porém, com um tamanho de vetor menor, no caso,
+10 mil posições. Nesse casos apenas o Teste 4 foi pior quando não havia IFs. O Teste 3, estranhamente,
+teve os melhores resultados quando não utilizava IFs.
+
+O número de IF ideal foi inconclusivo, porém, dos 4 testes, 3 foram significativamente piores quando
+não se utilizaram da técnica de redução de acesso a seção crítica.
