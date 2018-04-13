@@ -1,30 +1,5 @@
 #!/bin/bash
 
-call_contention()
-{
-  echo ""
-  echo "CALL CONTENTION"
-  echo "---------------"
-  # Call contention with different numbers of Ts and Ns
-  T=( 1700 1800 1900 2000 )
-  N=( 10 )
-
-  for t in "${T[@]}"
-  do
-    for n in "${N[@]}"
-    do
-       printf "\nRunning for T=$t and N=$n\n"
-       output=$(./contention.sh $n $t)
-
-       read N_IFS <<< $(echo "$output" | awk '/Number of ifs:[[:space:]]/ { print $4 }')
-       read TIME_IFS <<< $(echo "$output" | awk '/[[:space:]]Average of[[:space:]]/ { print $5 }')
-
-       # echo "${N_IFS}"
-       echo "${TIME_IFS}"
-    done
-  done
-}
-
 index_of_best()
 {
   current_best=0
@@ -87,10 +62,10 @@ generate_histogram()
   # Collect data to generate a histogram for a specific number of T and N
   BESTHIST=( 0 0 0 0 0 0 0 0 0 0 )
   WORSTHIST=( 0 0 0 0 0 0 0 0 0 0 )
-  T=200
-  N=10000
+  N=$1
+  T=$2
   counter=0
-  N_ROUNDS=10
+  N_ROUNDS=1000
   for i in `seq 1 $N_ROUNDS`
   do
       printf "Running for T=$T and N=$N. Round: $i\n"
@@ -105,5 +80,11 @@ generate_histogram()
   done
 }
 
-generate_histogram
+generate_histogram 10000 250
+print_histogram_data
+
+generate_histogram 10000 500
+print_histogram_data
+
+generate_histogram 10000 1000
 print_histogram_data
