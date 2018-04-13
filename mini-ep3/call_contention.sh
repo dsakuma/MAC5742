@@ -27,12 +27,37 @@ call_contention()
 
 index_of_best()
 {
-  echo 0
+  current_best=0
+  for i in "${!TIME_IFS[@]}"; do
+    # printf "%s\t%s\n" "$i" "${TIME_IFS[$i]}"
+    if [ $(echo "${TIME_IFS[$i]} < ${TIME_IFS[$current_best]}" | bc) -eq 1 ]; then
+      current_best=$i
+    fi
+  done
+  echo $current_best
 }
 
 index_of_worst()
 {
-  echo 9
+  current_worst=0
+  for i in "${!TIME_IFS[@]}"; do
+    # printf "%s\t%s\n" "$i" "${TIME_IFS[$i]}"
+    if [ $(echo "${TIME_IFS[$i]} > ${TIME_IFS[$current_worst]}" | bc) -eq 1 ]; then
+      current_worst=$i
+    fi
+  done
+  echo $current_worst
+}
+
+print_time_ifs()
+{
+  echo ""
+  echo "PRINT TIME IFS"
+  echo "--------------"
+  for i in `seq 0 9`
+  do
+    printf "$i - ${TIME_IFS[i]}\n"
+  done
 }
 
 print_histogram_data()
@@ -46,7 +71,7 @@ print_histogram_data()
   done
 
   echo ""
-  echo "BEST HISTOGRAM DATA"
+  echo "WORST HISTOGRAM DATA"
   echo "-------------------"
   for i in `seq 0 9`
   do
@@ -62,22 +87,23 @@ generate_histogram()
   # Collect data to generate a histogram for a specific number of T and N
   BESTHIST=( 0 0 0 0 0 0 0 0 0 0 )
   WORSTHIST=( 0 0 0 0 0 0 0 0 0 0 )
-  T=2
-  N=10
+  T=200
+  N=10000
   counter=0
-  N_ROUNDS=2
+  N_ROUNDS=10
   for i in `seq 1 $N_ROUNDS`
   do
       printf "Running for T=$T and N=$N. Round: $i\n"
       output=$(./contention.sh $N $T)
-      read TIME_IFS <<< $(echo "$output" | awk '/[[:space:]]Average of[[:space:]]/ { print $5 }')
+      read -a TIME_IFS <<< $(echo "$output" | awk '/[[:space:]]Average of[[:space:]]/ { print $5 }')
+
       idx_best=$(index_of_best)
       idx_worst=$(index_of_worst)
+
       BESTHIST[$idx_best]=$((${BESTHIST[$idx_best]}+1))
       WORSTHIST[$idx_worst]=$((${WORSTHIST[$idx_worst]}+1))
   done
 }
 
-# call_contention
 generate_histogram
 print_histogram_data
