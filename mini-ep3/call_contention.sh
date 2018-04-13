@@ -58,20 +58,21 @@ print_histogram_data()
 
 generate_histogram()
 {
-  # Collect data to generate a histogram for a specific number of T and N
+  # Collect data to generate a histogram for a specific number of threads and size of
+  # vetor for a specif number of rounds
   echo ""
   echo "GENERATE HISTOGRAM DATA"
   echo "-----------------------"
   BESTHIST=( 0 0 0 0 0 0 0 0 0 0 )
   WORSTHIST=( 0 0 0 0 0 0 0 0 0 0 )
-  N=$1
-  T=$2
-  N_ROUNDS=$3
+  SIZE_VECTOR=$1
+  NUM_THREADS=$2
+  NUM_ROUNDS=$3
   counter=0
-  for i in `seq 1 $N_ROUNDS`
+  for round in `seq 1 $NUM_ROUNDS`
   do
-      printf "Running for T=$T and N=$N. Round: $i\n"
-      output=$(./contention.sh $N $T)
+      printf "Running for N=$SIZE_VECTOR snd T=$NUM_THREADS. Round: $round\n"
+      output=$(./contention.sh $SIZE_VECTOR $NUM_THREADS)
       read -a TIME_IFS <<< $(echo "$output" | awk '/[[:space:]]Average of[[:space:]]/ { print $5 }')
 
       idx_best=$(index_of_best)
@@ -82,14 +83,14 @@ generate_histogram()
   done
 }
 
-# generate_histogram 10 2 5
+generate_histogram 100 2 5
+print_histogram_data
+#
+# generate_histogram 10000 250 1000
 # print_histogram_data
-
-generate_histogram 10000 250 1000
-print_histogram_data
-
-generate_histogram 10000 500 1000
-print_histogram_data
-
-generate_histogram 10000 1000 1000
-print_histogram_data
+#
+# generate_histogram 10000 500 1000
+# print_histogram_data
+#
+# generate_histogram 10000 1000 1000
+# print_histogram_data
