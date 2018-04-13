@@ -82,14 +82,14 @@ generate_histogram()
   done
 }
 
-generate_histogram 10000 25 5
+# generate_histogram 10 2 5
+# print_histogram_data
+
+generate_histogram 10000 250 1000
 print_histogram_data
 
-# generate_histogram 10000 250 1000
-# print_histogram_data
-#
-# generate_histogram 10000 500 1000
-# print_histogram_data
-#
-# generate_histogram 10000 1000 1000
-# print_histogram_data
+generate_histogram 10000 500 1000
+print_histogram_data
+
+generate_histogram 10000 1000 1000
+print_histogram_data
