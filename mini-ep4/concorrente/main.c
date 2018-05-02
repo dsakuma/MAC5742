@@ -2,6 +2,7 @@
 #include "globals.h"
 #include "general_lock.h"
 #include "statistics.h"
+#include "pthread_barrier_t.h"
 
 #include <stdio.h>
 #include <stdlib.h>

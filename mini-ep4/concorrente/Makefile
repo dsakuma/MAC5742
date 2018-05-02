@@ -14,7 +14,7 @@ test: test.o bakery.o gate.o general_lock.o
 test.o: test.c bakery.c gate.c general_lock.c bakery.h gate.h general_lock.h globals.h
 	$(CC) $(CFLAGS) -c $<
 
-main.o: main.c bakery.c gate.c general_lock.c bakery.h gate.h general_lock.h globals.h statistics.c statistics.h
+main.o: main.c bakery.c gate.c general_lock.c bakery.h gate.h general_lock.h globals.h statistics.c statistics.h pthread_barrier_t.h
 	$(CC) $(CFLAGS) -c $<
 
 bakery.o: bakery.c bakery.h globals.h
