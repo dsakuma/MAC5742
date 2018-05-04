@@ -5,7 +5,7 @@ parse_test_output()
   end="$((${test_number} * $OUTPUT_LINES_PER_TEST))"
   start="$((${end} - $OUTPUT_LINES_PER_TEST + 1))"
   test_output=$(echo "$output" | sed -n ${start},${end}p)
-  echo "$test_output"
+  #echo "$test_output"
 }
 
 #count_bottom_outlier()
@@ -15,12 +15,12 @@ store_results()
 {
   algorithm=$(echo "$test_output" | awk '/Algorithm:[[:space:]]/ { print $2 }')
   elapsed_time=$(echo "$test_output" | awk '/Elapsed/ { print $5 }')
-  # avg_access=$(echo "$test_output" | awk '/Average/ { print $4 }')
+  avg_access=$(echo "$test_output" | awk '/Average/ { print $4 }')
   std_deviation_access=$(echo "$test_output" | awk '/Standard/ { print $5 }')
-  echo "$algorithm"
-  echo "$elapsed_time"
+  #echo "$algorithm"
+  #echo "$elapsed_time"
   #echo "$avg_access"
-  echo "$std_deviation_access"
+  #echo "$std_deviation_access"
   if [ "$algorithm" = "bakery," ]; then
     bakery_sum_elapsed_time=$((${bakery_sum_elapsed_time} + ${elapsed_time}))
     bakery_sum_std_deviation_access=$(echo "${bakery_sum_std_deviation_access} + ${std_deviation_access}" | bc)
@@ -50,13 +50,21 @@ print_statistics()
 
 }
 
+compile_project()
+{
+  # Ensure the project is compiled
+  echo ""
+  echo "COMPILE PROJECT"
+  echo "==============="
+  make
+}
+
 generate_statistics()
 {
-  # Collect data to generate a histogram for a specific number of threads and size of
-  # vetor for a specif number of rounds
+  # Generate statistics for a specific number of threads and time consuming cpu
   echo ""
-  echo "GENERATE HISTOGRAM DATA"
-  echo "======================="
+  echo "GENERATE STATISTICS"
+  echo "==================="
   NUM_THREADS=$1
   TOTAL_TIME=$2
   bakery_sum_elapsed_time=0
@@ -68,10 +76,16 @@ generate_statistics()
   number_of_tests=$((${number_of_lines} / $OUTPUT_LINES_PER_TEST))
   for test_number in `seq 1 $number_of_tests`
   do
-      parse_test_output
-      store_results
+    echo "Processing test ${test_number}"
+    parse_test_output
+    store_results
   done
   print_statistics
 }
 
-generate_statistics 10 100000
+compile_project
+
+
+#generate_statistics 10 300000
+
+generate_statistics 10 3000000
