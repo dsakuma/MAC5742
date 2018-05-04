@@ -1,0 +1,97 @@
+MAC5742 - Relatório Mini EP4
+============================
+
+1. Aluno
+--------
+
+Daniel Sakuma
+N USP: 5619562
+
+
+2. Conteúdo do diretório
+------------------------
+.
+|-- bakery.c
+|-- bakery.h
+|-- call_main.sh            - shell script que gera os dados para este relatório.
+|-- daniel.sakuma.txt       - este arquivo.
+|-- gate.c
+|-- gate.h
+|-- general_lock.c
+|-- globals.h
+|-- mian.c
+|-- Makefile
+|-- pthread_barrier_t.h
+|-- statistics.c
+|-- statistics.h
+|-- test.c
+`-- utils
+    `-- ascii-histogram.js   - gerador de histogramas em ascii.
+
+
+3. Como compilar e rodar
+------------------------
+
+Para rodar compilar o programa e gerar os dados para o relatório:
+
+  $ chmod +x call_main.sh
+  $ ./contention.sh
+
+Para compilar o programa:
+
+  $ ./make
+
+Para executar os testes:
+
+  $ ./make test
+
+
+4. Descrição do programa
+------------------------
+
+O que é
+
+Para este trabalho, foi implementado um shell script que gera dados para um histograma com os
+valores obtidos no contention.sh com diferentes números de threads e tamanho de vetores. A idéia é
+avaliar se a técnica é efetiva, executando-a em diferentes cenários e tentar descobrir qual é o
+número de ideal de ifs para melhorar a performance do programa.
+
+O ascii-histogram.js foi utilizado para gerar os histogramas desse relatório.
+
+
+5. Resultados
+-------------
+
+Foram realizados testes com 4 diferentes configurações:
+
+  - Teste 1: Vetor com 1.000.000 de posições e 1000 threads
+  - Teste 2: Vetor com 1.000.000 de posições e 500 threads
+  - Teste 3: Vetor com 10.000 de posições e 1000 threads
+  - Teste 4: Vetor com 10.000 de posições e 500 threads
+
+Para cada teste, o programa faz 1000 execuções e coleta a quantidade de IFs com MELHOR e PIOR resultado.
+Ao fim da execução, o output gerado pode ser utilizado para montar um histogramas para análise.
+
+Abaixo, seguem 2 histogramas para cada teste. Um para a configuraçaão de IFs com melhores resultados,
+e outro com os piores.
+
+
+- Teste 1: Vetor com 1.000.000 de posições e 1000 threads
+
+          IF| Teste 1: Melhores resultados                                 | QTD
+          --|--------------------------------------------------------------|----
+          B | =========================================                    | 85
+          G | ===========================================                  | 88
+
+
+
+A ideia do Testes 1 e 2, foi comparar a variação do número de threads de 1000 para 500, quando o tamanho
+do vetor tem um tamanho fixo de 1 milhão. Não foi possível determinar um número ideal de IFs, porém
+os piores resultados foram nos casos em que o programa não colocou IFs.
+
+Nos Testes 3 e 4, foram repetidos os testes anteriores, porém, com um tamanho de vetor menor, no caso,
+10 mil posições. Nesse casos apenas o Teste 4 foi pior quando não havia IFs. O Teste 3, estranhamente,
+teve os melhores resultados quando não utilizava IFs.
+
+O número de IF ideal foi inconclusivo, porém, dos 4 testes, 3 foram significativamente piores quando
+não se utilizaram da técnica de redução de acesso a seção crítica.
