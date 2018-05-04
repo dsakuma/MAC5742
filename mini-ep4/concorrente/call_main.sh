@@ -5,7 +5,6 @@ parse_test_output()
   end="$((${test_number} * $OUTPUT_LINES_PER_TEST))"
   start="$((${end} - $OUTPUT_LINES_PER_TEST + 1))"
   test_output=$(echo "$output" | sed -n ${start},${end}p)
-  #echo "$test_output"
 }
 
 store_results()
@@ -14,10 +13,6 @@ store_results()
   elapsed_time=$(echo "$test_output" | awk '/Elapsed/ { print $5 }')
   avg_access=$(echo "$test_output" | awk '/Average/ { print $4 }')
   std_deviation_access=$(echo "$test_output" | awk '/Standard/ { print $5 }')
-  #echo "$algorithm"
-  #echo "$elapsed_time"
-  #echo "$avg_access"
-  #echo "$std_deviation_access"
   if [ "$algorithm" = "bakery," ]; then
     bakery_sum_elapsed_time=$((${bakery_sum_elapsed_time} + ${elapsed_time}))
     bakery_sum_std_deviation_access=$(echo "${bakery_sum_std_deviation_access} + ${std_deviation_access}" | bc)
@@ -94,10 +89,10 @@ run_program()
 
 compile_project
 
-run_program 10 300000
-
-run_program 10 3000000
-
 run_program 5 300000
 
 run_program 5 3000000
+
+run_program 10 300000
+
+run_program 10 3000000

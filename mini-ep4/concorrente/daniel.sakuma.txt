@@ -21,12 +21,12 @@ N USP: 5619562
 |-- globals.h
 |-- mian.c
 |-- Makefile
-|-- pthread_barrier_t.h
+|-- pthread_barrier_t.h     - para pthread_barrier_t funcionar no OSX
 |-- statistics.c
 |-- statistics.h
 |-- test.c
 `-- utils
-    `-- ascii-histogram.js   - gerador de histogramas em ascii.
+    `-- ascii-histogram.js  - gerador de histogramas em ascii.
 
 
 3. Como compilar e rodar
@@ -45,53 +45,110 @@ Para executar os testes:
 
   $ ./make test
 
+Para rodar o utilitário de histograma
+
+  $ node utils/ascii-histogram.js
+
 
 4. Descrição do programa
 ------------------------
 
-O que é
+O main.c gera um programa que a simulação do uso de dois algoritmos de exclusão mútua, o Bakery e
+o Gate. No algoritmo Bakery um processo recebe um número antes de acessar a seção crítica. O processo
+com o menor número entra na seção crítica. Assim, possuindo a propriedade de o primeiro a chegar
+é o primeiro a acessar. Já no algoritmo Gate é usado um conceito de "portas". O processo a entrar
+na seção crítica é aquele que, depois de passar pela porta 1, tenta passar pela porta 2, quando
+nenhum outro processo passou pela porta 1. Nesse último algoritmo, a ordem do primeiro a
+tentar acessar ser o primeiro a entrar não é garantida.
 
-Para este trabalho, foi implementado um shell script que gera dados para um histograma com os
-valores obtidos no contention.sh com diferentes números de threads e tamanho de vetores. A idéia é
-avaliar se a técnica é efetiva, executando-a em diferentes cenários e tentar descobrir qual é o
-número de ideal de ifs para melhorar a performance do programa.
+Para este trabalho, foi implementado um shell script que gera dados para analisar a performance
+e comportamento do uso de cada algoritmo de exclusão mútua usando diversas configurações. A ideia
+é avaliar a performance de cada algoritmo de exclusão mútua e o seu comportamento em relação a justiça
+no acesso de cada processo na seção crítica.
 
-O ascii-histogram.js foi utilizado para gerar os histogramas desse relatório.
+O ascii-histogram.js foi utilizado para gerar os gráficos desse relatório.
 
 
 5. Resultados
 -------------
 
+Os testes foram feitos no OSX, em um processador i5 com 2 cores e 4 threads.
+
 Foram realizados testes com 4 diferentes configurações:
 
-  - Teste 1: Vetor com 1.000.000 de posições e 1000 threads
-  - Teste 2: Vetor com 1.000.000 de posições e 500 threads
-  - Teste 3: Vetor com 10.000 de posições e 1000 threads
-  - Teste 4: Vetor com 10.000 de posições e 500 threads
+  - Teste 1: n_thread = 5  e total_time = 300000
+  - Teste 2: n_thread = 5  e total_time = 3000000
+  - Teste 3: n_thread = 10  e total_time = 300000
+  - Teste 4: n_thread = 10  e total_time = 3000000
 
-Para cada teste, o programa faz 1000 execuções e coleta a quantidade de IFs com MELHOR e PIOR resultado.
-Ao fim da execução, o output gerado pode ser utilizado para montar um histogramas para análise.
+Para cada algoritmo, o main.c faz 30 simulações. Para avaliarmos a performance, foi coletada a média
+do elapsed time de cada algoritmo. E para avaliarmos po comportamento de cada algoritmo, está sendo
+utilizado duas métricas, a média do desvio padrão do acesso dos processos à seção crítica e a contagem
+de outliers no acesso à seção crítica, para mostrar se o algoritmo está gerando alguma injustiça ou
+se está tendendo a gerar starvation. Foi usado o outlier, pois a média do desvio padrão não é suficiente
+para mostrar o comportamento. O desvio padrão pode ser pequeno, mas a simulação alguma thread com
+muito ou pouco acesso à seção crítica.
 
 Abaixo, seguem 2 histogramas para cada teste. Um para a configuraçaão de IFs com melhores resultados,
 e outro com os piores.
 
 
-- Teste 1: Vetor com 1.000.000 de posições e 1000 threads
+- Teste 1: n_thread = 5  e total_time = 300000
 
-          IF| Teste 1: Melhores resultados                                 | QTD
-          --|--------------------------------------------------------------|----
-          B | =========================================                    | 85
-          G | ===========================================                  | 88
+        Algoritmo | Teste 1: Média Elapsed Time (ns)                             | QTD
+        ----------|--------------------------------------------------------------|----
+           bakery | ============================================================ | 9704633
+             gate | =====                                                        | 766333
+
+        Algoritmo | Teste 1: Média Standard Deviation Access                     | QTD
+        ----------|--------------------------------------------------------------|----
+           bakery | ==                                                           | 13.32
+             gate | ============================================================ | 501.24
+
+
+- Teste 2: n_thread = 5  e total_time = 3000000
+
+         Algoritmo | Teste 2: Média Elapsed Time (ns)                             | QTD
+         ----------|--------------------------------------------------------------|----
+            bakery | ============================================================ | 91595300
+              gate | ====                                                         | 6736400
+
+         Algoritmo | Teste 2: Média Standard Deviation Access                     | QTD
+         ----------|--------------------------------------------------------------|----
+            bakery | =                                                            | 17.49
+              gate | ============================================================ | 849.06
+
+
+- Teste 3: n_thread = 10  e total_time = 300000
+
+          Algoritmo | Teste 3: Média Elapsed Time (ns)                             | QTD
+          ----------|--------------------------------------------------------------|----
+             bakery | ============================================================ | 17289766
+               gate | ===                                                          | 820166
+
+          Algoritmo | Teste 3: Média Standard Deviation Access                     | QTD
+          ----------|--------------------------------------------------------------|----
+             bakery | =                                                            | 17.49
+               gate | ============================================================ | 849.06
+
+
+- Teste 4: n_thread = 5  e total_time = 3000000
+
+          Algoritmo | Teste 4: Média Elapsed Time (ns)                             | QTD
+          ----------|--------------------------------------------------------------|----
+             bakery | ============================================================ | 162145366
+               gate | ===                                                          | 7248433
+
+          Algoritmo | Teste 4: Média Standard Deviation Access                     | QTD
+          ----------|--------------------------------------------------------------|----
+             bakery | =                                                            | 17.49
+               gate | ============================================================ | 849.06
+
 
 
 
 A ideia do Testes 1 e 2, foi comparar a variação do número de threads de 1000 para 500, quando o tamanho
-do vetor tem um tamanho fixo de 1 milhão. Não foi possível determinar um número ideal de IFs, porém
-os piores resultados foram nos casos em que o programa não colocou IFs.
+do vetor tem um tamanho fixo de 1 milhão. Foi possível determinar...
 
 Nos Testes 3 e 4, foram repetidos os testes anteriores, porém, com um tamanho de vetor menor, no caso,
-10 mil posições. Nesse casos apenas o Teste 4 foi pior quando não havia IFs. O Teste 3, estranhamente,
-teve os melhores resultados quando não utilizava IFs.
-
-O número de IF ideal foi inconclusivo, porém, dos 4 testes, 3 foram significativamente piores quando
-não se utilizaram da técnica de redução de acesso a seção crítica.
+10 mil posições. Nesse casos..
