@@ -50,8 +50,8 @@ Para rodar o utilitário de histograma
   $ node utils/ascii-histogram.js
 
 
-4. Descrição do programa
-------------------------
+4. Descrição do programa e relatório
+------------------------------------
 
 O main.c gera um programa que a simulação do uso de dois algoritmos de exclusão mútua, o Bakery e
 o Gate. No algoritmo Bakery um processo recebe um número antes de acessar a seção crítica. O processo
@@ -73,6 +73,8 @@ se está tendendo a gerar starvation. Foi utilizado o outlier como métrica, poi
 padrão não é suficiente para mostrar o comportamento do algoritmo. O desvio padrão pode ser pequeno,
 mas a simulação alguma thread com muito ou pouco acesso à seção crítica. Como outlier, está sendo
 considerado valores com 3 desvios padrão acima ou abaixo da média.
+
+Ao fim, foi realizado um teste da remoção do __sync_synchronize dos algoritmos.
 
 O ascii-histogram.js foi utilizado para gerar os gráficos desse relatório.
 
@@ -167,3 +169,15 @@ A diferença de performance entre os algoritmos ficou ainda mais evidente. O des
 continua mostrando que o algoritmo Bakery é mais justo, porém no Teste 3 o algoritmo 3 teve o maior
 
 A conclusão é que o algoritmo Bakery é mais justo, porém menos perfomatico que o Gate.
+
+
+6. Remoção do __sync_synchronize
+--------------------------------
+
+No OSX, em um processador i5 com 2 cores e 4 threads, foi removido __sync_synchronize e apenas
+o algoritmo Gate falhou:
+
+  Test: Check if bakery algorithm provides mutual exclusion with 100 threads: OK
+  Test: Check if gate algorithm provides mutual exclusion with 100 threads: FAILED!!
+
+Verifiquei que os dois trechos com __sync_synchronize do algoritmos Gate são necessários.
