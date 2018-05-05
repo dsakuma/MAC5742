@@ -55,16 +55,24 @@ Para rodar o utilitário de histograma
 
 O main.c gera um programa que a simulação do uso de dois algoritmos de exclusão mútua, o Bakery e
 o Gate. No algoritmo Bakery um processo recebe um número antes de acessar a seção crítica. O processo
-com o menor número entra na seção crítica. Assim, possuindo a propriedade de o primeiro a chegar
-é o primeiro a acessar. Já no algoritmo Gate é usado um conceito de "portas". O processo a entrar
-na seção crítica é aquele que, depois de passar pela porta 1, tenta passar pela porta 2, quando
+com o menor número entra na seção crítica. Assim, possui a propriedade de "primeiro a chegar
+é o primeiro a acessar". Já no algoritmo Gate é usado um conceito de "portas". O processo a entrar
+na seção crítica é aquele que, depois de passar pela porta 1, tenta passar pela porta 2 quando
 nenhum outro processo passou pela porta 1. Nesse último algoritmo, a ordem do primeiro a
 tentar acessar ser o primeiro a entrar não é garantida.
 
 Para este trabalho, foi implementado um shell script que gera dados para analisar a performance
-e comportamento do uso de cada algoritmo de exclusão mútua usando diversas configurações. A ideia
-é avaliar a performance de cada algoritmo de exclusão mútua e o seu comportamento em relação a justiça
-no acesso de cada processo na seção crítica.
+e o comportamento de cada algoritmo de exclusão mútua usando diversas configurações. A ideia
+é avaliar a performance de cada algoritmo testando com diversas configurações.
+
+Para cada algoritmo, o main.c faz 30 simulações. Para avaliarmos a performance, foi coletada a média
+do elapsed time de cada algoritmo. E para avaliarmos po comportamento de cada algoritmo, está sendo
+utilizado duas métricas, a média do desvio padrão do acesso dos processos à seção crítica e a contagem
+de outliers no acesso à seção crítica, para mostrar se o algoritmo está gerando alguma injustiça ou
+se está tendendo a gerar starvation. Foi utilizado o outlier como métrica, pois a média do desvio
+padrão não é suficiente para mostrar o comportamento do algoritmo. O desvio padrão pode ser pequeno,
+mas a simulação alguma thread com muito ou pouco acesso à seção crítica. Como outlier, está sendo
+considerado valores com 3 desvios padrão acima ou abaixo da média.
 
 O ascii-histogram.js foi utilizado para gerar os gráficos desse relatório.
 
@@ -76,21 +84,13 @@ Os testes foram feitos no OSX, em um processador i5 com 2 cores e 4 threads.
 
 Foram realizados testes com 4 diferentes configurações:
 
-  - Teste 1: n_thread = 5  e total_time = 300000
-  - Teste 2: n_thread = 5  e total_time = 3000000
-  - Teste 3: n_thread = 10  e total_time = 300000
-  - Teste 4: n_thread = 10  e total_time = 3000000
+  - Teste 1: n_thread = 5 e total_time = 300000
+  - Teste 2: n_thread = 5 e total_time = 3000000
+  - Teste 3: n_thread = 10 e total_time = 300000
+  - Teste 4: n_thread = 10 e total_time = 3000000
 
-Para cada algoritmo, o main.c faz 30 simulações. Para avaliarmos a performance, foi coletada a média
-do elapsed time de cada algoritmo. E para avaliarmos po comportamento de cada algoritmo, está sendo
-utilizado duas métricas, a média do desvio padrão do acesso dos processos à seção crítica e a contagem
-de outliers no acesso à seção crítica, para mostrar se o algoritmo está gerando alguma injustiça ou
-se está tendendo a gerar starvation. Foi usado o outlier, pois a média do desvio padrão não é suficiente
-para mostrar o comportamento. O desvio padrão pode ser pequeno, mas a simulação alguma thread com
-muito ou pouco acesso à seção crítica.
-
-Abaixo, seguem 2 histogramas para cada teste. Um para a configuraçaão de IFs com melhores resultados,
-e outro com os piores.
+Abaixo, seguem os gráficos para a média de elapsed time e média de standard deviation access em cada
+teste, junto com o resultado para a contagem de outliers.
 
 
 - Teste 1: n_thread = 5  e total_time = 300000
@@ -102,9 +102,11 @@ e outro com os piores.
 
         Algoritmo | Teste 1: Média Standard Deviation Access                     | QTD
         ----------|--------------------------------------------------------------|----
-           bakery | ==                                                           | 13.32
-             gate | ============================================================ | 501.24
+           bakery | ====                                                         | 14.31
+             gate | ============================================================ | 209.78
 
+        Outliers:
+          - Não houve outliers
 
 - Teste 2: n_thread = 5  e total_time = 3000000
 
@@ -115,9 +117,11 @@ e outro com os piores.
 
          Algoritmo | Teste 2: Média Standard Deviation Access                     | QTD
          ----------|--------------------------------------------------------------|----
-            bakery | =                                                            | 17.49
-              gate | ============================================================ | 849.06
+            bakery | =                                                            | 13.79
+              gate | ============================================================ | 803.69
 
+         Outliers:
+           - Não houve outliers
 
 - Teste 3: n_thread = 10  e total_time = 300000
 
@@ -128,11 +132,13 @@ e outro com os piores.
 
           Algoritmo | Teste 3: Média Standard Deviation Access                     | QTD
           ----------|--------------------------------------------------------------|----
-             bakery | =                                                            | 17.49
-               gate | ============================================================ | 849.06
+             bakery | ======                                                       | 11.98
+               gate | ============================================================ | 123.52
 
+          Outliers:
+             - Não houve outliers
 
-- Teste 4: n_thread = 5  e total_time = 3000000
+- Teste 4: n_thread = 10  e total_time = 3000000
 
           Algoritmo | Teste 4: Média Elapsed Time (ns)                             | QTD
           ----------|--------------------------------------------------------------|----
@@ -141,14 +147,23 @@ e outro com os piores.
 
           Algoritmo | Teste 4: Média Standard Deviation Access                     | QTD
           ----------|--------------------------------------------------------------|----
-             bakery | =                                                            | 17.49
-               gate | ============================================================ | 849.06
+             bakery | =                                                            | 10.96
+               gate | ============================================================ | 456.72
+
+         Outliers:
+           - Não houve outliers
 
 
+A ideia do Testes 1 e 2, foi comparar a variação do total_time de 300000 para 3000000, quando
+utilizado 5 threads. Não houve uma grande diferença entres esses testes. Em ambos foi possível
+verificar que o algoritmos Gate possui uma performance melhor. Consumiu 10 vezes menos tempo do
+que o Bakery nos dois testes. Porém o Bakery foi mais justo na liberação de acesso à seção crítica,
+o desvio padrão no acesso foi 38 vezes menor que o do Gate. Mesmo assim, não houve nenhum caso de
+outlier de acessos, não houve tendência para starvation ou algum processo com muito mais acessos
+que outros.
 
+Nos Testes 3 e 4, foram repetidos os testes anteriores, porém, utilizando 10 threads ao invés de 5.
+A diferença de performance entre os algoritmos ficou ainda mais evidente. O desvio padrão de acesso
+continua mostrando que o algoritmo Bakery é mais justo, porém no Teste 3 o algoritmo 3 teve o maior
 
-A ideia do Testes 1 e 2, foi comparar a variação do número de threads de 1000 para 500, quando o tamanho
-do vetor tem um tamanho fixo de 1 milhão. Foi possível determinar...
-
-Nos Testes 3 e 4, foram repetidos os testes anteriores, porém, com um tamanho de vetor menor, no caso,
-10 mil posições. Nesse casos..
+A conclusão é que o algoritmo Bakery é mais justo, porém menos perfomatico que o Gate.
