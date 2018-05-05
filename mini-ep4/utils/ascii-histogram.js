@@ -8,20 +8,3 @@ var data = {
 
 console.log();
 console.log(histogram(data, { bar: "=" }));
-
-var data = {
-  bakery: 13.67,
-  gate: 156.6
-};
-
-console.log();
-console.log(histogram(data, { bar: "=" }));
-
-var data = {
-  bakery: 20.26,
-  gate: 522.47
-};
-
-console.log();
-console.log(histogram(data, { bar: "=" }));
-

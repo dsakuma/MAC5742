@@ -74,6 +74,9 @@ padrão não é suficiente para mostrar o comportamento do algoritmo. O desvio p
 mas a simulação alguma thread com muito ou pouco acesso à seção crítica. Como outlier, está sendo
 considerado valores com 3 desvios padrão acima ou abaixo da média.
 
+Não consegui fazer alterações no SCHED_OTHER, SCHED_FIFO e SCHED_RR para testar, apenas foram alterados
+o número de threads e o tempo de cpu gasto por cada thread.
+
 Ao fim, foi realizado um teste da remoção do __sync_synchronize dos algoritmos.
 
 O ascii-histogram.js foi utilizado para gerar os gráficos desse relatório.
