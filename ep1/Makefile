@@ -10,9 +10,13 @@ generate_matrix: generate_matrix.c
 sandbox: sandbox.c
 	$(CC) $(CFLAGS) -o $@ $^
 
+.PHONY: test_main
+test_main: main generate_matrix
+	./generate_matrix 2 2 2 2
+	./main
 
-.PHONY: test
-test: main generate_matrix
+.PHONY: test_generate_matrix
+test_generate_matrix: generate_matrix
 	./generate_matrix 20 20 3 3
 
 test_sandbox: sandbox
