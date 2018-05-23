@@ -25,5 +25,10 @@ int main()
      printf("its equals\n");
    }
 
+   if(strcmp("example1", "example2") == 0)
+   {
+     printf("same string");
+   }
+
    return 0;
 }
