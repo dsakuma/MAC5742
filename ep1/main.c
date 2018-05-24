@@ -3,6 +3,16 @@
 #include <time.h>
 #include <string.h>
 
+void print_matrix(double** matrix, int n_rows, int n_cols)
+{
+  printf("Printing matrix...\n");
+  for(int i=0; i<n_rows; i++){
+    for(int j=0; j<n_cols; j++){
+        printf("%f\n", matrix[i][j]);
+      }
+  }
+}
+
 double sequentialMultiply(double** matrixA, double** matrixB, double** matrixC, int dimension)
 {
   clock_t tic = clock();
@@ -51,13 +61,6 @@ double ** allocate_memory_matrix(long long int n_rows, long long int n_cols)
     matrix[i] = malloc(n_rows*sizeof(double*));
   }
 
-  return matrix;
-}
-
-double ** allocate_memory_and_fill_matrix(char filename[], long long int n_rows, long long int n_cols)
-{
-  double** matrix = allocate_memory_matrix(n_rows, n_cols);
-
   /* initialize with zero */
   for(int i=0; i<n_rows; i++){
     for(int j=0; j<n_cols; j++){
@@ -65,50 +68,98 @@ double ** allocate_memory_and_fill_matrix(char filename[], long long int n_rows,
       }
   }
 
-  /* read matrix from file */
-  if(strcmp(filename, "") != 0)
-  {
-    for(int i=0; i<n_rows; i++){
-      for(int j=0; j<n_cols; j++){
-          matrix[i][j] = 2.0;
-        }
-    }
-  }
   return matrix;
 }
 
-void print_matrix(double** matrix, int n_rows, int n_cols)
+double ** allocate_memory_and_fill_matrix(char filename[])
 {
-  printf("Printing matrix...\n");
-  for(int i=0; i<n_rows; i++){
-    for(int j=0; j<n_cols; j++){
-        printf("%f\n", matrix[i][j]);
-      }
+  int r;
+  long long int i;
+  long long int j;
+  double v;
+  long long int n_rows = 0;
+  long long int n_cols = 0;
+
+  FILE *fp;
+  fp = fopen(filename, "r");
+
+  if (fp == NULL)
+  {
+      printf ("Error opening the file\n\n'");
+      exit(EXIT_FAILURE);
   }
+
+  r = fscanf(fp, "%lld %lld", &n_rows, &n_cols);
+
+  double** matrix = allocate_memory_matrix(n_rows, n_cols);
+
+  /* read matrix from file */
+  r = fscanf(fp, "%lld %lld %lf", &i, &j, &v);
+  matrix[i-1][j-1] = v;
+  while (r != EOF)
+  {
+      // printf("i: %lld | j: %lld | v: %lf\n", i, j, v);
+      matrix[i-1][j-1] = v;
+      r = fscanf(fp, "%lld %lld %lf", &i, &j, &v);
+  }
+  fclose(fp);
+
+  // print_matrix(matrix, n_rows, n_cols);
+  return matrix;
 }
+
+long long int get_n_rows_or_cols(char filename[], char type[])
+{
+  long long int n_rows;
+  long long int n_cols;
+
+  FILE *fp;
+  fp = fopen(filename, "r");
+
+  if (fp == NULL)
+  {
+      printf ("Error opening the file\n\n'");
+      exit(EXIT_FAILURE);
+  }
+
+  fscanf(fp, "%lld %lld", &n_rows, &n_cols);
+  fclose(fp);
+  if(strcmp(type, "rows") == 0)
+    return n_rows;
+  else
+    return n_cols;
+}
+
+double ** allocate_memory_result_matrix(char filenameA[], char filenameB[])
+{
+  long long int n_rows = get_n_rows_or_cols("matrix_a.txt", "rows");
+  long long int n_cols = get_n_rows_or_cols("matrix_b.txt", "cols");
+
+  double** matrix = allocate_memory_matrix(n_rows, n_cols);
+
+  // print_matrix(matrix, n_rows, n_cols);
+  return matrix;
+}
+
+
 
 int main()
 {
    printf("Hello, main!\n");
+   char filenameA[] = "matrix_a.txt";
+   char filenameB[] = "matrix_b.txt";
 
-   /* initialize matrix a */
-   long long int n_rows_a = 2;
-   long long int n_cols_a = 2;
-   long long int n_rows_b = 2;
-   long long int n_cols_b = 2;
-   long long int n_rows_c = 2;
-   long long int n_cols_c = 2;
 
-   double **matrix_a = allocate_memory_and_fill_matrix("matrix_a.txt", n_rows_a, n_cols_a);
-   double **matrix_b = allocate_memory_and_fill_matrix("matrix_b.txt", n_rows_b, n_cols_b);
-   double **matrix_c = allocate_memory_and_fill_matrix("", n_rows_c, n_cols_c);
+   double **matrix_a = allocate_memory_and_fill_matrix(filenameA);
+   double **matrix_b = allocate_memory_and_fill_matrix(filenameB);
+   double **matrix_c = allocate_memory_result_matrix(filenameA, filenameB);
 
    // sequentialMultiply(matrix_a, matrix_b, matrix_c, 2);
-   parallelMultiply(matrix_a, matrix_b, matrix_c, 2);
+   // parallelMultiply(matrix_a, matrix_b, matrix_c, 2);
 
-   print_matrix(matrix_a, n_rows_a, n_cols_a);
-   print_matrix(matrix_b, n_rows_b, n_cols_b);
-   print_matrix(matrix_c, n_rows_c, n_cols_c);
+   // print_matrix(matrix_a, n_rows_a, n_cols_a);
+   // print_matrix(matrix_b, n_rows_b, n_cols_b);
+   // print_matrix(matrix_c, 2, 2);
 
 
 
@@ -116,5 +167,5 @@ int main()
 }
 
 // Falta:
-// Ler do arquivo
+// multiply qualquer dimensao
 // 3 tipos de multiply
