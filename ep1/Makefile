@@ -1,5 +1,5 @@
 CC      = gcc
-CFLAGS  = -O3 -flto -Wall
+CFLAGS  = -O3 -flto -Wall -Xpreprocessor -fopenmp -lomp
 
 main: main.c
 	$(CC) $(CFLAGS) -o $@ $^
@@ -12,7 +12,7 @@ sandbox: sandbox.c
 
 .PHONY: test_main
 test_main: main generate_matrix
-	./generate_matrix 3 2 2 3
+	./generate_matrix 2 2 2 2
 	./main
 
 .PHONY: test_generate_matrix
