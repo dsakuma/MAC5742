@@ -13,12 +13,12 @@ void print_matrix(double** matrix, int n_rows, int n_cols)
   }
 }
 
-double sequentialMultiply(double** matrixA, double** matrixB, double** matrixC, int dimension)
+double sequentialMultiply(double** matrixA, double** matrixB, double** matrixC, int n_rows_a, int n_cols_a, int n_cols_b)
 {
   clock_t tic = clock();
-	for(int i=0; i<dimension; i++){
-		for(int j=0; j<dimension; j++){
-			for(int k=0; k<dimension; k++){
+	for(int i=0; i<n_rows_a; i++){
+		for(int j=0; j<n_cols_b; j++){
+			for(int k=0; k<n_cols_a; k++){
 				matrixC[i][j] += matrixA[i][k] * matrixB[k][j];
 			}
 		}
@@ -29,13 +29,13 @@ double sequentialMultiply(double** matrixA, double** matrixB, double** matrixC, 
 	return elapsed;
 }
 
-double parallelMultiply(double** matrixA, double** matrixB, double** matrixC, int dimension)
+double parallelMultiply(double** matrixA, double** matrixB, double** matrixC, int n_rows_a, int n_cols_a, int n_cols_b)
 {
   clock_t tic = clock();
 	#pragma omp parallel for
-	for(int i=0; i<dimension; i++){
-		for(int j=0; j<dimension; j++){
-			for(int k=0; k<dimension; k++){
+	for(int i=0; i<n_rows_a; i++){
+		for(int j=0; j<n_cols_b; j++){
+			for(int k=0; k<n_cols_a; k++){
 				matrixC[i][j] += matrixA[i][k] * matrixB[k][j];
 			}
 		}
@@ -56,10 +56,12 @@ double ** allocate_memory_matrix(long long int n_rows, long long int n_cols)
 
   /* allocate memory */
   matrix = malloc(n_rows*sizeof(double*));
-  for(int i = 0; i<n_cols; i++)
+  for(int i = 0; i<n_rows; i++)
   {
-    matrix[i] = malloc(n_rows*sizeof(double*));
+    matrix[i] = malloc(n_cols*sizeof(double*));
   }
+
+  printf ("%lld, %lld\n\n'", n_rows, n_cols);
 
   /* initialize with zero */
   for(int i=0; i<n_rows; i++){
@@ -104,7 +106,7 @@ double ** allocate_memory_and_fill_matrix(char filename[])
   }
   fclose(fp);
 
-  // print_matrix(matrix, n_rows, n_cols);
+  print_matrix(matrix, n_rows, n_cols);
   return matrix;
 }
 
@@ -154,12 +156,16 @@ int main()
    double **matrix_b = allocate_memory_and_fill_matrix(filenameB);
    double **matrix_c = allocate_memory_result_matrix(filenameA, filenameB);
 
-   // sequentialMultiply(matrix_a, matrix_b, matrix_c, 2);
-   // parallelMultiply(matrix_a, matrix_b, matrix_c, 2);
+   long long int n_rows_a = get_n_rows_or_cols("matrix_a.txt", "rows");
+   long long int n_cols_a = get_n_rows_or_cols("matrix_a.txt", "cols");
+   long long int n_cols_b = get_n_rows_or_cols("matrix_b.txt", "cols");
+
+   sequentialMultiply(matrix_a, matrix_b, matrix_c, n_rows_a,n_cols_a , n_cols_b);
+   // parallelMultiply(matrix_a, matrix_b, matrix_c, n_rows_a,n_cols_a , n_cols_b);
 
    // print_matrix(matrix_a, n_rows_a, n_cols_a);
    // print_matrix(matrix_b, n_rows_b, n_cols_b);
-   // print_matrix(matrix_c, 2, 2);
+   print_matrix(matrix_c, n_rows_a, n_cols_b);
 
 
 
@@ -167,5 +173,6 @@ int main()
 }
 
 // Falta:
-// multiply qualquer dimensao
+// multiply qualquer dimensao (param type)
 // 3 tipos de multiply
+// write result matrix

@@ -12,7 +12,7 @@ sandbox: sandbox.c
 
 .PHONY: test_main
 test_main: main generate_matrix
-	# ./generate_matrix 2 2 2 2
+	./generate_matrix 3 2 2 3
 	./main
 
 .PHONY: test_generate_matrix
