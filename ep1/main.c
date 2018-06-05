@@ -4,14 +4,11 @@
 #include <string.h>
 #include "sequential_multiply.h"
 #include "openmp_multiply.h"
+#include "pthread_multiply.h"
+
 #include "utils.h"
 
-double pthreadMultiply(double** matrixA, double** matrixB, double** matrixC, int n_rows_a, int n_cols_a, int n_cols_b)
-{
-  printf("Pthread multiply matrix...\n");
 
-  return 0;
-}
 
 int main()
 {
@@ -29,8 +26,8 @@ int main()
 
 
    // sequentialMultiply(matrix_a, matrix_b, matrix_c, n_rows_a,n_cols_a , n_cols_b);
-   openmpMultiply(matrix_a, matrix_b, matrix_c, n_rows_a,n_cols_a , n_cols_b);
-   // pthreadMultiply(matrix_a, matrix_b, matrix_c, n_rows_a,n_cols_a , n_cols_b);
+   // openmpMultiply(matrix_a, matrix_b, matrix_c, n_rows_a,n_cols_a , n_cols_b);
+   pthreadMultiply(matrix_a, matrix_b, matrix_c, n_rows_a,n_cols_a , n_cols_b);
 
    // print_matrix(matrix_a, n_rows_a, n_cols_a);
    // print_matrix(matrix_b, n_rows_b, n_cols_b);

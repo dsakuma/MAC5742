@@ -1,7 +1,7 @@
 CC      = gcc
 CFLAGS  = -O3 -flto -Wall -Xpreprocessor -fopenmp -lomp
 
-main: main.c sequential_multiply.c openmp_multiply.c utils.c
+main: main.c sequential_multiply.c openmp_multiply.c pthread_multiply.c utils.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 generate_matrix: generate_matrix.c
