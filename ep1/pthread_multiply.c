@@ -57,7 +57,7 @@ void * worker( void *threadarg )
 }
 
 int threads_to_init(long long int n_rows_a){
-  int num_threads = 2;
+  int num_threads = 3;
   if(n_rows_a < num_threads)
     return n_rows_a;
   return num_threads;
@@ -96,6 +96,6 @@ double pthreadMultiply(double** matrixA, double** matrixB, double** matrixC,
   }
   clock_t toc = clock();
   double elapsed = (double)(toc - tic) / CLOCKS_PER_SEC;
-  printf("openMpMultiply: %f seconds\n", elapsed);
+  printf("pthreadMultiply: %f seconds\n", elapsed);
 	return elapsed;
 }

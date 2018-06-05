@@ -30,7 +30,7 @@ int main()
 
    // print_matrix(matrix_a, n_rows_a, n_cols_a);
    // print_matrix(matrix_b, n_rows_b, n_cols_b);
-   print_matrix(matrix_c, n_rows_a, n_cols_b);
+   // print_matrix(matrix_c, n_rows_a, n_cols_b);
 
    printf("Finished!\n");
 

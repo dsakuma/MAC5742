@@ -7,7 +7,7 @@
 double openmpMultiply(double** matrixA, double** matrixB, double** matrixC,
   long long int n_rows_a, long long int n_cols_a, long long int n_cols_b)
 {
-  printf("Open mp multiply matrix...\n");
+  printf("OpenMp multiply matrix...\n");
   clock_t tic = clock();
 	#pragma omp parallel for
 	for(int i=0; i<n_rows_a; i++){
