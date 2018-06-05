@@ -29,16 +29,20 @@ void * worker( void *threadarg )
   long long int n_cols_a = my_data->n_cols_a;
   long long int n_cols_b = my_data->n_cols_b;
 
-  printf("tid->%d\n", tid);
+  // printf("tid->%d\n", tid);
 
   int i, j, k, portion_size, row_start, row_end;
   double sum;
   int size = n_cols_a;
 
   portion_size = n_rows_a / num_threads;
-  printf("psize -> %d\n", portion_size);
   row_start = tid * portion_size;
   row_end = (tid+1) * portion_size;
+
+  if(tid == num_threads - 1 && row_end < n_rows_a){
+    row_end = n_rows_a;
+  }
+  printf("tid->%d, nthreads-> %d, psize -> %d, row_start->%d, row_end->%d, n_rows_a->%lld\n", tid, num_threads, portion_size, row_start, row_end, n_rows_a);
 
   for (i = row_start; i < row_end; ++i) { // hold row index of 'matrix1'
     for (j = 0; j < n_cols_b; ++j) { // hold column index of 'matrix2'
@@ -70,10 +74,10 @@ double pthreadMultiply(double** matrixA, double** matrixB, double** matrixC,
   pthread_t * threads;
   threads = (pthread_t *) malloc( num_threads * sizeof(pthread_t) );
 
-  printf("t-init->%d\n", num_threads);
+  // printf("t-init->%d\n", num_threads);
 
   for ( i = 0; i < num_threads; ++i ) {
-    printf("thread->%d\n", i);
+    // printf("thread->%d\n", i);
     thread_data_array[i].thread_id = i;
     thread_data_array[i].num_threads = num_threads;
     thread_data_array[i].matrix_a = matrixA;
