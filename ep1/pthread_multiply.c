@@ -67,6 +67,7 @@ double pthreadMultiply(double** matrixA, double** matrixB, double** matrixC,
   long long int n_rows_a, long long int n_cols_a, long long int n_cols_b)
 {
   printf("Pthread multiply matrix...\n");
+  clock_t tic = clock();
   int i;
   int num_threads = threads_to_init(n_rows_a);
   struct thread_data thread_data_array[num_threads];
@@ -93,6 +94,8 @@ double pthreadMultiply(double** matrixA, double** matrixB, double** matrixC,
   for ( i = 0; i < num_threads; ++i ) {
     pthread_join( threads[i], NULL );
   }
-  double elapsed = 0;
-  return elapsed;
+  clock_t toc = clock();
+  double elapsed = (double)(toc - tic) / CLOCKS_PER_SEC;
+  printf("openMpMultiply: %f seconds\n", elapsed);
+	return elapsed;
 }
