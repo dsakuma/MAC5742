@@ -5,7 +5,7 @@
 #include "sequential_multiply.h"
 #include <pthread.h>
 
-int num_threads = 1;
+int num_threads = 2;
 
 struct thread_data {
  int thread_id;
@@ -36,6 +36,7 @@ void * worker( void *threadarg )
   int size = n_cols_a;
 
   portion_size = n_rows_a / num_threads;
+  printf("psize -> %d\n", portion_size);
   row_start = tid * portion_size;
   row_end = (tid+1) * portion_size;
 
@@ -47,13 +48,12 @@ void * worker( void *threadarg )
       }
       matrix_c[ i ][ j ] = sum;
     }
-}
-
-
+  }
   return NULL;
 }
 
-double pthreadMultiply(double** matrixA, double** matrixB, double** matrixC, long long int n_rows_a, long long int n_cols_a, long long int n_cols_b)
+double pthreadMultiply(double** matrixA, double** matrixB, double** matrixC,
+  long long int n_rows_a, long long int n_cols_a, long long int n_cols_b)
 {
   int i;
   printf("Pthread multiply matrix...\n");

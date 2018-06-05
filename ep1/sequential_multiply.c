@@ -4,7 +4,8 @@
 // #include <string.h>
 #include "sequential_multiply.h"
 
-double sequentialMultiply(double** matrixA, double** matrixB, double** matrixC, long long int n_rows_a, long long int n_cols_a, long long int n_cols_b)
+double sequentialMultiply(double** matrixA, double** matrixB, double** matrixC,
+  long long int n_rows_a, long long int n_cols_a, long long int n_cols_b)
 {
   printf("Sequential multiply matrix...\n");
   clock_t tic = clock();
