@@ -4,7 +4,7 @@
 // #include <string.h>
 #include "openmp_multiply.h"
 
-double openmpMultiply(double** matrixA, double** matrixB, double** matrixC, int n_rows_a, int n_cols_a, int n_cols_b)
+double openmpMultiply(double** matrixA, double** matrixB, double** matrixC, long long int n_rows_a, long long int n_cols_a, long long int n_cols_b)
 {
   printf("Open mp multiply matrix...\n");
   clock_t tic = clock();
