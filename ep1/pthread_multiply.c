@@ -5,10 +5,9 @@
 #include "sequential_multiply.h"
 #include <pthread.h>
 
-int num_threads = 2;
-
 struct thread_data {
  int thread_id;
+ int num_threads;
  double **matrix_a;
  double **matrix_b;
  double **matrix_c;
@@ -22,6 +21,7 @@ void * worker( void *threadarg )
   struct thread_data *my_data;
   my_data = (struct thread_data *) threadarg;
   int tid = my_data->thread_id;
+  int num_threads = my_data->num_threads;
   double **matrix_a = my_data->matrix_a;
   double **matrix_b = my_data->matrix_b;
   double **matrix_c = my_data->matrix_c;
@@ -52,19 +52,30 @@ void * worker( void *threadarg )
   return NULL;
 }
 
+int threads_to_init(long long int n_rows_a){
+  int num_threads = 2;
+  if(n_rows_a < num_threads)
+    return n_rows_a;
+  return num_threads;
+}
+
 double pthreadMultiply(double** matrixA, double** matrixB, double** matrixC,
   long long int n_rows_a, long long int n_cols_a, long long int n_cols_b)
 {
-  int i;
   printf("Pthread multiply matrix...\n");
+  int i;
+  int num_threads = threads_to_init(n_rows_a);
   struct thread_data thread_data_array[num_threads];
 
   pthread_t * threads;
   threads = (pthread_t *) malloc( num_threads * sizeof(pthread_t) );
 
+  printf("t-init->%d\n", num_threads);
+
   for ( i = 0; i < num_threads; ++i ) {
     printf("thread->%d\n", i);
     thread_data_array[i].thread_id = i;
+    thread_data_array[i].num_threads = num_threads;
     thread_data_array[i].matrix_a = matrixA;
     thread_data_array[i].matrix_b = matrixB;
     thread_data_array[i].matrix_c = matrixC;
