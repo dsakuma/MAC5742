@@ -4,7 +4,7 @@
 #include <string.h>
 #include "utils.h"
 
-void print_matrix(double** matrix, int n_rows, int n_cols)
+void print_matrix(double** matrix, long long int n_rows, long long int n_cols)
 {
   printf("Printing matrix...\n");
   for(int i=0; i<n_rows; i++){
@@ -12,6 +12,28 @@ void print_matrix(double** matrix, int n_rows, int n_cols)
         printf("%f\n", matrix[i][j]);
       }
   }
+}
+
+void write_matrix(double** matrix, long long int n_rows, long long int n_cols, char filename[])
+{
+  FILE *f = fopen(filename, "w");
+  if (f == NULL)
+  {
+      printf("Error opening file!\n");
+      exit(1);
+  }
+
+  /* print n_rows and n_cols */
+  fprintf(f, "%lld %lld\n", n_rows, n_cols);
+
+  /* print matrix */
+  for(long long int i=0; i<n_rows; i++){
+    for(long long int j=0; j<n_cols; j++){
+        if(matrix[i][j] != 0)
+          fprintf(f, "%lld %lld %f\n", i, j, matrix[i][j]);
+      }
+  }
+  fclose(f);
 }
 
 double ** allocate_memory_matrix(long long int n_rows, long long int n_cols)

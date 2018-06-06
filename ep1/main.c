@@ -32,11 +32,15 @@ int main()
    // print_matrix(matrix_b, n_rows_b, n_cols_b);
    // print_matrix(matrix_c, n_rows_a, n_cols_b);
 
+   write_matrix(matrix_c, n_rows_a, n_cols_b, "matrix_c.txt");
+
    printf("Finished!\n");
 
    return 0;
 }
 
 // Falta:
-// pthreads
 // write result matrix
+// fix timer
+// write report
+// use intrinsics
