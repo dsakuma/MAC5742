@@ -46,7 +46,28 @@ Para rodar o utilitário de histograma
 4. Descrição da solução
 -----------------------
 
+A ideia desse programa é implementar, de maneira mais eficiente possível, o
+algoritmo para a multiplicação entre duas matrizes. Nesse programa foram
+utilizadas duas bibliotecas de paralelização, o OpenMP e o Pthreads.
+
+O OpenMP permite paralelizar programas escritos em C, C++ e Fortran através de
+anotações no código, que guiam o compilador para acrescentar simultaneidade
+aos programas. O OpenMP utiliza a base do modelo de execução fork-join.
+
+O Pthreads é um padrão que define uma interface para criação e manipulação
+de threads. Ou seja, é uma interface padronizada para utilizar versões
+proprietárias de implementação de threads em hardwares diferentes. Normalmente,
+bibliotecas  que implementam o padrão de POSIX threads são  chamadas de Pthreads.
 
 
-5. Conclusões
+Foi implementado..
+
+5. Resultados
 -------------
+
+
+6. Conclusões
+-------------
+
+Apesar de poucas alterações no código serial existente, a paralelização com o
+OpenMP teve uma performance pior em comparação à implementação com Pthreads.
