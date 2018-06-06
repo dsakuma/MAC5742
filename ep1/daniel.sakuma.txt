@@ -1,0 +1,52 @@
+MAC5742 - Relatório EP1
+=======================
+
+1. Aluno
+--------
+
+Daniel Sakuma
+N USP: 5619562
+
+
+2. Conteúdo do diretório
+------------------------
+.
+|-- daniel.sakuma.txt       - este arquivo
+|-- generate_matrix.c       - gera matriz A e matrix B
+|-- main.c                  - o programa de multiplicação de matriz
+|-- Makefile
+|-- openmp_multiply.c       - implementação de multiplicação utilizando OpenMP
+|-- openmp_multiply.h
+|-- pthread_multiply.c      - implementação de multiplicação utilizando pthreads
+|-- pthread_multiply.h
+|-- sequential_multiply.c   - implementação de multiplicação sequencial
+|-- sequential_multiply.h
+|-- functions.c             - funções auxiliares
+|-- functions.h
+`-- utils
+    `-- ascii-histogram.js  - gerador de histogramas em ascii.
+
+
+3. Como compilar e rodar
+------------------------
+
+Para compilar o programa:
+
+  $ ./make
+
+Para executar o programa:
+
+  $ ./make <implementação> <caminho_matr_A> <caminho_matr_B> <caminho_matr_C>
+
+Para rodar o utilitário de histograma
+
+  $ node utils/ascii-histogram.js
+
+
+4. Descrição da solução
+-----------------------
+
+
+
+5. Conclusões
+-------------
