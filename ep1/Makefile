@@ -12,8 +12,8 @@ sandbox: sandbox.c
 
 .PHONY: test_main
 test_main: main generate_matrix
-	./generate_matrix 1500 1500 1500 1500
-	./main
+	./generate_matrix 500 500 500 500
+	./main p matrix_a.txt matrix_b.txt matrix_c.txt
 
 .PHONY: test_generate_matrix
 test_generate_matrix: generate_matrix
@@ -24,4 +24,4 @@ test_sandbox: sandbox
 
 .PHONY: clean
 clean:
-	rm -f generate_matrix main sandbox matrix_a.txt matrix_b.txt
+	rm -f generate_matrix main sandbox matrix_a.txt matrix_b.txt matrix_c.txt
