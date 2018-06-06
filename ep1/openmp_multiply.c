@@ -1,6 +1,5 @@
 #include <stdio.h>
 // #include <stdlib.h>
-// #include <time.h>
 #include <sys/time.h>
 // #include <string.h>
 #include "openmp_multiply.h"
@@ -12,7 +11,6 @@ double openmpMultiply(double** matrixA, double** matrixB, double** matrixC,
   struct timeval tstart, tend;
   double exectime;
   gettimeofday( &tstart, NULL );
-  // clock_t tic = clock();
 	#pragma omp parallel for
 	for(int i=0; i<n_rows_a; i++){
 		for(int j=0; j<n_cols_b; j++){
@@ -22,9 +20,6 @@ double openmpMultiply(double** matrixA, double** matrixB, double** matrixC,
 		}
 	}
   gettimeofday( &tend, NULL );
-  // clock_t toc = clock();
-  // double elapsed = (double)(toc - tic) / CLOCKS_PER_SEC;
-  // printf("openMpMultiply: %f seconds\n", elapsed);
   exectime = (tend.tv_sec - tstart.tv_sec) * 1000.0; // sec to ms
   exectime += (tend.tv_usec - tstart.tv_usec) / 1000.0; // us to ms
   printf( "Execution time:%.3lf sec\n", exectime/1000.0);

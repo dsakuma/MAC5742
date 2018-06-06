@@ -13,7 +13,7 @@ sandbox: sandbox.c
 .PHONY: test_main
 test_main: main generate_matrix
 	./generate_matrix 1500 1500 1500 1500
-	./main s matrix_a.txt matrix_b.txt matrix_c.txt
+	./main p matrix_a.txt matrix_b.txt matrix_c.txt
 
 .PHONY: test_generate_matrix
 test_generate_matrix: generate_matrix

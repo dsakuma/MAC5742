@@ -49,17 +49,9 @@ int main(int argc, char* argv[])
        printf("Invalid implementation\n");
        return 1;
    }
-   // print_matrix(matrix_a, n_rows_a, n_cols_a);
-   // print_matrix(matrix_b, n_rows_b, n_cols_b);
-   // print_matrix(matrix_c, n_rows_a, n_cols_b);
 
    write_matrix(matrix_c, n_rows_a, n_cols_b, filenameC);
 
    printf("Finished!\n");
    return 0;
 }
-
-// Falta:
-// fix timer
-// write report
-// use intrinsics
