@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+// #include <time.h>
+#include <sys/time.h>
 // #include <string.h>
 #include "sequential_multiply.h"
 #include <pthread.h>
@@ -67,7 +68,10 @@ double pthreadMultiply(double** matrixA, double** matrixB, double** matrixC,
   long long int n_rows_a, long long int n_cols_a, long long int n_cols_b)
 {
   printf("Pthread multiply matrix...\n");
-  clock_t tic = clock();
+  struct timeval tstart, tend;
+  double exectime;
+  // clock_t tic = clock();
+  gettimeofday( &tstart, NULL );
   int i;
   int num_threads = threads_to_init(n_rows_a);
   struct thread_data thread_data_array[num_threads];
@@ -94,8 +98,12 @@ double pthreadMultiply(double** matrixA, double** matrixB, double** matrixC,
   for ( i = 0; i < num_threads; ++i ) {
     pthread_join( threads[i], NULL );
   }
-  clock_t toc = clock();
-  double elapsed = (double)(toc - tic) / CLOCKS_PER_SEC;
-  printf("pthreadMultiply: %f seconds\n", elapsed);
-	return elapsed;
+  gettimeofday( &tend, NULL );
+  exectime = (tend.tv_sec - tstart.tv_sec) * 1000.0; // sec to ms
+  exectime += (tend.tv_usec - tstart.tv_usec) / 1000.0; // us to ms
+  printf( "Execution time:%.3lf sec\n", exectime/1000.0);
+  // clock_t toc = clock();
+  // double elapsed = (double)(toc - tic) / CLOCKS_PER_SEC;
+  // printf("pthreadMultiply: %f seconds\n", elapsed);
+	return exectime;
 }

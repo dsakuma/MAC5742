@@ -8,8 +8,6 @@
 
 #include "utils.h"
 
-
-
 int main(int argc, char* argv[])
 {
    printf("Hello, main!\n");
@@ -51,10 +49,6 @@ int main(int argc, char* argv[])
        printf("Invalid implementation\n");
        return 1;
    }
-   // sequentialMultiply(matrix_a, matrix_b, matrix_c, n_rows_a,n_cols_a , n_cols_b);
-   // openmpMultiply(matrix_a, matrix_b, matrix_c, n_rows_a,n_cols_a , n_cols_b);
-   // pthreadMultiply(matrix_a, matrix_b, matrix_c, n_rows_a,n_cols_a , n_cols_b);
-
    // print_matrix(matrix_a, n_rows_a, n_cols_a);
    // print_matrix(matrix_b, n_rows_b, n_cols_b);
    // print_matrix(matrix_c, n_rows_a, n_cols_b);
@@ -66,7 +60,6 @@ int main(int argc, char* argv[])
 }
 
 // Falta:
-// input args
 // fix timer
 // write report
 // use intrinsics
