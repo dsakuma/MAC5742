@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include "utils.h"
+#include "functions.h"
 
 void print_matrix(double** matrix, long long int n_rows, long long int n_cols)
 {

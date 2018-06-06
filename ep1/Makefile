@@ -1,7 +1,7 @@
 CC      = gcc
-CFLAGS  = -O3 -flto -Wall -Xpreprocessor -fopenmp -lomp
+CFLAGS  = -O3 -flto -Wall -Xpreprocessor -fopenmp -lomp -lpthread
 
-main: main.c sequential_multiply.c openmp_multiply.c pthread_multiply.c utils.c
+main: main.c sequential_multiply.c openmp_multiply.c pthread_multiply.c functions.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 generate_matrix: generate_matrix.c
@@ -12,12 +12,12 @@ sandbox: sandbox.c
 
 .PHONY: test_main
 test_main: main generate_matrix
-	./generate_matrix 1500 1500 1500 1500
+	./generate_matrix 1000 1000 1000 1000
 	./main p matrix_a.txt matrix_b.txt matrix_c.txt
 
 .PHONY: test_generate_matrix
 test_generate_matrix: generate_matrix
-	./generate_matrix 20 20 3 3
+	./generate_matrix 2 2 2 2
 
 test_sandbox: sandbox
 	./sandbox

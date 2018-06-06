@@ -59,8 +59,8 @@ de threads. Ou seja, é uma interface padronizada para utilizar versões
 proprietárias de implementação de threads em hardwares diferentes. Normalmente,
 bibliotecas  que implementam o padrão de POSIX threads são  chamadas de Pthreads.
 
-
 Foi implementado..
+
 
 5. Resultados
 -------------

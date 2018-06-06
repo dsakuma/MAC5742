@@ -6,7 +6,7 @@
 #include "openmp_multiply.h"
 #include "pthread_multiply.h"
 
-#include "utils.h"
+#include "functions.h"
 
 int main(int argc, char* argv[])
 {
