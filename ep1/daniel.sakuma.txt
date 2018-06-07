@@ -61,7 +61,7 @@ de threads. Ou seja, é uma interface padronizada para utilizar versões
 proprietárias de implementação de threads em hardwares diferentes. Normalmente,
 bibliotecas  que implementam o padrão de POSIX threads são  chamadas de Pthreads.
 
-Foi implementado um algoritmo utilizando o OpenMP (o), que utiliza o #pragma opm parallel
+Foi implementado um algoritmo utilizando o OpenMP (o), que usa o #pragma opm parallel
 para paralelizar o loop mais externo. Usando essa delcaração, porções do loop for
 são delegadas para diferentes threads.
 
@@ -93,4 +93,6 @@ sequential | ============================================================ | 22.1
 
 Mesmo com poucas alterações no código sequencial existente, a paralelização com o
 OpenMP teve uma performance ligeiramente melhor em comparação à implementação
-com Pthreads.
+com Pthreads. Porém não houve tempo de estudar outros particionamentos com Pthreads,
+que poderiam gerar um ganho maior na perofrmance. Mas observamos que a performance
+é 40% maior em ambos os casos, comparado com o algoritmos sequencial.

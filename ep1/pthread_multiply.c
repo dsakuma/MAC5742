@@ -42,7 +42,6 @@ void * worker( void *threadarg )
   if(tid == num_threads - 1 && row_end < n_rows_a){
     row_end = n_rows_a;
   }
-  printf("tid->%d, nthreads-> %d, psize -> %d, row_start->%d, row_end->%d, n_rows_a->%lld\n", tid, num_threads, portion_size, row_start, row_end, n_rows_a);
 
   for (i = row_start; i < row_end; ++i) { // hold row index of 'matrix1'
     for (j = 0; j < n_cols_b; ++j) { // hold column index of 'matrix2'
@@ -53,6 +52,7 @@ void * worker( void *threadarg )
       matrix_c[ i ][ j ] = sum;
     }
   }
+
   return NULL;
 }
 
