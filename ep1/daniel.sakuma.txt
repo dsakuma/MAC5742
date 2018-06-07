@@ -35,6 +35,9 @@ Para compilar e executar o programa:
   $ ./make
   $ ./main <implementação> <caminho_matr_A> <caminho_matr_B> <caminho_matr_C>
 
+* Onde <implementação> = p para executar em modo pthreads, <implementação> = o
+para executar em modo OpenMP e  <implementação> = s para modo sequencial
+
 Para gerar a matriz de testes:
 
   $ ./make generate_matrix
@@ -66,14 +69,14 @@ para paralelizar o loop mais externo. Usando essa delcaração, porções do loo
 são delegadas para diferentes threads.
 
 Também há a implementação usando Pthreads (p) que executa a multiplicação dividindo
-o procesamento em três threads. O algoritmos foi desenvolvido para que o calculo
+o procesamento em três threads. O algoritmos foi desenvolvido para que o cálculo
 da multiplicação se divida entre as threads igualmente.
 
 Por fim, há uma implementação sequencial (s), que utiliza o algoritmo mais básico de
 multiplicação de matrizes, apenas para efeito de comparação.
 
-Tentei fazer a utilização das instruções instrinsics Intel, mas não consegui
-terminar a tempo.
+Houve a tentativa de fazer a utilização das instruções instrinsics Intel, porém
+não  foi possível concluir à tempo.
 
 5. Resultados
 -------------
@@ -83,7 +86,7 @@ sequencial, foi feita a multiplicação de uma matriz 1500x1500.
 
 Tempos obtidos em segundos:
 
-sequential | ============================================================ | 22.112
+sequencial | ============================================================ | 22.112
     openMP | ===================================                          | 12.887
   pthreads | ====================================                         | 13.441
 
@@ -94,5 +97,5 @@ sequential | ============================================================ | 22.1
 Mesmo com poucas alterações no código sequencial existente, a paralelização com o
 OpenMP teve uma performance ligeiramente melhor em comparação à implementação
 com Pthreads. Porém não houve tempo de estudar outros particionamentos com Pthreads,
-que poderiam gerar um ganho maior na perofrmance. Mas observamos que a performance
+que poderiam gerar um ganho maior na perofrmance. Porém observamos que a performance
 é 40% maior em ambos os casos, comparado com o algoritmos sequencial.
