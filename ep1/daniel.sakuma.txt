@@ -30,13 +30,15 @@ N USP: 5619562
 3. Como compilar e rodar
 ------------------------
 
-Para compilar o programa:
+Para compilar e executar o programa:
 
   $ ./make
+  $ ./main <implementação> <caminho_matr_A> <caminho_matr_B> <caminho_matr_C>
 
-Para executar o programa:
+Para gerar a matriz de testes:
 
-  $ ./make <implementação> <caminho_matr_A> <caminho_matr_B> <caminho_matr_C>
+  $ ./make generate_matrix
+  ./generate_matrix <n_linhas_matr_A> <n_cols_matr_A> <n_linhas_matr_B> <n_cols_matr_B>
 
 Para rodar o utilitário de histograma
 
@@ -59,15 +61,36 @@ de threads. Ou seja, é uma interface padronizada para utilizar versões
 proprietárias de implementação de threads em hardwares diferentes. Normalmente,
 bibliotecas  que implementam o padrão de POSIX threads são  chamadas de Pthreads.
 
-Foi implementado..
+Foi implementado um algoritmo utilizando o OpenMP (o), que utiliza o #pragma opm parallel
+para paralelizar o loop mais externo. Usando essa delcaração, porções do loop for
+são delegadas para diferentes threads.
 
+Também há a implementação usando Pthreads (p) que executa a multiplicação dividindo
+o procesamento em três threads. O algoritmos foi desenvolvido para que o calculo
+da multiplicação se divida entre as threads igualmente.
+
+Por fim, há uma implementação sequencial (s), que utiliza o algoritmo mais básico de
+multiplicação de matrizes, apenas para efeito de comparação.
+
+Tentei fazer a utilização das instruções instrinsics Intel, mas não consegui
+terminar a tempo.
 
 5. Resultados
 -------------
+
+Para comparar a performance dos algoritmos paralelos em relação ao algoritmo
+sequencial, foi feita a multiplicação de uma matriz 1500x1500.
+
+Tempos obtidos em segundos:
+
+sequential | ============================================================ | 22.112
+    openMP | ===================================                          | 12.887
+  pthreads | ====================================                         | 13.441
 
 
 6. Conclusões
 -------------
 
-Apesar de poucas alterações no código serial existente, a paralelização com o
-OpenMP teve uma performance pior em comparação à implementação com Pthreads.
+Mesmo com poucas alterações no código sequencial existente, a paralelização com o
+OpenMP teve uma performance ligeiramente melhor em comparação à implementação
+com Pthreads.

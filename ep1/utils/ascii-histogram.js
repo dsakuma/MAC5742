@@ -2,8 +2,9 @@ var histogram = require("ascii-histogram");
 var bytes = require("bytes");
 
 var data = {
-  bakery: 10.96,
-  gate: 456.72
+  sequential: 22.112,
+  openMP: 12.887,
+  pthreads: 13.441
 };
 
 console.log();
