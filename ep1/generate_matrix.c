@@ -14,8 +14,6 @@ double randMToN(double M, double N)
 
 void write_matrix(int n_rows, int n_cols, char filename[])
 {
-  printf("Writing matrix...\n");
-
   /* open file */
   FILE *f = fopen(filename, "w");
   if (f == NULL)

@@ -10,8 +10,6 @@
 
 int main(int argc, char* argv[])
 {
-   printf("Hello, main!\n");
-
    if (argc != 5)
    {
        printf("Usage: %s <implementação> <caminho_matr_A> <caminho_matr_B> <caminho_matr_C>\n", argv[0]);
