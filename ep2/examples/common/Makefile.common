@@ -1,0 +1,6 @@
+CC=nvcc
+CFLAGS=-lm -O2 -w -D Tile_Width=128 -arch sm_35
+DEVICE_ID=0
+sizeV=262144
+sizeM=2048 
+
