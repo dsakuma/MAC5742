@@ -17,6 +17,7 @@ EP2 - redução em CUDA
 #define D 3             // dimensão das matrizes (quadradas)
 
 void print_matrix(int** matrix, int n_rows, int n_cols);
+void print_vector(int* vector, int n_els);
 
 __global__
 void add(int **x, int *y, int n_els, int n_mat)
@@ -88,7 +89,7 @@ void print_matrix(int** matrix, int n_rows, int n_cols)
 void print_vector(int* vector, int n_els)
 {
   printf("Printing vector...\n");
-  for(int i=0; i<n_rows; i++){
+  for(int i=0; i<n_els; i++){
     printf("%d ", vector[i]);
     printf("\n");
   }
