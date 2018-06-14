@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
       cudaError_t err = cudaMallocManaged(&x[i], n_mat * sizeof(int));
     }
 
-    fp = fopen(filename, "r");
+    fp = fopen(argv[1], "r");
     fscanf(fp, "%d", n_mat);
     fscanf(fp, "%*s", NULL); // pula linha
 
