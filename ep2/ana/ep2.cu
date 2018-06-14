@@ -16,7 +16,7 @@ EP2 - redução em CUDA
 #define BLOCK_SIZE 64   // tamanho do bloco
 #define D 3             // dimensão das matrizes (quadradas)
 
-void read_file(char *filename, int ***input, int n_els);
+void read_file(char *filename, int ***input, int* n_els);
 long time_elapsed (struct timeval t0, struct timeval t1);
 void print_matrix(int** matrix, int n_rows, int n_cols);
 
