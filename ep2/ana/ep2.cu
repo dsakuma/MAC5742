@@ -111,11 +111,6 @@ int main(int argc, char *argv[])
     // copia resultado da gpu para a cpu
     // cudaMemcpy(result, dev_result, D*D * sizeof(int), cudaMemcpyDeviceToHost);
 
-    // limpa memoria
-    cudaFree(host);
-    cudaFree(result);
-    // cudaFree(dev);
-    // cudaFree(dev_result);
 
     cudaThreadExit();
 
@@ -124,6 +119,13 @@ int main(int argc, char *argv[])
     printf("tempo: %ld us\nresultado:\n", time_elapsed(t0, t1));
     for(int i=0; i < D; i++)
         printf("%d %d %d\n", result[D*i], result[D*i+1], result[D*i+2]);
+
+    // limpa memoria
+    cudaFree(host);
+    cudaFree(result);
+    // cudaFree(dev);
+    // cudaFree(dev_result);
+
 
     return 0;
 
