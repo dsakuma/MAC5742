@@ -38,23 +38,23 @@ int main(int argc, char *argv[])
       cudaError_t err = cudaMallocManaged(&x[i], n_mat * sizeof(int));
     }
 
-    fp = fopen("teste.txt", "r");
-    fscanf(fp, "%d", n_mat);
-    fscanf(fp, "%*s", NULL); // pula linha
-
-    for(int i=0; i < n_mat; i++)
-    {
-      for(int j=0; j < D; j++)
-        {
-            fscanf(fp, "%d %d %d", &val1, &val2, &val3);
-            x[D*j][i] = val1;
-            x[D*j+1][i] = val2;
-            x[D*j+2][i] = val3;
-        }
-        fscanf(fp, "%*s", NULL); // pula linha
-    }
-
-    print_matrix(x, n_els, n_mat);
+    // fp = fopen("teste.txt", "r");
+    // fscanf(fp, "%d", n_mat);
+    // fscanf(fp, "%*s", NULL); // pula linha
+    //
+    // for(int i=0; i < n_mat; i++)
+    // {
+    //   for(int j=0; j < D; j++)
+    //     {
+    //         fscanf(fp, "%d %d %d", &val1, &val2, &val3);
+    //         x[D*j][i] = val1;
+    //         x[D*j+1][i] = val2;
+    //         x[D*j+2][i] = val3;
+    //     }
+    //     fscanf(fp, "%*s", NULL); // pula linha
+    // }
+    //
+    // print_matrix(x, n_els, n_mat);
 
     return 0;
 
