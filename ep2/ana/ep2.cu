@@ -1,10 +1,10 @@
 /**
- 
+
 Ana Martinazzo (7209231)
-Daniel 
+Daniel
 
 EP2 - redução em CUDA
- 
+
 **/
 
 #include <cuda.h>
@@ -12,7 +12,7 @@ EP2 - redução em CUDA
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/time.h>
- 
+
 #define BLOCK_SIZE 64   // tamanho do bloco
 #define D 3             // dimensão das matrizes (quadradas)
 
@@ -21,7 +21,7 @@ long time_elapsed (struct timeval t0, struct timeval t1);
 
 
 __global__ void min_reduction(int *input, int *output, int pos)
-{   
+{
     int tid = threadIdx.x;
     int step_size = 1;
     int number_of_threads = blockDim.x;
@@ -36,17 +36,17 @@ __global__ void min_reduction(int *input, int *output, int pos)
             input[fst] = input[fst] < input[snd] ? input[fst] : input[snd];
         }
 
-        step_size <<= 1; 
+        step_size <<= 1;
         number_of_threads >>= 1;
     }
 
-    if(tid == 0) 
-    { 
+    if(tid == 0)
+    {
         output[pos] = input[0];
-    } 
+    }
 }
 
- 
+
 int main(int argc, char *argv[])
 {
 
@@ -105,9 +105,9 @@ int main(int argc, char *argv[])
     printf("tempo: %ld us\nresultado:\n", time_elapsed(t0, t1));
     for(int i=0; i < D; i++)
         printf("%d %d %d\n", result[D*i], result[D*i+1], result[D*i+2]);
- 
+
     return 0;
- 
+
 }
 
 
@@ -116,10 +116,11 @@ void read_file(char *filename, int ***input, int *n_els)
     FILE *fp;
     int val1, val2, val3;
     int i, j;
- 
+
     fp = fopen(filename, "r");
     fscanf(fp, "%d", n_els);
- 
+    fscanf(fp, "%*s", NULL); // pula linha
+
     for(i=0; i < D*D; i++)
     {
         (*input)[i] = (int *) calloc(*n_els, sizeof(int));
@@ -127,16 +128,16 @@ void read_file(char *filename, int ***input, int *n_els)
 
     for(j=0; j < *n_els; j++)
     {
-        for(i=0; i < D; i++)
+      for(i=0; i < D; i++)
         {
             fscanf(fp, "%d %d %d", &val1, &val2, &val3);
             (*input)[D*i][j] = val1;
             (*input)[D*i+1][j] = val2;
-            (*input)[D*i+2][j] = val3;   
+            (*input)[D*i+2][j] = val3;
         }
-        fscanf(fp, "%*[^\n]\n", NULL); // pula linha
+        fscanf(fp, "%*s", NULL); // pula linha
     }
- 
+
     fclose(fp);
 }
 
@@ -145,5 +146,3 @@ long time_elapsed (struct timeval t0, struct timeval t1)
 {
     return (t1.tv_sec-t0.tv_sec)*1000000 + t1.tv_usec-t0.tv_usec;
 }
-
-
