@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     printf("HELLO!!!!");
     int **x;
     int n_els = 9;
-    int n_mat = 3;
+    int n_mat;
 
     FILE *fp;
     int val1, val2, val3;
@@ -33,12 +33,12 @@ int main(int argc, char *argv[])
     // (*input)[i] = (int *) calloc(*n_els, sizeof(int));
     cudaError_t err = cudaMallocManaged(&x, n_els * sizeof(int));
 
+    fp = fopen("teste.txt", "r");
+    fscanf(fp, "%d", &n_mat);
     for(int i=0; i < n_els; i++){
       cudaError_t err = cudaMallocManaged(&x[i], n_mat * sizeof(int));
     }
 
-    fp = fopen("teste.txt", "r");
-    fscanf(fp, "%d", n_mat);
     fscanf(fp, "%*s", NULL); // pula linha
 
     for(int i=0; i < n_mat; i++)
