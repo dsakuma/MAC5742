@@ -9,3 +9,6 @@ all:
 c:
 	$(CC) ep2.c -o main_c $(CC_OPT)
 	./main_c teste.txt
+
+sandbox: sandbox.cu
+	nvcc -o $@ $^

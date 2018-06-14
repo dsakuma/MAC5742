@@ -150,7 +150,7 @@ void read_file(char *filename, int ***input, int *n_els)
     {
        printf("for %d", i);
         // (*input)[i] = (int *) calloc(*n_els, sizeof(int));
-        cudaMallocManaged(&(*x), *n_els * sizeof(int));
+        cudaError_t err = cudaMallocManaged(&(*x), *n_els * sizeof(int));
     }
 
     // for(j=0; j < n_els; j++)
