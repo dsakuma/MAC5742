@@ -24,16 +24,17 @@ int main(int argc, char *argv[])
 {
     printf("HELLO!!!!");
     int **x;
-    int n_els = 2;
+    int n_els = 9;
+    int n_mat = 3;
 
     // (*input)[i] = (int *) calloc(*n_els, sizeof(int));
-    cudaError_t err = cudaMallocManaged(&(*x), n_els * sizeof(int));
+    cudaError_t err = cudaMallocManaged(&x, n_els * sizeof(int));
 
     for(int i=0; i < n_els; i++){
-      x[0][i] = 99;
+      cudaError_t err = cudaMallocManaged(x[i], n_mat * sizeof(int));
     }
 
-    print_matrix(x, 1, 2);
+    // print_matrix(x, 1, 2);
 
     return 0;
 
