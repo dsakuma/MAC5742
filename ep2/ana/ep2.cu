@@ -18,7 +18,7 @@ EP2 - redução em CUDA
 
 void read_file(char *filename, int ***input, int *n_els);
 long time_elapsed (struct timeval t0, struct timeval t1);
-
+void print_matrix(int** matrix, int n_rows, int n_cols);
 
 __global__ void min_reduction(int *input, int *output, int pos)
 {
@@ -67,6 +67,7 @@ int main(int argc, char *argv[])
     host = (int **) calloc(D*D, sizeof(int *));
     result = (int *) calloc(D*D, sizeof(int));
     read_file(argv[1], &host, &n_els);
+    print_matrix(host, D*D, n_els);
 
     gettimeofday(&t0, NULL);
 
@@ -145,4 +146,15 @@ void read_file(char *filename, int ***input, int *n_els)
 long time_elapsed (struct timeval t0, struct timeval t1)
 {
     return (t1.tv_sec-t0.tv_sec)*1000000 + t1.tv_usec-t0.tv_usec;
+}
+
+void print_matrix(int** matrix, int n_rows, int n_cols)
+{
+  printf("Printing matrix...\n");
+  for(int i=0; i<n_rows; i++){
+    for(int j=0; j<n_cols; j++){
+        printf("%d ", matrix[i][j]);
+      }
+      printf("\n");
+  }
 }
