@@ -18,12 +18,18 @@ EP2 - redução em CUDA
 
 void print_matrix(int** matrix, int n_rows, int n_cols);
 
-
+__global__
+void add(int *x, int *y, int n_els, int n_mat)
+{
+  for (int i = 0; i < n_els; i++)
+    y[i] = x[i][0];
+}
 
 int main(int argc, char *argv[])
 {
     printf("HELLO!!!!");
     int **x;
+    int *y;
     int n_els = 9;
     int n_mat;
 
@@ -32,6 +38,7 @@ int main(int argc, char *argv[])
 
     // (*input)[i] = (int *) calloc(*n_els, sizeof(int));
     cudaError_t err = cudaMallocManaged(&x, n_els * sizeof(int));
+    cudaError_t err = cudaMallocManaged(&y, n_els * sizeof(int));
 
     fp = fopen("teste.txt", "r");
     fscanf(fp, "%d", &n_mat);
@@ -56,7 +63,11 @@ int main(int argc, char *argv[])
         fscanf(fp, "%*s", NULL); // pula linha
     }
 
+    add<<<1,1>>>(x, y, n_els, n_mat);
+
     print_matrix(x, n_els, n_mat);
+    printf("y:\n");
+    print_matrix(y, n_els, 1);
 
     return 0;
 
