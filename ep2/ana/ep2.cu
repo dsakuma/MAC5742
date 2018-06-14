@@ -139,6 +139,8 @@ void read_file(char *filename, int ***input, int *n_els)
     int val1, val2, val3;
     int i, j;
 
+    int **x;
+
     fp = fopen(filename, "r");
     fscanf(fp, "%d", n_els);
     fscanf(fp, "%*s", NULL); // pula linha
@@ -148,7 +150,7 @@ void read_file(char *filename, int ***input, int *n_els)
     {
        printf("for %d", i);
         // (*input)[i] = (int *) calloc(*n_els, sizeof(int));
-        // cudaMallocManaged(input[i], *n_els * sizeof(int));
+        cudaMallocManaged(&(*x), *n_els * sizeof(int));
     }
 
     // for(j=0; j < n_els; j++)
