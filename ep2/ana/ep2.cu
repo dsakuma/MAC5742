@@ -66,38 +66,56 @@ int main(int argc, char *argv[])
 
     host = (int **) calloc(D*D, sizeof(int *));
     result = (int *) calloc(D*D, sizeof(int));
+
+    cudaMallocManaged(&host, D*D*sizeof(int *));
+    cudaMallocManaged(&result, D*D*sizeof(int));
+
     read_file(argv[1], &host, &n_els);
     print_matrix(host, D*D, n_els);
 
     gettimeofday(&t0, NULL);
 
+    // Allocate Unified Memory – accessible from CPU or GPU
+    // cudaMallocManaged(&x, N*sizeof(float));
+    // cudaMallocManaged(&y, N*sizeof(float));
+
+    // Run kernel on 1M elements on the GPU
+    // add<<<1, 1>>>(N, x, y);
+
+    // Wait for GPU to finish before accessing on host
+    cudaDeviceSynchronize();
+
     // aloca memoria na gpu
-    cudaMalloc((void**) &dev, D*D * sizeof(int *));
-    cudaMalloc((void**) &dev_result, D*D * sizeof(int));
-    for(i=0; i < D*D; i++)
-    {
-        cudaMalloc((void**) &dev[i], n_els * sizeof(int));
-    }
+    // cudaMalloc((void**) &dev, D*D * sizeof(int *));
+    // cudaMalloc((void**) &dev_result, D*D * sizeof(int));
+    // for(i=0; i < D*D; i++)
+    // {
+    //     cudaMalloc((void**) &dev[i], n_els * sizeof(int));
+    // }
+
+    printf("oi 1\n");
 
     // copiar array 2d pra gpu: http://www.orangeowlsolutions.com/archives/613
-
     // copia entrada da cpu para a gpu
-    cudaMemcpy(dev, host, D*D * n_els * sizeof(int), cudaMemcpyHostToDevice);
+    // cudaMemcpy2D(devPtr, devPitch, hostPtr, hostPitch, Ncols * sizeof(float), Nrows, cudaMemcpyHostToDevice)
+    // cudaMemcpy(dev, host, D*D * n_els * sizeof(int), cudaMemcpyHostToDevice);
+
+    printf("oi 2\n");
 
     // executa o kernel
-    for(i=0; i<D*D; i++)
-    {
-        min_reduction<<<1, n_els/2>>>(dev[i], dev_result, i);
-    }
+    // for(i=0; i<D*D; i++)
+    // {
+    //     min_reduction<<<1, n_els/2>>>(dev[i], dev_result, i);
+    // }
 
     // copia resultado da gpu para a cpu
-    cudaMemcpy(result, dev_result, D*D * sizeof(int), cudaMemcpyDeviceToHost);
+    // cudaMemcpy(result, dev_result, D*D * sizeof(int), cudaMemcpyDeviceToHost);
 
     // limpa memoria
-    free(host);
-    free(result);
-    cudaFree(dev);
-    cudaFree(dev_result);
+    cudaFree(host);
+    cudaFree(result);
+    // cudaFree(dev);
+    // cudaFree(dev_result);
 
     cudaThreadExit();
 
@@ -124,7 +142,8 @@ void read_file(char *filename, int ***input, int *n_els)
 
     for(i=0; i < D*D; i++)
     {
-        (*input)[i] = (int *) calloc(*n_els, sizeof(int));
+        // (*input)[i] = (int *) calloc(*n_els, sizeof(int));
+        cudaMallocManaged((*input)[i], *n_nels * sizeof(int));
     }
 
     for(j=0; j < *n_els; j++)
