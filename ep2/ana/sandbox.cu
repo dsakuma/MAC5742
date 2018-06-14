@@ -28,7 +28,7 @@ void add(int **x, int *y, int n_els, int n_mat)
 
 int main(int argc, char *argv[])
 {
-    printf("HELLO!!!!");
+    printf("HELLO!!!!\n");
     int **x;
     int *y;
     int n_els = 9;
