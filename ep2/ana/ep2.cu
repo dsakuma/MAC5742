@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
     int i;
     struct timeval t0, t1;
 
-    host = (int **) calloc(D*D, sizeof(int *));
-    result = (int *) calloc(D*D, sizeof(int));
+    // host = (int **) calloc(D*D, sizeof(int *));
+    // result = (int *) calloc(D*D, sizeof(int));
 
     cudaMallocManaged(&host, D*D*sizeof(int *));
     cudaMallocManaged(&result, D*D*sizeof(int));
