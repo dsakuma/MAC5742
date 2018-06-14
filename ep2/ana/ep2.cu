@@ -116,9 +116,9 @@ int main(int argc, char *argv[])
 
     gettimeofday(&t1, NULL);
 
-    printf("tempo: %ld us\nresultado:\n", time_elapsed(t0, t1));
-    for(int i=0; i < D; i++)
-        printf("%d %d %d\n", result[D*i], result[D*i+1], result[D*i+2]);
+    // printf("tempo: %ld us\nresultado:\n", time_elapsed(t0, t1));
+    // for(int i=0; i < D; i++)
+    //     printf("%d %d %d\n", result[D*i], result[D*i+1], result[D*i+2]);
 
     // limpa memoria
     cudaFree(host);
