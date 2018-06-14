@@ -22,7 +22,7 @@ void print_matrix(int** matrix, int n_rows, int n_cols);
 
 int main(int argc, char *argv[])
 {
-
+    printf("HELLO!!!!");
     int *x;
     int n_els = 2;
 
