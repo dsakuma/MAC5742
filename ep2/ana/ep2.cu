@@ -70,8 +70,8 @@ int main(int argc, char *argv[])
     cudaMallocManaged(&host, D*D*sizeof(int *));
     cudaMallocManaged(&result, D*D*sizeof(int));
 
-    read_file(argv[1], &host, &n_els);
-    print_matrix(host, D*D, n_els);
+    // read_file(argv[1], &host, &n_els);
+    // print_matrix(host, D*D, n_els);
 
     gettimeofday(&t0, NULL);
 
