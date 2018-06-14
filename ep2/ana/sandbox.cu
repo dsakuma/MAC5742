@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     cudaError_t err = cudaMallocManaged(&x, n_els * sizeof(int));
 
     for(int i=0; i < n_els; i++){
-      cudaError_t err = cudaMallocManaged(x[i], n_mat * sizeof(int));
+      cudaError_t err = cudaMallocManaged(&x[i], n_mat * sizeof(int));
     }
 
     // print_matrix(x, 1, 2);
