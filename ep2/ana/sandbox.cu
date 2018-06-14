@@ -39,12 +39,12 @@ int main(int argc, char *argv[])
 
     // (*input)[i] = (int *) calloc(*n_els, sizeof(int));
     cudaError_t err = cudaMallocManaged(&x, n_els * sizeof(int));
-    cudaError_t err = cudaMallocManaged(&y, n_els * sizeof(int));
+    err = cudaMallocManaged(&y, n_els * sizeof(int));
 
     fp = fopen("teste.txt", "r");
     fscanf(fp, "%d", &n_mat);
     for(int i=0; i < n_els; i++){
-      cudaError_t err = cudaMallocManaged(&x[i], n_mat * sizeof(int));
+      err = cudaMallocManaged(&x[i], n_mat * sizeof(int));
     }
 
     fscanf(fp, "%*s", NULL); // pula linha
