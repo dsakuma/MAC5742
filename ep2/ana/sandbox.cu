@@ -64,9 +64,9 @@ int main(int argc, char *argv[])
         fscanf(fp, "%*s", NULL); // pula linha
     }
 
-    add<<<1,1>>>(x, y, n_els, n_mat);
-
     print_matrix(x, n_els, n_mat);
+    add<<<1,1>>>(x, y, n_els, n_mat);
+    cudaDeviceSynchronize();
     printf("y:\n");
     print_vector(y, n_els);
 
