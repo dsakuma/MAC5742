@@ -29,6 +29,12 @@ int main(int argc, char *argv[])
     // (*input)[i] = (int *) calloc(*n_els, sizeof(int));
     cudaError_t err = cudaMallocManaged(&(*x), n_els * sizeof(int));
 
+    for(i=0; i < n_els; i++){
+      x[0][i] = 99;
+    }
+
+    print_matrix(x, 1, 2);
+
     return 0;
 
 }
