@@ -19,7 +19,7 @@ EP2 - redução em CUDA
 void print_matrix(int** matrix, int n_rows, int n_cols);
 
 __global__
-void add(int *x, int *y, int n_els, int n_mat)
+void add(int **x, int *y, int n_els, int n_mat)
 {
   for (int i = 0; i < n_els; i++)
     y[i] = x[i][0];
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
     print_matrix(x, n_els, n_mat);
     printf("y:\n");
-    print_matrix(y, n_els, 1);
+    print_vector(y, n_els);
 
     return 0;
 
@@ -82,5 +82,14 @@ void print_matrix(int** matrix, int n_rows, int n_cols)
         printf("%d ", matrix[i][j]);
       }
       printf("\n");
+  }
+}
+
+void print_vector(int* vector, int n_els)
+{
+  printf("Printing vector...\n");
+  for(int i=0; i<n_rows; i++){
+    printf("%d ", vector[i]);
+    printf("\n");
   }
 }
