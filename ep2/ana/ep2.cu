@@ -71,7 +71,6 @@ int main(int argc, char *argv[])
     cudaMallocManaged(&result, D*D*sizeof(int));
 
     read_file(argv[1], &host, &n_els);
-    printf("nels2-> %d", n_els);
 
     // print_matrix(host, D*D, n_els);
 
@@ -134,7 +133,7 @@ int main(int argc, char *argv[])
 }
 
 
-void read_file(char *filename, int ***input, int* n_els)
+void read_file(char *filename, int ***input, int *n_els)
 {
     FILE *fp;
     int val1, val2, val3;
@@ -143,13 +142,13 @@ void read_file(char *filename, int ***input, int* n_els)
     fp = fopen(filename, "r");
     fscanf(fp, "%d", n_els);
     fscanf(fp, "%*s", NULL); // pula linha
-    printf("nels-> %d", n_els);
+    // printf("nels-> %d", *n_els);
 
-    // for(i=0; i < D*D; i++)
-    // {
-    //     // (*input)[i] = (int *) calloc(*n_els, sizeof(int));
-    //     // cudaMallocManaged((*input)[i], *n_nels * sizeof(int));
-    // }
+    for(i=0; i < D*D; i++)
+    {
+        // (*input)[i] = (int *) calloc(*n_els, sizeof(int));
+        cudaMallocManaged((*input)[i], *n_nels * sizeof(int));
+    }
 
     // for(j=0; j < n_els; j++)
     // {
