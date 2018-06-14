@@ -34,7 +34,12 @@ int main(int argc, char *argv[])
       cudaError_t err = cudaMallocManaged(&x[i], n_mat * sizeof(int));
     }
 
-    // print_matrix(x, 1, 2);
+    for(i=0; i<n_els; i++ ){
+      for(int j = 0; j<n_mat; j++)
+        x[i][j] = 99;
+    }
+
+    print_matrix(x, n_els, n_mat);
 
     return 0;
 
