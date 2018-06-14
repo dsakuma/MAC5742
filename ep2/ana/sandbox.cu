@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
       cudaError_t err = cudaMallocManaged(&x[i], n_mat * sizeof(int));
     }
 
-    for(i=0; i<n_els; i++ ){
+    for(int i=0; i<n_els; i++ ){
       for(int j = 0; j<n_mat; j++)
         x[i][j] = 99;
     }
