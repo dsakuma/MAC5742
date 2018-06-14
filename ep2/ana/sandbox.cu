@@ -23,11 +23,11 @@ void print_matrix(int** matrix, int n_rows, int n_cols);
 int main(int argc, char *argv[])
 {
     printf("HELLO!!!!");
-    int *x;
+    int **x;
     int n_els = 2;
 
     // (*input)[i] = (int *) calloc(*n_els, sizeof(int));
-    cudaError_t err = cudaMallocManaged(&x, n_els * sizeof(int));
+    cudaError_t err = cudaMallocManaged(&(*x), n_els * sizeof(int));
 
     return 0;
 
