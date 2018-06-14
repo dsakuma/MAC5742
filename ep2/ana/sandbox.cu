@@ -43,8 +43,11 @@ int main(int argc, char *argv[])
 
     for(int i=0; i < n_mat; i++)
     {
+      printf("i: %d\n", i);
       for(int j=0; j < D; j++)
         {
+            printf("j: %d\n", j);
+
             fscanf(fp, "%d %d %d", &val1, &val2, &val3);
             x[D*j][i] = val1;
             x[D*j+1][i] = val2;
