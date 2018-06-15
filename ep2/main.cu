@@ -53,7 +53,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	// strided index and non-divergent branch
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
-		int index = 2*s;
+		int index = 2*s*tid;
 		if (index < blockDim.x)
 		{
 			if (mintile[tid + s] < mintile[tid])
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
     print_matrix(x, n_els, n_mat);
 
     dim3 numBlocks(D*D);
-    dim3 threadsPerBlock(ceil(n_mat/2));
+    dim3 threadsPerBlock(n_mat);
 
     // <<<number_of_blocks, block_size>>>
 	min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat);
