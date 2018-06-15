@@ -36,6 +36,7 @@ __cuda_safe_call (cudaError err, const char *filename, const int line_number)
 
 __global__ void min_kernel(int *result, int **input, int n_mat)
 {
+  printf("AAAAAA");
 	__shared__ int mintile[1000];
 	unsigned int tid = threadIdx.x;
 	unsigned int index = blockIdx.x;
