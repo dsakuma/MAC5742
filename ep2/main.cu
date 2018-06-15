@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 
     dim3 numBlocks(D*D);
     dim3 threadsPerBlock(ceil(n_mat/2));
-
+    printf("ceil -> %d", ceil(n_mat/2));
     // <<<number_of_blocks, block_size>>>
 	 min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat);
 
