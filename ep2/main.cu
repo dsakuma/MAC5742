@@ -41,9 +41,9 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
   //index=0 (primeiro elemente cada matriz)
   //input[index] = [4 1 2]
   //mintile[tid] = 4
-	__shared__ int mintile[4];
-  for(int i=0; i<n_mat; i++)
-    mintile[i] = 99;
+	__shared__ int mintile[3];
+  // for(int i=0; i<n_mat; i++)
+  //   mintile[i] = 99;
 	unsigned int tid = threadIdx.x;
 	unsigned int index = blockIdx.x;
 	mintile[tid] = input[index][tid];
