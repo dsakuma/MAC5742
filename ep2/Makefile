@@ -2,11 +2,9 @@
 
 main:
 	nvcc main.cu -o main -Xptxas --opt-level=3 -arch sm_30
-	./main teste.txt
 
 sandbox:
 	nvcc sandbox.cu -o sandbox -Xptxas --opt-level=3 -arch sm_30
-	./sandbox teste.txt
 
 # ep2_cuda:
 # 	nvcc ep2.cu -o main -Xptxas --opt-level=3 -arch sm_30
