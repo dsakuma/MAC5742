@@ -41,8 +41,6 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
   //index=0 (primeiro elemente cada matriz)
   //input[index] = [4 1 2]
   //mintile[tid] = 4
-  //
-  // const int aaa = n_mat;
 	__shared__ int mintile[4];
   for(int i=0; i<n_mat; i++)
     mintile[i] = 99;
@@ -57,7 +55,6 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	// strided index and non-divergent branch
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
-
     int idx = 2*s*tid;
     // if(mintile[tid] > 0)
     //   printf("Dentro for: i=%d, tid=%d, s=%d, blockDim=%d\n",
@@ -108,9 +105,7 @@ int main(int argc, char *argv[])
     fp = fopen(argv[1], "r");
     fscanf(fp, "%d", &n_mat);
 
-    // tratamento impar
-    // if(n_mat%2 == 1)
-    //   n_mat += 1;
+
 
     for(int i=0; i < n_els; i++){
       CUDA_SAFE_CALL(cudaMallocManaged(&x[i], n_mat * sizeof(int)));
@@ -130,15 +125,9 @@ int main(int argc, char *argv[])
         fscanf(fp, "%*s"); // pula linha
     }
 
-    //se impar, preenche com inf
-    // for(int j=0; j < D; j++)
-    // {
-    //     x[D*j][n_mat] = INFINITY;
-    //     x[D*j+1][n_mat] = INFINITY;
-    //     x[D*j+2][n_mat] = INFINITY;
-    // }
 
-    print_matrix(x, n_els, n_mat);
+
+    // print_matrix(x, n_els, n_mat);
 
     dim3 numBlocks(D*D);
     dim3 threadsPerBlock(n_mat);
