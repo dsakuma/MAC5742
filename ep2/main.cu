@@ -34,7 +34,7 @@ __cuda_safe_call (cudaError err, const char *filename, const int line_number)
 }
 
 
-__global__ void min_kernel(int *result, int **input, int n_mat)
+__global__ void min_kernel(int *result, int **input, const int n_mat)
 {
   //input (9x4)
   //tid=0 (prineira thread)
