@@ -45,9 +45,8 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
   // const int aaa = n_mat;
 	__shared__ int mintile[4];
 	unsigned int tid = threadIdx.x;
-  unsigned int index2 = blockIdx.x * blockDim.x + threadIdx.x;
 	unsigned int index = blockIdx.x;
-	mintile[tid] = input[index][index2];
+	mintile[tid] = input[index][2*tid];
   // if(mintile[tid] > 0)
 	//   printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
 
@@ -59,13 +58,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	// strided index and non-divergent branch
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
-    if(tid==0)
-    {
-      printf("mintile:\n");
-      for(int i=0; i<n_mat; i++)
-        printf("%d ", mintile[i]);
-      printf("\n");
-    }
+
     int idx = 2*s*tid;
     // if(mintile[tid] > 0)
     //   printf("Dentro for: i=%d, tid=%d, s=%d, blockDim=%d\n",
@@ -81,6 +74,13 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
         mintile[tid] = mintile[tid + s];
       }
 		}
+    if(mintile[tid] > 0)
+    {
+      printf("mintile:\n");
+      for(int i=0; i<n_mat; i++)
+        printf("%d ", mintile[i]);
+      printf("\n");
+    }
 		__syncthreads();
 	}
   // if(mintile[tid] > 0)
