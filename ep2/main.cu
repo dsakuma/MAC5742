@@ -52,7 +52,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	// strided index and non-divergent branch
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
-		int index = s*tid;
+		int index = 2*s;
 		if (index < blockDim.x)
 		{
 			if (mintile[tid + s] < mintile[tid])
