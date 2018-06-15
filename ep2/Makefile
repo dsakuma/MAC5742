@@ -5,12 +5,12 @@ main:
 	./main teste.txt
 
 
-ep2_cuda:
-	nvcc ep2.cu -o main -Xptxas --opt-level=3 -arch sm_30
-
-ep2_c:
-	gcc ep2.c -o main_c -std=c11
-	./main_c teste.txt
+# ep2_cuda:
+# 	nvcc ep2.cu -o main -Xptxas --opt-level=3 -arch sm_30
+#
+# ep2_c:
+# 	gcc ep2.c -o main_c -std=c11
+# 	./main_c teste.txt
 
 sandbox:
 	nvcc sandbox.cu -o sandbox -Xptxas --opt-level=3 -arch sm_30
