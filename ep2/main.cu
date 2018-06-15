@@ -51,7 +51,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	__syncthreads();
 
 	// strided index and non-divergent branch
-	for (unsigned int s = 1; s < blockDim.x; s *= 2)
+	for (unsigned int s = 1; s <= blockDim.x; s *= 2)
 	{
     int idx = 2*s*tid;
     if(mintile[tid] > 0)
