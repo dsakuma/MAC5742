@@ -17,4 +17,4 @@ sandbox:
 
 .PHONY: clean
 clean:
-	rm -f *.o test main
+	rm -f *.o main sandbox
