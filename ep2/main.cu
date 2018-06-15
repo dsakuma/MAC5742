@@ -108,10 +108,12 @@ int main(int argc, char *argv[])
         fscanf(fp, "%*s"); // pula linha
     }
 
+
+
     print_matrix(x, n_els, n_mat);
 
     dim3 numBlocks(D*D);
-    dim3 threadsPerBlock(ceil(n_mat/2));
+    dim3 threadsPerBlock(1);
 
     // <<<number_of_blocks, block_size>>>
 	min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat);
