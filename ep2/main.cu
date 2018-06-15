@@ -51,13 +51,13 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	//   printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
 
   __syncthreads();
-  // if(tid == 0 && index ==0)
-  // {
-  //   printf("mintile tid=%d index=%d:\n", tid, index);
-  //   for(int i=0; i<n_mat; i++)
-  //     printf("%d ", mintile[i]);
-  //   printf("\n");
-  // }
+  if(tid == 0 && index ==0)
+  {
+    printf("mintile inicial tid=%d index=%d:\n", tid, index);
+    for(int i=0; i<n_mat; i++)
+      printf("%d ", mintile[i]);
+    printf("\n");
+  }
 
 	// strided index and non-divergent branch
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
