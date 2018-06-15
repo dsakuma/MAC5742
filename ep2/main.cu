@@ -70,11 +70,11 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 		{
       // if(mintile[tid] > 0)
       //   printf("primeiro if, i=%d, tid=%d, mintile[tid]=%d, input[tid + s]=%d\n", idx, tid, mintile[tid], input[index][2*tid + s]);
-			if (mintile[tid + s] < mintile[tid])
+			if (mintile[idx + s] < mintile[idx])
       {
-        // printf("Dentro if: i=%d, tid=%d, s=%d, mintile[tid]=%d, mintile[tid + s]=%d\n",
-        //        idx, tid, s, mintile[tid], input[index][2*tid + s]);
-        mintile[tid] = mintile[tid + s];
+        // printf("Dentro if: i=%d, idx=%d, s=%d, mintile[idx]=%d, mintile[idx + s]=%d\n",
+        //        idx, idx, s, mintile[idx], input[index][2*idx + s]);
+        mintile[idx] = mintile[idx + s];
       }
 		}
     // if(mintile[tid] > 0)
