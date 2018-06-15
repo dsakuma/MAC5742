@@ -13,8 +13,6 @@ EP2 - redução em CUDA
 #include <stdio.h>
 #include <sys/time.h>
 
-#ifdef INFINITY
-
 #define CUDA_SAFE_CALL(err) __cuda_safe_call(err, __FILE__, __LINE__)
 
 #define D 3             // dimensão das matrizes (quadradas)
