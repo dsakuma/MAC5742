@@ -53,9 +53,9 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	// strided index and non-divergent branch
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
+    int idx = 2*s*tid;
     printf("Dentro for: i=%d, tid=%d, s=%d, blockDim=%d\n",
            idx, tid, s, blockDim.x);
-		int idx = 2*s*tid;
 		if (idx < blockDim.x)
 		{
 			if (input[index][tid + s] < mintile[tid])
