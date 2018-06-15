@@ -51,7 +51,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	//   printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
 
   __syncthreads();
-  if(mintile[tid] > 0)
+  if(tid == 0)
   {
     printf("mintile:\n");
     for(int i=0; i<n_mat; i++)
