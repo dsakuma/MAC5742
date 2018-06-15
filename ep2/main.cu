@@ -42,13 +42,16 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
   //input[index] = [4 1 2]
   //mintile[tid] = 4
   //
-	__shared__ int mintile[n_mat] = 99;
+	__shared__ int mintile[n_mat];
 	unsigned int tid = threadIdx.x;
 	unsigned int index = blockIdx.x;
 	mintile[tid] = input[index][2*tid];
   if(mintile[tid] > 0)
 	  printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
 	__syncthreads();
+
+  for(int i=0; i<n_mat; i++)
+    mintile[i] = 99;
 
 	// strided index and non-divergent branch
 	for (unsigned int s = 1; s <= blockDim.x; s *= 2)
