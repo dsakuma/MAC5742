@@ -42,7 +42,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
   //input[index] = [4 1 2]
   //mintile[tid] = 4
   //
-	__shared__ int mintile[1000];
+	__shared__ int mintile[n_mat] = 99;
 	unsigned int tid = threadIdx.x;
 	unsigned int index = blockIdx.x;
 	mintile[tid] = input[index][2*tid];
@@ -53,6 +53,10 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	// strided index and non-divergent branch
 	for (unsigned int s = 1; s <= blockDim.x; s *= 2)
 	{
+    printf("mintile:\n");
+    for(int i=0; i<n_mat; i++)
+      printf("%d", mintile[i]);
+    printf("\n\n");
     int idx = 2*s*tid;
     if(mintile[tid] > 0)
       printf("Dentro for: i=%d, tid=%d, s=%d, blockDim=%d\n",
@@ -129,7 +133,7 @@ int main(int argc, char *argv[])
     print_matrix(x, n_els, n_mat);
 
     dim3 numBlocks(D*D);
-    dim3 threadsPerBlock(ceil(n_mat/2));
+    dim3 threadsPerBlock(n_mat);
     // <<<number_of_blocks, block_size>>>
 	 min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat);
 
