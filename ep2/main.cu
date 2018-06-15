@@ -59,7 +59,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 			if (mintile[tid + s] < mintile[tid])
       {
         printf("Dentro if: i=%d, tid=%d, s=%d, mintile[tid]=%d, mintile[tid + s]=%d\n",
-               idx, tid, s, mintile[tid], input[tid + s]);
+               idx, tid, s, mintile[tid], input[index][tid + s]);
         mintile[tid] = mintile[tid + s];
       }
 		}
