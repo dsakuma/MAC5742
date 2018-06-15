@@ -45,17 +45,19 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
   // const int aaa = n_mat;
 	__shared__ int mintile[4];
 	unsigned int tid = threadIdx.x;
+  unsigned int index2 = blockIdx.x * blockDim.x + threadIdx.x;
 	unsigned int index = blockIdx.x;
-	mintile[tid] = input[index][2*tid];
-  if(mintile[tid] > 0)
-	  printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
-	__syncthreads();
+	mintile[tid] = input[index][index2];
+  // if(mintile[tid] > 0)
+	//   printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
+
+  __syncthreads();
 
   for(int i=0; i<n_mat; i++)
     mintile[i] = 99;
 
 	// strided index and non-divergent branch
-	for (unsigned int s = 1; s <= blockDim.x; s *= 2)
+	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
     if(tid==0)
     {
@@ -65,24 +67,24 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
       printf("\n");
     }
     int idx = 2*s*tid;
-    if(mintile[tid] > 0)
-      printf("Dentro for: i=%d, tid=%d, s=%d, blockDim=%d\n",
-           idx, tid, s, blockDim.x);
-		if (idx <= blockDim.x)
+    // if(mintile[tid] > 0)
+    //   printf("Dentro for: i=%d, tid=%d, s=%d, blockDim=%d\n",
+    //        idx, tid, s, blockDim.x);
+		if (idx < blockDim.x)
 		{
-      if(mintile[tid] > 0)
-        printf("primeiro if, i=%d, tid=%d, mintile[tid]=%d, input[tid + s]=%d\n", idx, tid, mintile[tid], input[index][2*tid + s]);
-			if (input[index][2*tid + s] < mintile[tid])
+      // if(mintile[tid] > 0)
+      //   printf("primeiro if, i=%d, tid=%d, mintile[tid]=%d, input[tid + s]=%d\n", idx, tid, mintile[tid], input[index][2*tid + s]);
+			if (mintile[tid + s] < mintile[tid])
       {
-        printf("Dentro if: i=%d, tid=%d, s=%d, mintile[tid]=%d, mintile[tid + s]=%d\n",
-               idx, tid, s, mintile[tid], input[index][2*tid + s]);
-        mintile[tid] = input[index][2*tid + s];
+        // printf("Dentro if: i=%d, tid=%d, s=%d, mintile[tid]=%d, mintile[tid + s]=%d\n",
+        //        idx, tid, s, mintile[tid], input[index][2*tid + s]);
+        mintile[tid] = mintile[tid + s];
       }
 		}
 		__syncthreads();
 	}
-  if(mintile[tid] > 0)
-    printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
+  // if(mintile[tid] > 0)
+  //   printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
 
 	if (tid == 0)
 	{
