@@ -53,6 +53,8 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	// strided index and non-divergent branch
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
+    printf("Dentro for: i=%d, tid=%d, s=%d, blockDim=%d\n",
+           idx, tid, s, blockDim.x);
 		int idx = 2*s*tid;
 		if (idx < blockDim.x)
 		{
@@ -125,7 +127,6 @@ int main(int argc, char *argv[])
 
     dim3 numBlocks(D*D);
     dim3 threadsPerBlock(ceil(n_mat/2));
-    printf("ceil -> %d", ceil(n_mat/2));
     // <<<number_of_blocks, block_size>>>
 	 min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat);
 
