@@ -48,7 +48,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
     mintile[i] = 99;
 	unsigned int tid = threadIdx.x;
 	unsigned int index = blockIdx.x;
-	mintile[tid] = input[index][2*tid];
+	mintile[tid] = input[index][tid];
   // if(mintile[tid] > 0)
 	//   printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
 
