@@ -10,6 +10,6 @@ c:
 	$(CC) ep2.c -o main_c $(CC_OPT)
 	./main_c teste.txt
 
-sandbox: sandbox.cu
+sandbox:
 	nvcc sandbox.cu -o sand -Xptxas --opt-level=3 -arch sm_30
 	./sand teste.txt
