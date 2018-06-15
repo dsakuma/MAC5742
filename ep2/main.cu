@@ -34,7 +34,7 @@ __cuda_safe_call (cudaError err, const char *filename, const int line_number)
 }
 
 
-__global__ void min_kernel(int *result, int **input, const int n_mat)
+__global__ void min_kernel(int *result, int **input, int n_mat)
 {
   //input (9x4)
   //tid=0 (prineira thread)
@@ -42,7 +42,8 @@ __global__ void min_kernel(int *result, int **input, const int n_mat)
   //input[index] = [4 1 2]
   //mintile[tid] = 4
   //
-	__shared__ int mintile[n_mat];
+  // const int aaa = n_mat;
+	__shared__ int mintile[4];
 	unsigned int tid = threadIdx.x;
 	unsigned int index = blockIdx.x;
 	mintile[tid] = input[index][2*tid];
