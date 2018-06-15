@@ -59,7 +59,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
            idx, tid, s, blockDim.x);
 		if (idx <= blockDim.x)
 		{
-      printf("primeiro if, i=%d, tid=%d\n", idx, tid);
+      printf("primeiro if, i=%d, tid=%d, mintile[tid]=%d, input[tid + s]=%d\n", idx, tid, mintile[tid], input[tid + s]);
 			if (input[index][tid + s] < mintile[tid])
       {
         printf("Dentro if: i=%d, tid=%d, s=%d, mintile[tid]=%d, mintile[tid + s]=%d\n",
