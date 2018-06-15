@@ -4,6 +4,9 @@ main:
 	nvcc main.cu -o main -Xptxas --opt-level=3 -arch sm_30
 	./main teste.txt
 
+sandbox:
+	nvcc sandbox.cu -o sandbox -Xptxas --opt-level=3 -arch sm_30
+	./sandbox teste.txt
 
 # ep2_cuda:
 # 	nvcc ep2.cu -o main -Xptxas --opt-level=3 -arch sm_30
@@ -12,6 +15,6 @@ main:
 # 	gcc ep2.c -o main_c -std=c11
 # 	./main_c teste.txt
 
-sandbox:
-	nvcc sandbox.cu -o sandbox -Xptxas --opt-level=3 -arch sm_30
-	./sandbox teste.txt
+.PHONY: clean
+clean:
+	rm -f *.o test main
