@@ -18,7 +18,7 @@ EP2 - redução em CUDA
 #define D 3             // dimensão das matrizes (quadradas)
 // #define inf 0x7f800000
 
-void get_num_threads(int n);
+int get_num_threads(int n);
 void print_matrix(int** matrix, int n_rows, int n_cols);
 void print_vector(int* vector, int n_els);
 
@@ -43,7 +43,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	// printf("i=%d, tid=%d, part_min=%d, blockDim.x=%d, blockDim.y=%d\n",
 	// 	index, tid, mintile[tid], blockDim.x, blockDim.y);
 	__syncthreads();
-	
+
 	// strided index and non-divergent branch
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
@@ -55,7 +55,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 		}
 		__syncthreads();
 	}
-	
+
 	if (tid == 0)
 	{
 		result[index] = mintile[0];
@@ -99,11 +99,11 @@ int main(int argc, char *argv[])
     print_matrix(x, n_els, n_mat);
 
     dim3 numBlocks(D*D);
-	dim3 threadsPerBlock(get_num_threads(n_mat));
+    dim3 threadsPerBlock(ceil(n_mat/2));
 
     // <<<number_of_blocks, block_size>>>
 	min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat);
-    
+
     cudaDeviceSynchronize();
 
     printf("y:\n");
@@ -145,4 +145,3 @@ void print_vector(int* vector, int n_els)
 	}
 	printf("\n");
 }
-
