@@ -36,7 +36,12 @@ __cuda_safe_call (cudaError err, const char *filename, const int line_number)
 
 __global__ void min_kernel(int *result, int **input, int n_mat)
 {
-  printf("AAAAAA");
+  //input (9x4)
+  //tid=0 (prineira thread)
+  //index=0 (primeiro elemente cada matriz)
+  //input[index] = [4 1 2 2]
+  //mintile[tid] = 4
+  //
 	__shared__ int mintile[1000];
 	unsigned int tid = threadIdx.x;
 	unsigned int index = blockIdx.x;
@@ -47,7 +52,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	// strided index and non-divergent branch
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
-		int index = 2*s*tid;
+		int index = s*tid;
 		if (index < blockDim.x)
 		{
 			if (mintile[tid + s] < mintile[tid])
