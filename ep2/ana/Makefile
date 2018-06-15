@@ -11,4 +11,5 @@ c:
 	./main_c teste.txt
 
 sandbox: sandbox.cu
-	nvcc -o $@ $^
+	nvcc sandbox.cu -o sand -Xptxas --opt-level=3 -arch sm_30
+	./sand teste.txt
