@@ -54,7 +54,8 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
     int idx = 2*s*tid;
-    printf("Dentro for: i=%d, tid=%d, s=%d, blockDim=%d\n",
+    if(mintile[tid] > 0)
+      printf("Dentro for: i=%d, tid=%d, s=%d, blockDim=%d\n",
            idx, tid, s, blockDim.x);
 		if (idx < blockDim.x)
 		{
