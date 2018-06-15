@@ -46,7 +46,8 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	unsigned int tid = threadIdx.x;
 	unsigned int index = blockIdx.x;
 	mintile[tid] = input[index][2*tid];
-	printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
+  if(mintile[tid] > 0)
+	  printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
 	__syncthreads();
 
 	// strided index and non-divergent branch
@@ -60,8 +61,8 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 		}
 		__syncthreads();
 	}
-
-  printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
+  if(mintile[tid] > 0)
+    printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
 
 	if (tid == 0)
 	{
