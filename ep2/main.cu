@@ -33,13 +33,10 @@ __cuda_safe_call (cudaError err, const char *filename, const int line_number)
 __global__ void min_kernel(int *result, int **input, int n_mat)
 {
 	__shared__ int mintile[3];
-  // for(int i=0; i<n_mat; i++)
-  //   mintile[i] = 99;
+
 	unsigned int tid = threadIdx.x;
 	unsigned int index = blockIdx.x;
 	mintile[tid] = input[index][tid];
-  // if(mintile[tid] > 0)
-	//   printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
 
   __syncthreads();
   if(tid == 0 && index ==0)
@@ -54,27 +51,13 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
     int idx = 2*s*tid;
-    // if(mintile[tid] > 0)
-    //   printf("Dentro for: i=%d, tid=%d, s=%d, blockDim=%d\n",
-    //        idx, tid, s, blockDim.x);
 		if (idx < blockDim.x-1)
 		{
-      // if(mintile[tid] > 0)
-      //   printf("primeiro if, i=%d, tid=%d, mintile[tid]=%d, input[tid + s]=%d\n", idx, tid, mintile[tid], input[index][2*tid + s]);
 			if (mintile[idx + s] < mintile[idx])
       {
-        // printf("Dentro if: i=%d, idx=%d, s=%d, mintile[idx]=%d, mintile[idx + s]=%d\n",
-        //        idx, idx, s, mintile[idx], input[index][2*idx + s]);
         mintile[idx] = mintile[idx + s];
       }
 		}
-    // if(mintile[tid] > 0)
-    // {
-    //   printf("mintile:\n");
-    //   for(int i=0; i<n_mat; i++)
-    //     printf("%d ", mintile[i]);
-    //   printf("\n");
-    // }
 		__syncthreads();
     if(tid == 0 && index ==0)
     {
@@ -84,8 +67,6 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
       printf("\n");
     }
 	}
-  // if(mintile[tid] > 0)
-  //   printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
 
 	if (tid == 0)
 	{
@@ -129,8 +110,6 @@ int main(int argc, char *argv[])
       }
         fscanf(fp, "%*s");  // skip line
     }
-
-    // print_matrix(x, n_els, n_mat);
 
     dim3 numBlocks(D*D);
     dim3 threadsPerBlock(n_mat);
