@@ -1,2 +1,6 @@
 // exemplo
 // https://gist.github.com/jatesy/9920023
+
+/refactor
+//teste automatizado
+//relatorio

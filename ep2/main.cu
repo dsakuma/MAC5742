@@ -1,11 +1,9 @@
 /**
 Ana Martinazzo (7209231)
-Daniel
-EP2 - redução em CUDA
+Daniel Sakuma (5619562  )
+EP2 - Redução em CUDA
 **/
 
-// ssh -R 52698:localhost:52698 anamartinazzo@shell.vision.ime.usp.br
-// https://github.com/AJcodes/cuda_minmax/blob/master/cuda_minmax/kernel.cu
 
 #include <cuda.h>
 #include <math.h>
@@ -15,10 +13,8 @@ EP2 - redução em CUDA
 
 #define CUDA_SAFE_CALL(err) __cuda_safe_call(err, __FILE__, __LINE__)
 
-#define D 3             // dimensão das matrizes (quadradas)
-// #define inf 0x7f800000
+#define D 3 // dimensão das matrizes (quadradas)
 
-int get_num_threads(int n);
 void print_matrix(int** matrix, int n_rows, int n_cols);
 void print_vector(int* vector, int n_els);
 
@@ -36,11 +32,6 @@ __cuda_safe_call (cudaError err, const char *filename, const int line_number)
 
 __global__ void min_kernel(int *result, int **input, int n_mat)
 {
-  //input (9x4)
-  //tid=0 (prineira thread)
-  //index=0 (primeiro elemente cada matriz)
-  //input[index] = [4 1 2]
-  //mintile[tid] = 4
 	__shared__ int mintile[3];
   // for(int i=0; i<n_mat; i++)
   //   mintile[i] = 99;
@@ -125,7 +116,7 @@ int main(int argc, char *argv[])
       CUDA_SAFE_CALL(cudaMallocManaged(&x[i], n_mat * sizeof(int)));
     }
 
-    fscanf(fp, "%*s"); // pula linha
+    fscanf(fp, "%*s"); // skip line
 
     for(int i=0; i < n_mat; i++)
     {
@@ -136,17 +127,15 @@ int main(int argc, char *argv[])
           x[D*j+1][i] = val2;
           x[D*j+2][i] = val3;
       }
-        fscanf(fp, "%*s"); // pula linha
+        fscanf(fp, "%*s");  // skip line
     }
-
-
 
     // print_matrix(x, n_els, n_mat);
 
     dim3 numBlocks(D*D);
     dim3 threadsPerBlock(n_mat);
-    // <<<number_of_blocks, block_size>>>
-	 min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat);
+
+	  min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
 
     cudaDeviceSynchronize();
 
@@ -156,14 +145,6 @@ int main(int argc, char *argv[])
     return 0;
 
 }
-
-
-int get_num_threads(int n)
-{
-	// TODO: OTIMIZAR PRA WARP COM 32 THREADS ETC
-	return ceil(n/2);
-}
-
 
 void print_matrix(int** matrix, int n_rows, int n_cols)
 {
