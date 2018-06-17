@@ -14,7 +14,7 @@ int* seqReduction(char filename[], int D)
 
   /* allocate memory */
   // y = malloc(n_els*sizeof(int*));
-  int *y = malloc (sizeof (int) * n_els);
+  int *y = malloc (sizeof (int) * 9);
 
   /* initialize with zero */
   for(int i=0; i<n_els; i++){
