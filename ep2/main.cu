@@ -71,10 +71,10 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	}
 }
 
-void cudaReduction(int* result, char filename[])
+int* cudaReduction(char filename[])
 {
   int **x;
-  // int *y;
+  int *y;
   int n_els = D*D;
   int n_mat;
 
@@ -82,7 +82,7 @@ void cudaReduction(int* result, char filename[])
   int val1, val2, val3;
 
   CUDA_SAFE_CALL(cudaMallocManaged(&x, n_els * sizeof(int)));
-  CUDA_SAFE_CALL(cudaMallocManaged(&result, n_els * sizeof(int)));
+  CUDA_SAFE_CALL(cudaMallocManaged(&y, n_els * sizeof(int)));
 
   fp = fopen(filename, "r");
   fscanf(fp, "%d", &n_mat);
@@ -108,19 +108,18 @@ void cudaReduction(int* result, char filename[])
   dim3 numBlocks(D*D);
   dim3 threadsPerBlock(n_mat);
 
-  min_kernel<<<numBlocks, threadsPerBlock>>>(result, x, n_mat); //<<<number_of_blocks, block_size>>>
+  min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
 
   cudaDeviceSynchronize();
+  return y;
 }
 
 int main(int argc, char *argv[])
 {
-
     char* filename = argv[1];
-    int *result;
     int n_els = D*D;
 
-    cudaReduction(result, filename);
+    int *result = cudaReduction(filename);
 
     print_vector(result, n_els, D);
 
