@@ -10,17 +10,15 @@
 int* seqReduction(char filename[], int D)
 {
   // int* y;
-  // int n_els = D*D;
+  int n_els = D*D;
 
   /* allocate memory */
-  // y = malloc(n_els*sizeof(int*));
-  // int *y = malloc (sizeof (int) * 9);
-  int *array = (int*)malloc(10 * sizeof(int));
+  int *y = (int*)malloc(n_els * sizeof(int));
 
   /* initialize with zero */
-  // for(int i=0; i<n_els; i++){
-  //   y[i] = 0;
-  // }
+  for(int i=0; i<n_els; i++){
+    y[i] = 0;
+  }
 
-  return array;
+  return y;
 }
