@@ -44,7 +44,7 @@ int* reduction_seq(char filename[], int matrix_order)
   //   }
   //     fscanf(fp, "%*s");  // skip line
   // }
-  fclose(fp);
+  // fclose(fp);
 
   // for(int i=0; i<matrix_order; i++){
   //   for(int j=0; j<n_els; j++){
