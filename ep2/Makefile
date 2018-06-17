@@ -4,7 +4,7 @@ CFLAGS  = -Xptxas --opt-level=3 -arch sm_30
 main: main.cu reduction.cu functions.cu
 	$(CC) $(CFLAGS) -o $@ $^
 
-sandbox: sandbox.cu
+sandbox: sandbox.cu reduction.cu functions.cu
 	$(CC) $(CFLAGS) -o $@ $^
 
 .PHONY: clean
