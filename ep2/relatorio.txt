@@ -1,6 +1,72 @@
-// exemplo
-// https://gist.github.com/jatesy/9920023
+##########################################
 
-/refactor
-//teste automatizado
-//relatorio
+Exemplo:
+https://gist.github.com/jatesy/9920023
+
+
+ToDo:
+- refactor (ok)
+- algoritmo seq (andamento)
+- teste automatizado (nok)
+- relatorio (nok)
+
+###########################################
+
+MAC5742 - Relatório EP1
+=======================
+
+1. Alunos
+---------
+
+Ana Martinazzo (7209231)
+Daniel Sakuma (5619562)
+
+
+2. Conteúdo do diretório
+------------------------
+.
+|-- relatorio.txt           - este arquivo
+|-- reduction_cuda.cu       - implementação de redução usando CUDA
+|-- reduction_cuda.h
+|-- reduction_seq.cu        - implementação de redução sequencial
+|-- reduction_seq.h
+|-- functions.c             - funções auxiliares
+|-- functions.h
+|-- main.c                  - o programa de redução de matrizes
+|-- Makefile
+`-- utils
+    `-- ascii-histogram.js  - gerador de histogramas em ascii.
+
+
+3. Como compilar e rodar
+------------------------
+
+Para compilar e executar o programa:
+
+  $ ./make
+  $ ./main <caminho_lista_matrizes>
+
+
+Para gerar a matriz de testes:
+
+  $ ./make generate_matrix_list
+  ./generate_matrix <qtd_matrizes>
+
+Para rodar o utilitário de histograma
+
+  $ node utils/ascii-histogram.js
+
+
+4. Descrição da solução
+-----------------------
+
+Descrever o problema, o que foi implementado e o que foi coletado de informações...
+
+
+5. Resultados
+-------------
+
+
+
+6. Conclusões
+-------------
