@@ -50,7 +50,7 @@ int* reduction_seq(char filename[], int matrix_order)
   }
   fclose(fp);
 
-  print_matrix(x, n_mat, n_els);
+  print_matrix(x, n_els, n_mat);
 
   // /* initialize with zero */
   // for(int i=0; i<n_els; i++){
