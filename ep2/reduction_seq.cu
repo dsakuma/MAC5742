@@ -56,9 +56,9 @@ int* reduction_seq(char filename[], int matrix_order)
         // x[0][0] = val1;
         // x[0][0] = val2;
         // x[0][0] = val3;
-        // x[matrix_order*j][i] = val1;
-        // x[matrix_order*j+1][i] = val2;
-        // x[matrix_order*j+2][i] = val3;
+        x[matrix_order*j][i] = val1;
+        x[matrix_order*j+1][i] = val2;
+        x[matrix_order*j+2][i] = val3;
     }
     fscanf(fp, "%*s");  // skip line
   }
