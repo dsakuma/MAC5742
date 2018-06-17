@@ -6,6 +6,7 @@ https://gist.github.com/jatesy/9920023
 
 ToDo:
 - refactor (ok)
+- gerador lista matrizes (ok)
 - algoritmo seq (andamento)
 - teste automatizado (nok)
 - relatorio (nok)
@@ -50,7 +51,7 @@ Para compilar e executar o programa:
 Para gerar a matriz de testes:
 
   $ ./make generate_matrix_list
-  ./generate_matrix <qtd_matrizes>
+  ./generate_matrix <qtd_matrizes> <caminho_lista_matrizes>
 
 Para rodar o utilitário de histograma
 
