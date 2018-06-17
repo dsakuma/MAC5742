@@ -7,7 +7,7 @@
 #include "reduction_seq.h"
 
 
-int* seqReduction(char filename[], int D)
+int* reduction_seq(char filename[], int D)
 {
   int* y;
   int n_els = D*D;
