@@ -28,7 +28,7 @@ int* reduction_seq(char filename[], int matrix_order)
 
   /* initialize with zero */
   for(int i=0; i<matrix_order; i++){
-    for(int j=0; j<matrix_order; j++){
+    for(int j=0; j<n_els; j++){
         x[i][j] = 0;
       }
   }
