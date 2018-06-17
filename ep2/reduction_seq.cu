@@ -55,7 +55,7 @@ int* reduction_seq(char filename[], int matrix_order)
   //     }
   // }
 
-  print_matrix(x, n_mat, n_els);
+  // print_matrix(x, n_mat, n_els);
 
 
   // /* initialize with zero */
