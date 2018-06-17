@@ -59,7 +59,7 @@ int* reduction_cuda(char filename[], int D)
   FILE *fp;
   int val1, val2, val3;
 
-  CUDA_SAFE_CALL(cudaMallocManaged(&x, n_els * sizeof(int)));
+  CUDA_SAFE_CALL(cudaMallocManaged(&x, n_els * sizeof(int*)));
   CUDA_SAFE_CALL(cudaMallocManaged(&y, n_els * sizeof(int)));
 
   fp = fopen(filename, "r");
