@@ -10,7 +10,7 @@ EP2 - Redução em CUDA
 #include <stdio.h>
 #include <sys/time.h>
 #include "functions.h"
-#include "reduction.h"
+#include "reduction_cuda.h"
 #include "reduction_seq.h"
 
 #define MATRIX_ORDER 3 // ordem das matrizes (quadradas)

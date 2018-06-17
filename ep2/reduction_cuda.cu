@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <sys/time.h>
 #include "functions.h"
-#include "reduction.h"
+#include "reduction_cuda.h"
 
 #define CUDA_SAFE_CALL(err) __cuda_safe_call(err, __FILE__, __LINE__)
 
