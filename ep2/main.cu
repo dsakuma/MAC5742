@@ -71,104 +71,48 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	}
 }
 
-void cudaReduction(int* result, char filename[])
-{
-  int **x;
-  // int *y;
-  int n_els = D*D;
-  int n_mat;
-
-  FILE *fp;
-  int val1, val2, val3;
-
-  CUDA_SAFE_CALL(cudaMallocManaged(&x, n_els * sizeof(int)));
-  CUDA_SAFE_CALL(cudaMallocManaged(&result, n_els * sizeof(int)));
-
-  fp = fopen(filename, "r");
-  fscanf(fp, "%d", &n_mat);
-
-  for(int i=0; i < n_els; i++){
-    CUDA_SAFE_CALL(cudaMallocManaged(&x[i], n_mat * sizeof(int)));
-  }
-
-  fscanf(fp, "%*s"); // skip line
-
-  for(int i=0; i < n_mat; i++)
-  {
-    for(int j=0; j < D; j++)
-    {
-        fscanf(fp, "%d %d %d", &val1, &val2, &val3);
-        x[D*j][i] = val1;
-        x[D*j+1][i] = val2;
-        x[D*j+2][i] = val3;
-    }
-      fscanf(fp, "%*s");  // skip line
-  }
-
-  dim3 numBlocks(D*D);
-  dim3 threadsPerBlock(n_mat);
-
-  min_kernel<<<numBlocks, threadsPerBlock>>>(result, x, n_mat); //<<<number_of_blocks, block_size>>>
-
-  cudaDeviceSynchronize();
-}
-
 int main(int argc, char *argv[])
 {
-
-    char* filename = argv[1];
-    int *result;
+    int **x;
+    int *y;
     int n_els = D*D;
+    int n_mat;
 
-    cudaReduction(result, filename)
+    FILE *fp;
+    int val1, val2, val3;
 
-    print_vector(result, n_els, D);
+    CUDA_SAFE_CALL(cudaMallocManaged(&x, n_els * sizeof(int)));
+    CUDA_SAFE_CALL(cudaMallocManaged(&y, n_els * sizeof(int)));
+
+    fp = fopen(argv[1], "r");
+    fscanf(fp, "%d", &n_mat);
+
+    for(int i=0; i < n_els; i++){
+      CUDA_SAFE_CALL(cudaMallocManaged(&x[i], n_mat * sizeof(int)));
+    }
+
+    fscanf(fp, "%*s"); // skip line
+
+    for(int i=0; i < n_mat; i++)
+    {
+      for(int j=0; j < D; j++)
+      {
+          fscanf(fp, "%d %d %d", &val1, &val2, &val3);
+          x[D*j][i] = val1;
+          x[D*j+1][i] = val2;
+          x[D*j+2][i] = val3;
+      }
+        fscanf(fp, "%*s");  // skip line
+    }
+
+    dim3 numBlocks(D*D);
+    dim3 threadsPerBlock(n_mat);
+
+	  min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
+
+    cudaDeviceSynchronize();
+
+    print_vector(y, n_els, D);
 
     return 0;
 }
-
-// int main(int argc, char *argv[])
-// {
-//     int **x;
-//     int *y;
-//     int n_els = D*D;
-//     int n_mat;
-//
-//     FILE *fp;
-//     int val1, val2, val3;
-//
-//     CUDA_SAFE_CALL(cudaMallocManaged(&x, n_els * sizeof(int)));
-//     CUDA_SAFE_CALL(cudaMallocManaged(&y, n_els * sizeof(int)));
-//
-//     fp = fopen(argv[1], "r");
-//     fscanf(fp, "%d", &n_mat);
-//
-//     for(int i=0; i < n_els; i++){
-//       CUDA_SAFE_CALL(cudaMallocManaged(&x[i], n_mat * sizeof(int)));
-//     }
-//
-//     fscanf(fp, "%*s"); // skip line
-//
-//     for(int i=0; i < n_mat; i++)
-//     {
-//       for(int j=0; j < D; j++)
-//       {
-//           fscanf(fp, "%d %d %d", &val1, &val2, &val3);
-//           x[D*j][i] = val1;
-//           x[D*j+1][i] = val2;
-//           x[D*j+2][i] = val3;
-//       }
-//         fscanf(fp, "%*s");  // skip line
-//     }
-//
-//     dim3 numBlocks(D*D);
-//     dim3 threadsPerBlock(n_mat);
-//
-// 	  min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
-//
-//     cudaDeviceSynchronize();
-//
-//     print_vector(y, n_els, D);
-//
-//     return 0;
-// }
