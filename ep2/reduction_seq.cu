@@ -20,7 +20,7 @@ int* reduction_seq(char filename[], int matrix_order)
 
 
   /* allocate memory for x */
-  x = malloc(n_mat*sizeof(double*));
+  x = (int*)malloc(n_mat*sizeof(int));
   for(int i = 0; i<n_mat; i++)
   {
     x[i] = (int*)malloc(n_els * sizeof(int));
