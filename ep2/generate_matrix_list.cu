@@ -26,15 +26,15 @@ void write_matrix_list(int n_matrix, char filename[])
   }
   /* print num matrizes */
   fprintf(f, "%d\n", n_matrix);
-  fprintf(f, "***");
+  fprintf(f, "***\n");
   /* write matrix */
-  for(int n=0; n<=n_matrix; n++)
+  for(int n=1; n<=n_matrix; n++)
   {
     for(int i=1; i<=MATRIX_ORDER; i++)
     {
         fprintf(f, "%d %d %d\n", randMToN(0,10), randMToN(0,10), randMToN(0,10));
     }
-    fprintf(f, "***");
+    fprintf(f, "***\n");
   }
   /* close file */
   fclose(f);
