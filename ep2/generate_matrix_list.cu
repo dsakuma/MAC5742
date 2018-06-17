@@ -14,32 +14,6 @@ int randMToN(int M, int N)
     return M + (rand() / ( RAND_MAX / (N-M) ) ) ;
 }
 
-// void write_matrix(int n_rows, int n_cols, char filename[])
-// {
-//   /* open file */
-//   FILE *f = fopen(filename, "w");
-//   if (f == NULL)
-//   {
-//       printf("Error opening file!\n");
-//       exit(1);
-//   }
-//   /* print qty rows and cols */
-//   fprintf(f, "%d %d\n", n_rows, n_cols);
-//
-//   /* write matrix */
-//   for(int i=1; i<=n_rows; i++)
-//   {
-//     for(int j=1; j<=n_cols; j++)
-//     {
-//       double val = randMToN(0,10);
-//       if (val >= 0.1)
-//         fprintf(f, "%d %d %.1f\n", i, j, val);
-//     }
-//   }
-//   fclose(f);
-// }
-
-// void write_matrix()
 
 void write_matrix_list(int n_matrix, char filename[])
 {
