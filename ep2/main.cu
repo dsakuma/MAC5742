@@ -1,6 +1,6 @@
 /**
 Ana Martinazzo (7209231)
-Daniel Sakuma (5619562  )
+Daniel Sakuma (5619562)
 EP2 - Redução em CUDA
 **/
 
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
     int *result;
     int n_els = D*D;
 
-    cudaReduction(result, filename)
+    cudaReduction(result, filename);
 
     print_vector(result, n_els, D);
 
