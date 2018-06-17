@@ -39,8 +39,8 @@ int* reduction_seq(char filename[], int matrix_order)
         printf("n_mat->%d, m_order->%d\n", i, j);
 
         fscanf(fp, "%d %d %d", &val1, &val2, &val3);
-        printf("%d %d %d\n", val1, val2, val3);
-        printf("place: %d %d %d %d\n", matrix_order*j, matrix_order*j+1, matrix_order*j+2, i);
+        // printf("%d %d %d\n", val1, val2, val3);
+        // printf("place: %d %d %d %d\n", matrix_order*j, matrix_order*j+1, matrix_order*j+2, i);
         x[matrix_order*j][i] = val1;
         x[matrix_order*j+1][i] = val2;
         x[matrix_order*j+2][i] = val3;
