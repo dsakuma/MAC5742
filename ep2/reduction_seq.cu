@@ -15,7 +15,7 @@ int* seqReduction(char filename[], int D)
   y = malloc(n_rows*sizeof(int));
 
   /* initialize with zero */
-  for(int i=0; i<n_rows; i++){
+  for(int i=0; i<D*D; i++){
     y[i] = 0;
   }
 
