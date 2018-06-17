@@ -15,7 +15,6 @@ EP2 - Redução em CUDA
 
 #define D 3 // ordem das matrizes (quadradas)
 
-
 inline void
 __cuda_safe_call (cudaError err, const char *filename, const int line_number)
 {
@@ -88,8 +87,6 @@ int main(int argc, char *argv[])
     fp = fopen(argv[1], "r");
     fscanf(fp, "%d", &n_mat);
 
-
-
     for(int i=0; i < n_els; i++){
       CUDA_SAFE_CALL(cudaMallocManaged(&x[i], n_mat * sizeof(int)));
     }
@@ -115,34 +112,7 @@ int main(int argc, char *argv[])
 
     cudaDeviceSynchronize();
 
-    printf("y:\n");
     print_vector(y, n_els, D);
 
     return 0;
-
 }
-
-// void print_matrix(int** matrix, int n_rows, int n_cols)
-// {
-// 	printf("Printing matrix...\n");
-// 	for(int i=0; i<n_rows; i++)
-// 	{
-// 		for(int j=0; j<n_cols; j++)
-// 		{
-// 			printf("%d ", matrix[i][j]);
-// 		}
-// 		printf("\n");
-// 	}
-// }
-//
-// void print_vector(int* vector, int n_els, int D)
-// {
-// 	printf("Printing vector...\n");
-// 	for(int i=0; i<n_els; i++)
-// 	{
-// 		printf("%d ", vector[i]);
-// 		if((i+1)%D == 0)
-// 			printf("\n");
-// 	}
-// 	printf("\n");
-// }
