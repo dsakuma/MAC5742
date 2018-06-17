@@ -9,6 +9,8 @@
 
 int* seqReduction(char filename[], int D)
 {
-  int y[10] = { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 };
+  int y[10] = { 0 };
+
+
   return y;
 }

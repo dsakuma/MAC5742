@@ -13,18 +13,17 @@ EP2 - Redução em CUDA
 #include "reduction.h"
 #include "reduction_seq.h"
 
-#define D 3 // ordem das matrizes (quadradas)
+#define MATRIX_ORDER 3 // ordem das matrizes (quadradas)
 
 int main(int argc, char *argv[])
 {
     char* filename = argv[1];
-    int n_els = D*D;
 
-    int *result = cudaReduction(filename, D);
-    int *resultSeq = seqReduction(filename, D);
+    int *resultCuda = cudaReduction(filename, MATRIX_ORDER);
+    int *resultSeq = seqReduction(filename, MATRIX_ORDER);
 
-    print_vector(result, n_els, D);
-    print_vector(resultSeq, n_els, D);
+    print_vector(resultCuda, MATRIX_ORDER);
+    print_vector(resultSeq, MATRIX_ORDER);
 
     return 0;
 }

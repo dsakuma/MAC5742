@@ -17,8 +17,9 @@ void print_matrix(int** matrix, int n_rows, int n_cols)
 	}
 }
 
-void print_vector(int* vector, int n_els, int D)
+void print_vector(int* vector, int D)
 {
+	int n_els = D*D;
 	printf("Printing vector...\n");
 	for(int i=0; i<n_els; i++)
 	{
