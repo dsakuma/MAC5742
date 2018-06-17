@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     int *y_seq = reduction_seq(filename, MATRIX_ORDER);
 
     // print_vector(y_cuda, MATRIX_ORDER);
-    print_vector(y_seq, MATRIX_ORDER);
+    // print_vector(y_seq, MATRIX_ORDER);
 
     return 0;
 }

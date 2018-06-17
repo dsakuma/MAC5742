@@ -32,22 +32,23 @@ int* reduction_seq(char filename[], int matrix_order)
   fp = fopen(filename, "r");
   fscanf(fp, "%*s");
   fscanf(fp, "%*s");
-  fscanf(fp, "%d %d %d", &val1, &val2, &val3);
-  printf("%d %d %d", val1, val2, val3);
+  // fscanf(fp, "%d %d %d", &val1, &val2, &val3);
+  // printf("%d %d %d", val1, val2, val3);
+  printf("%d, %d" n_mat, matrix_order);
 
-  // for(int i=0; i < n_mat; i++)
-  // {
-  //   for(int j=0; j < matrix_order; j++)
-  //   {
-  //       fscanf(fp, "%d %d %d", &val1, &val2, &val3);
-  //       printf("%d %d %d", val1, val2, val3);
-  //       x[matrix_order*j][i] = val1;
-  //       x[matrix_order*j+1][i] = val2;
-  //       x[matrix_order*j+2][i] = val3;
-  //   }
-  //     fscanf(fp, "%*s");  // skip line
-  // }
-  // fclose(fp);
+  for(int i=0; i < n_mat; i++)
+  {
+    for(int j=0; j < matrix_order; j++)
+    {
+        fscanf(fp, "%d %d %d", &val1, &val2, &val3);
+        printf("%d %d %d", val1, val2, val3);
+        x[matrix_order*j][i] = val1;
+        x[matrix_order*j+1][i] = val2;
+        x[matrix_order*j+2][i] = val3;
+    }
+      fscanf(fp, "%*s");  // skip line
+  }
+  fclose(fp);
 
   // for(int i=0; i<matrix_order; i++){
   //   for(int j=0; j<n_els; j++){
