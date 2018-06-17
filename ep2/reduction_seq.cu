@@ -15,6 +15,7 @@ int* reduction_seq(char filename[], int matrix_order)
   int n_els = matrix_order*matrix_order;
   int n_mat = get_n_mat(filename);
   int val1, val2, val3;
+  FILE *fp;
 
   /* allocate memory for y */
   y = (int*)malloc(n_els * sizeof(int));
@@ -34,12 +35,12 @@ int* reduction_seq(char filename[], int matrix_order)
 
   for(int i=0; i < n_mat; i++)
   {
-    for(int j=0; j < D; j++)
+    for(int j=0; j < matrix_order; j++)
     {
         fscanf(fp, "%d %d %d", &val1, &val2, &val3);
-        x[D*j][i] = val1;
-        x[D*j+1][i] = val2;
-        x[D*j+2][i] = val3;
+        x[matrix_order*j][i] = val1;
+        x[matrix_order*j+1][i] = val2;
+        x[matrix_order*j+2][i] = val3;
     }
       fscanf(fp, "%*s");  // skip line
   }
