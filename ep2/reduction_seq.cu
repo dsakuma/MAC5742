@@ -29,15 +29,18 @@ int* reduction_seq(char filename[], int matrix_order)
   }
 
   /* read matrix list */
-  // fp = fopen(filename, "r");
-  // fscanf(fp, "%*s");
-  // fscanf(fp, "%*s");
-  //
+  fp = fopen(filename, "r");
+  fscanf(fp, "%*s");
+  fscanf(fp, "%*s");
+  fscanf(fp, "%d %d %d", &val1, &val2, &val3);
+  printf("%d %d %d", val1, val2, val3);
+
   // for(int i=0; i < n_mat; i++)
   // {
   //   for(int j=0; j < matrix_order; j++)
   //   {
   //       fscanf(fp, "%d %d %d", &val1, &val2, &val3);
+  //       printf("%d %d %d", val1, val2, val3);
   //       x[matrix_order*j][i] = val1;
   //       x[matrix_order*j+1][i] = val2;
   //       x[matrix_order*j+2][i] = val3;
