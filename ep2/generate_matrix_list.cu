@@ -9,7 +9,7 @@ int randMToN(int M, int N)
     return M + (rand() / ( RAND_MAX / (N-M) ) ) ;
 }
 
-void write_matrix_list(int n_matrix, char filename[])
+void write_matrix_list(int n_mat, char filename[])
 {
   /* open file */
   FILE *f = fopen(filename, "w");
@@ -19,10 +19,10 @@ void write_matrix_list(int n_matrix, char filename[])
       exit(1);
   }
   /* print num matrizes */
-  fprintf(f, "%d\n", n_matrix);
+  fprintf(f, "%d\n", n_mat);
   fprintf(f, "***\n");
   /* write matrix */
-  for(int n=1; n<=n_matrix; n++)
+  for(int n=1; n<=n_mat; n++)
   {
     for(int i=1; i<=MATRIX_ORDER; i++)
     {
@@ -41,8 +41,8 @@ int main(int argc, char **argv)
       printf("Usage: %s <qtd_matrizes> <caminho_list_matrizes>\n", argv[0]);
       exit(1);
    }
-   int n_matrix = atoi(argv[1]);
+   int n_mat = atoi(argv[1]);
    char* filename = argv[2];
-   write_matrix_list(n_matrix, filename);
+   write_matrix_list(n_mat, filename);
    return 0;
 }

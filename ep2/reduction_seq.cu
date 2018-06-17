@@ -11,6 +11,9 @@ int* reduction_seq(char filename[], int D)
 {
   int* y;
   int n_els = D*D;
+  int n_mat = get_n_mat(filename);
+
+  printf("n_mat: %d", n_mat);
 
   /* allocate memory */
   y = (int*)malloc(n_els * sizeof(int));

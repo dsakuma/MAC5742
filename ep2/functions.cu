@@ -29,3 +29,21 @@ void print_vector(int* vector, int D)
 	}
 	printf("\n");
 }
+
+int get_n_mat(char filename[])
+{
+  int n_mat;
+
+  FILE *fp;
+  fp = fopen(filename, "r");
+
+  if (fp == NULL)
+  {
+      printf ("Error opening the file\n\n'");
+      exit(EXIT_FAILURE);
+  }
+
+  fscanf(fp, "%d", &n_mat);
+  fclose(fp);
+  return n_mat;
+}
