@@ -4,16 +4,10 @@
 
 #define MATRIX_ORDER 3 // ordem das matrizes (quadradas)
 
-double randZeroToOne()
-{
-    return rand() / (RAND_MAX + 1.);
-}
-
 int randMToN(int M, int N)
 {
     return M + (rand() / ( RAND_MAX / (N-M) ) ) ;
 }
-
 
 void write_matrix_list(int n_matrix, char filename[])
 {
