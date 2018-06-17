@@ -4,19 +4,17 @@ Daniel Sakuma (5619562  )
 EP2 - Redução em CUDA
 **/
 
-
 #include <cuda.h>
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/time.h>
+#include "functions.h"
 
 #define CUDA_SAFE_CALL(err) __cuda_safe_call(err, __FILE__, __LINE__)
 
-#define D 3 // dimensão das matrizes (quadradas)
+#define D 3 // ordem das matrizes (quadradas)
 
-void print_matrix(int** matrix, int n_rows, int n_cols);
-void print_vector(int* vector, int n_els);
 
 inline void
 __cuda_safe_call (cudaError err, const char *filename, const int line_number)
@@ -74,7 +72,6 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	}
 }
 
-
 int main(int argc, char *argv[])
 {
     int **x;
@@ -119,33 +116,33 @@ int main(int argc, char *argv[])
     cudaDeviceSynchronize();
 
     printf("y:\n");
-    print_vector(y, n_els);
+    print_vector(y, n_els, D);
 
     return 0;
 
 }
 
-void print_matrix(int** matrix, int n_rows, int n_cols)
-{
-	printf("Printing matrix...\n");
-	for(int i=0; i<n_rows; i++)
-	{
-		for(int j=0; j<n_cols; j++)
-		{
-			printf("%d ", matrix[i][j]);
-		}
-		printf("\n");
-	}
-}
-
-void print_vector(int* vector, int n_els)
-{
-	printf("Printing vector...\n");
-	for(int i=0; i<n_els; i++)
-	{
-		printf("%d ", vector[i]);
-		if((i+1)%D == 0)
-			printf("\n");
-	}
-	printf("\n");
-}
+// void print_matrix(int** matrix, int n_rows, int n_cols)
+// {
+// 	printf("Printing matrix...\n");
+// 	for(int i=0; i<n_rows; i++)
+// 	{
+// 		for(int j=0; j<n_cols; j++)
+// 		{
+// 			printf("%d ", matrix[i][j]);
+// 		}
+// 		printf("\n");
+// 	}
+// }
+//
+// void print_vector(int* vector, int n_els, int D)
+// {
+// 	printf("Printing vector...\n");
+// 	for(int i=0; i<n_els; i++)
+// 	{
+// 		printf("%d ", vector[i]);
+// 		if((i+1)%D == 0)
+// 			printf("\n");
+// 	}
+// 	printf("\n");
+// }
