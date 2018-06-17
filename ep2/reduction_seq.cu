@@ -52,10 +52,7 @@ int* reduction_seq(char filename[], int matrix_order)
 
   print_matrix(x, n_els, n_mat);
 
-  // /* initialize with zero */
-  // for(int i=0; i<n_els; i++){
-  //   y[i] = 0;
-  // }
+
 
   printf("Finish reduction seq\n");
   return y;
