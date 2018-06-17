@@ -1,1 +1,1 @@
-int* cudaReduction(char filename[]);
+int* cudaReduction(char filename[], int D);

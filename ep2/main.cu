@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     char* filename = argv[1];
     int n_els = D*D;
 
-    int *result = cudaReduction(filename);
+    int *result = cudaReduction(filename, D);
 
     print_vector(result, n_els, D);
 
