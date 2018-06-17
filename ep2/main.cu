@@ -84,7 +84,7 @@ void cudaReduction(int* result, char filename[])
   CUDA_SAFE_CALL(cudaMallocManaged(&x, n_els * sizeof(int)));
   CUDA_SAFE_CALL(cudaMallocManaged(&result, n_els * sizeof(int)));
 
-  fp = fopen(argv[1], "r");
+  fp = fopen(filename, "r");
   fscanf(fp, "%d", &n_mat);
 
   for(int i=0; i < n_els; i++){
