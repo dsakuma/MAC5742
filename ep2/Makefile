@@ -1,7 +1,7 @@
 CC      = nvcc
 CFLAGS  = -Xptxas --opt-level=3 -arch sm_30
 
-main: main.cu functions.cu
+main: main.cu reduction.cu functions.cu
 	$(CC) $(CFLAGS) -o $@ $^
 
 sandbox: sandbox.cu
