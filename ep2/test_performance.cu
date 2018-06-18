@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 {
   const char* filename;
   const char* description;
-  struct timeval t0, t1, t2, t3;
+  struct timeval t0, t1, t2;
 
   /* Teste 1: Redução de 10 mil matrizes */
   description = "Redução de 10 mil matrizes";
