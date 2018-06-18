@@ -101,3 +101,18 @@ long time_elapsed (struct timeval t0, struct timeval t1)
 {
     return (t1.tv_sec-t0.tv_sec)*1000000 + t1.tv_usec-t0.tv_usec;
 }
+
+void print_performance_test_result(
+  const char* description, long time_elapsed_cuda, long time_elapsed_seq
+)
+{
+  printf("Teste: %s\n", description);
+  printf("Tempo Cuda: %ld us\n", time_elapsed_cuda);
+  printf("Tempo Sequencial: %ld us\n", time_elapsed_seq);
+  if(time_elapsed_cuda < time_elapsed_seq)
+    printf("A implementação Cuda foi mais rápida em: %ld us\n", time_elapsed_seq-time_elapsed_cuda);
+  else if (time_elapsed_cuda > time_elapsed_seq)
+    printf("A implementação Sequencial foi mais rápida em: %ld us\n", time_elapsed_cuda-time_elapsed_seq);
+  else
+    printf("As duas implementações tiveram o mesmo tempo de execução\n");
+}
