@@ -56,27 +56,23 @@ int* reduction_seq(char filename[], int matrix_order)
       y[matrix_order*j] = x[matrix_order*j][0];
       y[matrix_order*j+1] = x[matrix_order*j+1][0];
       y[matrix_order*j+2] = x[matrix_order*j+2][0];
-      // printf("success\n");
   }
-  // fscanf(fp, "%*s");  // skip line
 
   /* sequential reduction */
-  // for(int i=1; i < n_mat; i++)
-  // {
-  //   for(int j=0; j < matrix_order; j++)
-  //   {
-  //       fscanf(fp, "%d %d %d", &val1, &val2, &val3);
-  //       x[matrix_order*j][i] = val1;
-  //       x[matrix_order*j+1][i] = val2;
-  //       x[matrix_order*j+2][i] = val3;
-  //       // printf("success\n");
-  //   }
-  //   fscanf(fp, "%*s");  // skip line
-  // }
+  for(int i=1; i < n_mat; i++)
+  {
+    for(int j=0; j < matrix_order; j++)
+    {
+        if(x[matrix_order*j][i] < y[matrix_order*j])
+          y[matrix_order*j] = x[matrix_order*j][i];
+        if(x[matrix_order*j+1][i] < y[matrix_order*j+1])
+          y[matrix_order*j+1] = x[matrix_order*j+1][i];
+        if(x[matrix_order*j+2][i] < y[matrix_order*j+2])
+          y[matrix_order*j+2] = x[matrix_order*j+2][i];
+    }
+  }
 
   // print_matrix(x, n_els, n_mat);
-
-  // fclose(fp);
   printf("Finish reduction seq\n");
   return y;
 }
