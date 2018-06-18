@@ -46,7 +46,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
     int idx = 2*s*tid;
     // if(tid == 2 && index ==1)
     //   printf("index=%d (bloco), tid=%d (n_mat), idx=%d, blockDim.x-1=%d\n", index, tid, idx,blockDim.x);
-		if (idx < blockDim.x-2)
+		if (idx < blockDim.x-3)
 		{
       // if(tid == 2 && index ==1)
       //   printf("mintile[idx]=%d, mintile[idx+s]=%d\n", mintile[idx], mintile[idx + s]);
