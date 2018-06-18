@@ -21,10 +21,10 @@ int assert_vector(int* a, int* b, int size)
 void print_test_result(char description[], int result)
 {
     if(result == 1){
-      printf("[Teste: %s] -> Falhou!\n", description);
+      printf("Teste: %s [Falhou]\n", description);
       return;
     }
-    printf("[Teste: %s] -> OK!\n", description);
+    printf("Teste: %s [OK]\n", description);
     return;
 }
 
