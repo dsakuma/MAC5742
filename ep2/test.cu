@@ -21,10 +21,10 @@ int assert_vector(int* a, int* b, int size)
 void print_test_result(int test_number, int result)
 {
     if(result == 1){
-      printf("Test %d failed!", test_number);
+      printf("Test %d failed!\n", test_number);
       return;
     }
-    printf("Test %d passed!", test_number);
+    printf("Test %d passed!\n", test_number);
     return;
 }
 
@@ -32,7 +32,7 @@ void print_test_result(int test_number, int result)
 int main(int argc, char *argv[])
 {
   int result;
-  
+
   /* Test 1: Quantidade ímpar de matrizes */
   //given
   char* filename = "data/teste_impar.txt";
