@@ -21,8 +21,7 @@ __cuda_safe_call (cudaError err, const char *filename, const int line_number)
 
 __global__ void min_kernel(int *result, int **input, int n_mat)
 {
-  const int min_tile_size = n_mat;
-	__shared__ int mintile[min_tile_size];
+	__shared__ int mintile[10000000];
 
 	unsigned int tid = threadIdx.x;
 	unsigned int index = blockIdx.x;
