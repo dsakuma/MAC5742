@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
   int *y_seq ;
 
   /* Test 1: Quantidade ímpar de matrizes */
-  description = "Quantidade ímpar de matrizes"
+  description = "Quantidade ímpar de matrizes";
   //given
   filename = "data/teste_impar.txt";
   //when
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
   print_test_result(description, result);
 
   /* Test 2: Quantidade par de matrizes */
-  description = "Quantidade par de matrizes"
+  description = "Quantidade par de matrizes";
   //given
   filename = "data/teste_par.txt";
   //when
