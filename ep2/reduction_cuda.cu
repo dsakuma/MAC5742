@@ -21,19 +21,19 @@ __cuda_safe_call (cudaError err, const char *filename, const int line_number)
 
 __global__ void min_kernel(int *result, int **input, int n_mat)
 {
-	__shared__ int mintile[3];
+	__shared__ int mintile[100];
 
 	unsigned int tid = threadIdx.x;
 	unsigned int index = blockIdx.x;
 	mintile[tid] = input[index][tid];
 
-  if(mintile[tid] > 0)
-  {
-    printf("mintile:\n");
-    for(int i=0; i<n_mat; i++)
-      printf("%d ", mintile[i]);
-    printf("\n");
-  }
+  // if(mintile[tid] > 0)
+  // {
+  //   printf("mintile:\n");
+  //   for(int i=0; i<n_mat; i++)
+  //     printf("%d ", mintile[i]);
+  //   printf("\n");
+  // }
 
   __syncthreads();
 
