@@ -48,14 +48,14 @@ int* reduction_seq(char filename[], int matrix_order)
     }
     fscanf(fp, "%*s");  // skip line
   }
+  fclose(fp);
 
   /* initialize y with first matrix */
   for(int j=0; j < matrix_order; j++)
   {
-      fscanf(fp, "%d %d %d", &val1, &val2, &val3);
-      y[matrix_order*j] = val1;
-      y[matrix_order*j+1] = val2;
-      y[matrix_order*j+2] = val3;
+      y[matrix_order*j] = x[matrix_order*j][0];
+      y[matrix_order*j+1] = x[matrix_order*j][0];
+      y[matrix_order*j+2] = x[matrix_order*j][0];
       // printf("success\n");
   }
   fscanf(fp, "%*s");  // skip line
