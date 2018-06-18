@@ -7,7 +7,7 @@ https://gist.github.com/jatesy/9920023
 ToDo:
 - refactor (ok)
 - gerador lista matrizes (ok)
-- algoritmo seq (implementado uma versão simples, fazer melhor)
+- algoritmo seq (ok)
 - teste automatizado (ok)
 - coletar tempos (ok)
 - relatorio (nok)
