@@ -37,5 +37,22 @@ int main(int argc, char *argv[])
   print_test_result(description, result);
   print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
 
+  /* Teste 2: Redução de 10 mil matrizes */
+  description = "Redução de 100 mil matrizes";
+  //given
+  filename = "data/teste_100k.txt";
+  write_matrix_list(100000, filename, MATRIX_ORDER);
+  //when
+  gettimeofday(&t0, NULL);
+  y_cuda = reduction_cuda(filename, MATRIX_ORDER);
+  gettimeofday(&t1, NULL);
+  gettimeofday(&t2, NULL);
+  y_seq = reduction_seq(filename, MATRIX_ORDER);
+  gettimeofday(&t3, NULL);
+  // //then
+  result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
+  print_test_result(description, result);
+  print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
+
   return 0;
 }
