@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     const char* filename = argv[1];
 
     int *y_cuda = reduction_cuda(filename, MATRIX_ORDER);
-    // int *y_seq = reduction_seq(filename, MATRIX_ORDER);
+    int *y_seq = reduction_seq(filename, MATRIX_ORDER);
 
     // print_vector(y_cuda, MATRIX_ORDER);
     // print_vector(y_seq, MATRIX_ORDER);
