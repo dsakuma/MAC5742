@@ -54,8 +54,8 @@ int* reduction_seq(char filename[], int matrix_order)
   for(int j=0; j < matrix_order; j++)
   {
       y[matrix_order*j] = x[matrix_order*j][0];
-      y[matrix_order*j+1] = x[matrix_order*j][0];
-      y[matrix_order*j+2] = x[matrix_order*j][0];
+      y[matrix_order*j+1] = x[matrix_order*j+1][0];
+      y[matrix_order*j+2] = x[matrix_order*j+2][0];
       // printf("success\n");
   }
   fscanf(fp, "%*s");  // skip line
