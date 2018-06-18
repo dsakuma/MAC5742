@@ -9,8 +9,6 @@
 
 #define MATRIX_ORDER 3
 
-
-
 int main(int argc, char *argv[])
 {
   int result;
@@ -79,6 +77,8 @@ int main(int argc, char *argv[])
   gettimeofday(&t3, NULL);
   // //then
   print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
-
+  result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
+  print_test_result(description, result);
+  
   return 0;
 }
