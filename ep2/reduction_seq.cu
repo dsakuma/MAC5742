@@ -48,7 +48,6 @@ int* reduction_seq(char filename[], int matrix_order)
     }
     fscanf(fp, "%*s");  // skip line
   }
-  fclose(fp);
 
   /* initialize y with first matrix */
   for(int j=0; j < matrix_order; j++)
@@ -77,8 +76,7 @@ int* reduction_seq(char filename[], int matrix_order)
 
   // print_matrix(x, n_els, n_mat);
 
-
-
+  fclose(fp);
   printf("Finish reduction seq\n");
   return y;
 }
