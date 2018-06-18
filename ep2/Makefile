@@ -10,6 +10,10 @@ sandbox: sandbox.cu reduction_cuda.cu reduction_seq.cu functions.cu
 generate_matrix_list: generate_matrix_list.cu
 	$(CC) $(CFLAGS) -o $@ $^
 
+test: test.cu reduction_cuda.cu reduction_seq.cu functions.cu
+	$(CC) $(CFLAGS) -o $@ $^
+	./test
+
 .PHONY: clean
 clean:
 	rm -f *.o main sandbox
