@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
   int *y_cuda;
   int *y_seq ;
 
-  /* Test 1: Quantidade ímpar de matrizes */
+  /* Teste 1: Quantidade ímpar de matrizes */
   description = "Quantidade ímpar de matrizes";
   //given
   filename = "data/teste_impar.txt";
@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
 
-  /* Test 2: Quantidade par de matrizes */
+  /* Teste 2: Quantidade par de matrizes */
   description = "Quantidade par de matrizes";
   //given
   filename = "data/teste_par.txt";
