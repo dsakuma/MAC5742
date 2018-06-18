@@ -73,10 +73,34 @@ int main(int argc, char *argv[])
   print_test_result(description, result);
 
   /* Teste 5: 65 matrizes */
-  description = "65 matrizes (acontece bus error)";
+  description = "65 matrizes";
   //given
   filename = "data/teste_65.txt";
   write_matrix_list(65, filename, MATRIX_ORDER);
+  //when
+  y_cuda = reduction_cuda(filename, MATRIX_ORDER);
+  y_seq = reduction_seq(filename, MATRIX_ORDER);
+  //then
+  result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
+  print_test_result(description, result);
+
+  /* Teste 6: 1024 matrizes */
+  description = "1024 matrizes (n max de threads por bloco)";
+  //given
+  filename = "data/teste_1024.txt";
+  write_matrix_list(1024, filename, MATRIX_ORDER);
+  //when
+  y_cuda = reduction_cuda(filename, MATRIX_ORDER);
+  y_seq = reduction_seq(filename, MATRIX_ORDER);
+  //then
+  result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
+  print_test_result(description, result);
+
+  /* Teste 6: 1025 matrizes */
+  description = "1025 matrizes (ultrapassa n max de threads por bloco)";
+  //given
+  filename = "data/teste_1025.txt";
+  write_matrix_list(1025, filename, MATRIX_ORDER);
   //when
   y_cuda = reduction_cuda(filename, MATRIX_ORDER);
   y_seq = reduction_seq(filename, MATRIX_ORDER);
