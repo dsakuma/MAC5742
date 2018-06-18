@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
   // //then
   print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
 
-  /* Teste 2: Redução de 10 mil matrizes */
+  /* Teste 2: Redução de 100 mil matrizes */
   description = "Redução de 100 mil matrizes";
   //given
   filename = "data/teste_100k.txt";
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
   // //then
   print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
 
-  /* Teste 3: Redução de 10 mil matrizes */
+  /* Teste 3: Redução de 1M matrizes */
   description = "Redução de 1M matrizes";
   //given
   filename = "data/teste_1M.txt";
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
   // //then
   print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
 
-  /* Teste 4: Redução de 10 mil matrizes */
+  /* Teste 4: Redução de 10M matrizes */
   description = "Redução de 10M matrizes";
   //given
   filename = "data/teste_10M.txt";
