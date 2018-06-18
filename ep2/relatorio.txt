@@ -9,7 +9,7 @@ ToDo:
 - gerador lista matrizes (ok)
 - algoritmo seq (implementado uma versão simples, fazer melhor)
 - teste automatizado (ok)
-- coletar tempos (nok)
+- coletar tempos (ok)
 - relatorio (nok)
 
 ###########################################
@@ -53,7 +53,12 @@ Para compilar e executar os testes:
   $ ./make test
   $ ./test
 
-Para gerar a matriz de testes:
+Para compilar e executar os testes de performance:
+
+  $ ./make test_performance
+  $ ./test_performance
+
+Para gerar uma lista de matrizes:
 
   $ ./make generate_matrix_list
   ./generate_matrix <qtd_matrizes> <caminho_lista_matrizes>
