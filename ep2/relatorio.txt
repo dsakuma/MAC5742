@@ -47,6 +47,10 @@ Para compilar e executar o programa:
   $ ./make
   $ ./main <caminho_lista_matrizes>
 
+Para compilar e executar os testes:
+
+  $ ./make test
+  $ ./test
 
 Para gerar a matriz de testes:
 
