@@ -18,21 +18,21 @@ int assert_vector(int* a, int* b, int size)
   return 0;
 }
 
-void print_test_result(const char description[], int result)
+void print_test_result(char description[], int result)
 {
     if(result == 1){
-      printf("Teste [%s]: Falhou!\n", description);
+      printf("[Teste: %s] -> Falhou!\n", description);
       return;
     }
-    printf("Teste [%s]: OK!\n", description);
+    printf("[Teste: %s] -> OK!\n", description);
     return;
 }
 
 int main(int argc, char *argv[])
 {
   int result;
-  const char* filename;
-  const char* description;
+  char* filename;
+  char* description;
   int *y_cuda;
   int *y_seq ;
 
