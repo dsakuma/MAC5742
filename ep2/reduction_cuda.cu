@@ -28,6 +28,8 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	mintile[tid] = input[index][tid];
 
   printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
+  if(tid == 0 && id ==0)
+    printf("%d", i);
 
   // if(mintile[tid] > 0)
   // {
