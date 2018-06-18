@@ -46,13 +46,16 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
     int idx = 2*s*tid;
 		if (idx < blockDim.x-1)
 		{
+      if(tid == 0 && index ==1)
+      printf("mintile[idx+s]=%d,  mintile[idx]=%d\n", mintile[idx + s], mintile[idx]);
+
 			if (mintile[idx + s] < mintile[idx])
       {
         mintile[idx] = mintile[idx + s];
       }
 		}
-    if(tid == 0 && index ==1)
-      printf("mintile[tid]=%d\n", mintile[tid]);
+    // if(tid == 0 && index ==1)
+      // printf("mintile[tid]=%d\n", mintile[tid]);
 		__syncthreads();
     // if(mintile[tid] > 0)
     // {
