@@ -9,7 +9,7 @@ ToDo:
 - gerador lista matrizes (ok)
 - algoritmo seq (implementado uma versão simples, fazer melhor)
 - teste automatizado (ok)
-- coletar tempos (ok)
+- coletar tempos (nok)
 - relatorio (nok)
 
 ###########################################
