@@ -87,7 +87,7 @@ void write_matrix_list(int n_mat, const char filename[], int matrix_order)
   {
     for(int i=1; i<=matrix_order; i++)
     {
-        fprintf(f, "%d %d %d\n", randMToN(0,10), randMToN(0,10), randMToN(0,10));
+        fprintf(f, "%d %d %d\n", randMToN(0,10000000), randMToN(0,10000000), randMToN(0,10000000));
     }
     fprintf(f, "***\n");
   }
