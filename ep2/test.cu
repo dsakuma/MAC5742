@@ -31,7 +31,7 @@ void print_test_result(char description[], int result)
 int main(int argc, char *argv[])
 {
   int result;
-  char* filename;
+  string filename;
   char* description;
   int *y_cuda;
   int *y_seq ;
