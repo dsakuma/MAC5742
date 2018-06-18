@@ -27,13 +27,15 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	unsigned int index = blockIdx.x;
 	mintile[tid] = input[index][tid];
 
-  // if(mintile[tid] > 0)
-  // {
-  //   printf("mintile:\n");
-  //   for(int i=0; i<n_mat; i++)
-  //     printf("%d ", mintile[i]);
-  //   printf("\n");
-  // }
+  printf("i=%d, tid=%d, part_min=%d\n", index, tid, mintile[tid]);
+
+  if(mintile[tid] > 0)
+  {
+    printf("mintile:\n");
+    for(int i=0; i<n_mat; i++)
+      printf("%d ", mintile[i]);
+    printf("\n");
+  }
 
   __syncthreads();
 
