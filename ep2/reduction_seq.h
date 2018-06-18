@@ -1,1 +1,1 @@
-int* reduction_seq(char filename[], int D);
+int* reduction_seq(const char filename[], int D);

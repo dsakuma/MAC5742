@@ -49,7 +49,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	}
 }
 
-int* reduction_cuda(char filename[], int D)
+int* reduction_cuda(const char filename[], int D)
 {
   int **x;
   int *y;
