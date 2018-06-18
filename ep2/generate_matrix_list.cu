@@ -5,36 +5,6 @@
 
 #define MATRIX_ORDER 3 // ordem das matrizes (quadradas)
 
-// int randMToN(int M, int N)
-// {
-//     return M + (rand() / ( RAND_MAX / (N-M) ) ) ;
-// }
-//
-// void write_matrix_list(int n_mat, char filename[])
-// {
-//   /* open file */
-//   FILE *f = fopen(filename, "w");
-//   if (f == NULL)
-//   {
-//       printf("Error opening file!\n");
-//       exit(1);
-//   }
-//   /* print num matrizes */
-//   fprintf(f, "%d\n", n_mat);
-//   fprintf(f, "***\n");
-//   /* write matrix */
-//   for(int n=1; n<=n_mat; n++)
-//   {
-//     for(int i=1; i<=MATRIX_ORDER; i++)
-//     {
-//         fprintf(f, "%d %d %d\n", randMToN(0,10), randMToN(0,10), randMToN(0,10));
-//     }
-//     fprintf(f, "***\n");
-//   }
-//   /* close file */
-//   fclose(f);
-// }
-
 int main(int argc, char **argv)
 {
    printf("Generating matrix list!\n");

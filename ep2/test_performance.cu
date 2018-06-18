@@ -24,11 +24,10 @@ int main(int argc, char *argv[])
   gettimeofday(&t0, NULL);
   reduction_cuda(filename, MATRIX_ORDER);
   gettimeofday(&t1, NULL);
-  gettimeofday(&t2, NULL);
   reduction_seq(filename, MATRIX_ORDER);
-  gettimeofday(&t3, NULL);
-  // //then
-  print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
+  gettimeofday(&t2, NULL);
+  //then
+  print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t1, t2));
 
   /* Teste 2: Redução de 100 mil matrizes */
   description = "Redução de 100 mil matrizes";
@@ -39,11 +38,10 @@ int main(int argc, char *argv[])
   gettimeofday(&t0, NULL);
   reduction_cuda(filename, MATRIX_ORDER);
   gettimeofday(&t1, NULL);
-  gettimeofday(&t2, NULL);
   reduction_seq(filename, MATRIX_ORDER);
-  gettimeofday(&t3, NULL);
-  // //then
-  print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
+  gettimeofday(&t2, NULL);
+  //then
+  print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t1, t2));
 
   /* Teste 3: Redução de 1M matrizes */
   description = "Redução de 1M matrizes";
@@ -54,11 +52,10 @@ int main(int argc, char *argv[])
   gettimeofday(&t0, NULL);
   reduction_cuda(filename, MATRIX_ORDER);
   gettimeofday(&t1, NULL);
-  gettimeofday(&t2, NULL);
   reduction_seq(filename, MATRIX_ORDER);
-  gettimeofday(&t3, NULL);
-  // //then
-  print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
+  gettimeofday(&t2, NULL);
+  //then
+  print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t1, t2));
 
   /* Teste 4: Redução de 10M matrizes */
   description = "Redução de 10M matrizes";
@@ -69,11 +66,10 @@ int main(int argc, char *argv[])
   gettimeofday(&t0, NULL);
   reduction_cuda(filename, MATRIX_ORDER);
   gettimeofday(&t1, NULL);
-  gettimeofday(&t2, NULL);
   reduction_seq(filename, MATRIX_ORDER);
-  gettimeofday(&t3, NULL);
-  // //then
-  print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
+  gettimeofday(&t2, NULL);
+  //then
+  print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t1, t2));
 
   return 0;
 }
