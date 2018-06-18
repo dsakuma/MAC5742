@@ -58,7 +58,7 @@ int* reduction_seq(char filename[], int matrix_order)
       y[matrix_order*j+2] = x[matrix_order*j+2][0];
       // printf("success\n");
   }
-  fscanf(fp, "%*s");  // skip line
+  // fscanf(fp, "%*s");  // skip line
 
   /* sequential reduction */
   // for(int i=1; i < n_mat; i++)
@@ -76,7 +76,7 @@ int* reduction_seq(char filename[], int matrix_order)
 
   // print_matrix(x, n_els, n_mat);
 
-  fclose(fp);
+  // fclose(fp);
   printf("Finish reduction seq\n");
   return y;
 }
