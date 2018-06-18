@@ -44,12 +44,12 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
     int idx = 2*s*tid;
-    if(tid == 2 && index ==1)
-      printf("index=%d (bloco), tid=%d (n_mat), idx=%d, blockDim.x-1=%d\n", index, tid, idx,blockDim.x);
+    // if(tid == 2 && index ==1)
+    //   printf("index=%d (bloco), tid=%d (n_mat), idx=%d, blockDim.x-1=%d\n", index, tid, idx,blockDim.x);
 		if (idx+s < blockDim.x)
 		{
-      if(tid == 2 && index ==1)
-        printf("mintile[idx]=%d, mintile[idx+s]=%d\n", mintile[idx], mintile[idx + s]);
+      // if(tid == 2 && index ==1)
+      //   printf("mintile[idx]=%d, mintile[idx+s]=%d\n", mintile[idx], mintile[idx + s]);
 
 			if (mintile[idx + s] < mintile[idx])
       {
