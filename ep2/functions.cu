@@ -6,7 +6,6 @@
 
 void print_matrix(int** matrix, int n_rows, int n_cols)
 {
-	printf("Printing matrix...\n");
 	for(int i=0; i<n_rows; i++)
 	{
 		for(int j=0; j<n_cols; j++)
