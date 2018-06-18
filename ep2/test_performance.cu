@@ -24,10 +24,10 @@ int main(int argc, char *argv[])
   write_matrix_list(10000, filename, MATRIX_ORDER);
   //when
   gettimeofday(&t0, NULL);
-  y_cuda = reduction_cuda(filename, MATRIX_ORDER);
+  reduction_cuda(filename, MATRIX_ORDER);
   gettimeofday(&t1, NULL);
   gettimeofday(&t2, NULL);
-  y_seq = reduction_seq(filename, MATRIX_ORDER);
+  reduction_seq(filename, MATRIX_ORDER);
   gettimeofday(&t3, NULL);
   // //then
   print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
