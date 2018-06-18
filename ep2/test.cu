@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
   print_test_result(description, result);
 
   /* Teste 6: 10k matrizes */
-  description = "Dez mil matrizes (acontece bus error)";
+  description = "Dez mil matrizes (usa bastante memória da gpu)";
   //given
   filename = "data/teste_10k.txt";
   write_matrix_list(10000, filename, MATRIX_ORDER);
