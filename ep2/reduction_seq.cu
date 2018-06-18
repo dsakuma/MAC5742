@@ -54,7 +54,7 @@ int* reduction_seq(char filename[], int matrix_order)
   for(int j=0; j < matrix_order; j++)
   {
       fscanf(fp, "%d %d %d", &val1, &val2, &val3);
-      y[matrix_order*j = val1;
+      y[matrix_order*j] = val1;
       y[matrix_order*j+1] = val2;
       y[matrix_order*j+2] = val3;
       // printf("success\n");
