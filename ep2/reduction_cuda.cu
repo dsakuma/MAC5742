@@ -53,7 +53,7 @@ int* reduction_cuda(const char filename[], int D)
 {
   int **x;
   int *y;
-  int n_els = D*D;
+  int n_els = D*D*D;
   int n_mat;
 
   FILE *fp;
