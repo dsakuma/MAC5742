@@ -17,7 +17,7 @@ EP2 - Redução em CUDA
 
 int main(int argc, char *argv[])
 {
-    char* filename = argv[1];
+    const char* filename = argv[1];
 
     int *y_cuda = reduction_cuda(filename, MATRIX_ORDER);
     int *y_seq = reduction_seq(filename, MATRIX_ORDER);
