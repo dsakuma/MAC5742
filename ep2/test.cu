@@ -28,7 +28,6 @@ void print_test_result(int test_number, int result)
     return;
 }
 
-
 int main(int argc, char *argv[])
 {
   int result;
@@ -46,6 +45,15 @@ int main(int argc, char *argv[])
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(1, result);
 
+  /* Test 2: Quantidade par de matrizes */
+  //given
+  filename = "data/teste_par.txt";
+  //when
+  y_cuda = reduction_cuda(filename, MATRIX_ORDER);
+  y_seq = reduction_seq(filename, MATRIX_ORDER);
+  //then
+  result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
+  print_test_result(1, result);
 
   return 0;
 }
