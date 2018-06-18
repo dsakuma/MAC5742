@@ -22,7 +22,9 @@ int main(int argc, char *argv[])
     int *y_cuda = reduction_cuda(filename, MATRIX_ORDER);
     int *y_seq = reduction_seq(filename, MATRIX_ORDER);
 
+    printf("Cuda reduction result:\n");
     print_vector(y_cuda, MATRIX_ORDER);
+    printf("Sequential reduction result:\n");
     print_vector(y_seq, MATRIX_ORDER);
 
     return 0;
