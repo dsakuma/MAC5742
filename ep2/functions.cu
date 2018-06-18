@@ -72,7 +72,7 @@ int randMToN(int M, int N)
     return M + (rand() / ( RAND_MAX / (N-M) ) ) ;
 }
 
-void write_matrix_list(int n_mat, char filename[], int matrix_order)
+void write_matrix_list(int n_mat, const char filename[], int matrix_order)
 {
   /* open file */
   FILE *f = fopen(filename, "w");

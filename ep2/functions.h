@@ -4,4 +4,4 @@ int get_n_mat(const char filename[]);
 int assert_vector(int* a, int* b, int size);
 void print_test_result(const char description[], int result);
 int randMToN(int M, int N);
-void write_matrix_list(int n_mat, char filename[], int matrix_order);
+void write_matrix_list(int n_mat, const char filename[], int matrix_order);
