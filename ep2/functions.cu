@@ -110,9 +110,9 @@ void print_performance_test_result(
   printf("Tempo Cuda: %ld us\n", time_elapsed_cuda);
   printf("Tempo Sequencial: %ld us\n", time_elapsed_seq);
   if(time_elapsed_cuda < time_elapsed_seq)
-    printf("A implementação Cuda foi mais rápida em: %ld us\n", time_elapsed_seq-time_elapsed_cuda);
+    printf("A implementação Cuda foi mais rápida em: %ld us\n\n", time_elapsed_seq-time_elapsed_cuda);
   else if (time_elapsed_cuda > time_elapsed_seq)
-    printf("A implementação Sequencial foi mais rápida em: %ld us\n", time_elapsed_cuda-time_elapsed_seq);
+    printf("A implementação Sequencial foi mais rápida em: %ld us\n\n", time_elapsed_cuda-time_elapsed_seq);
   else
-    printf("As duas implementações tiveram o mesmo tempo de execução\n");
+    printf("As duas implementações tiveram o mesmo tempo de execução\n\n");
 }

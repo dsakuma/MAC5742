@@ -65,5 +65,20 @@ int main(int argc, char *argv[])
   // //then
   print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
 
+  /* Teste 4: Redução de 10 mil matrizes */
+  description = "Redução de 10M matrizes";
+  //given
+  filename = "data/teste_10M.txt";
+  write_matrix_list(10000000, filename, MATRIX_ORDER);
+  //when
+  gettimeofday(&t0, NULL);
+  y_cuda = reduction_cuda(filename, MATRIX_ORDER);
+  gettimeofday(&t1, NULL);
+  gettimeofday(&t2, NULL);
+  y_seq = reduction_seq(filename, MATRIX_ORDER);
+  gettimeofday(&t3, NULL);
+  // //then
+  print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
+
   return 0;
 }
