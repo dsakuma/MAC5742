@@ -10,7 +10,7 @@ generate_matrix_list: generate_matrix_list.cu functions.cu
 test: test.cu reduction_cuda.cu reduction_seq.cu functions.cu
 	$(CC) $(CFLAGS) -o $@ $^
 
-test_performance: test.cu reduction_cuda.cu reduction_seq.cu functions.cu
+test_performance: test_performance.cu reduction_cuda.cu reduction_seq.cu functions.cu
 	$(CC) $(CFLAGS) -o $@ $^
 
 .PHONY: clean
