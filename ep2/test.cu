@@ -18,7 +18,7 @@ int assert_vector(int* a, int* b, int size)
   return 0;
 }
 
-void print_test_result(char description[], int result)
+void print_test_result(const char description[], int result)
 {
     if(result == 1){
       printf("Teste [%s]: Falhou!\n", description);
