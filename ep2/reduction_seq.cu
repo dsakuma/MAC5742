@@ -7,7 +7,7 @@
 #include "reduction_seq.h"
 
 
-int* reduction_seq(char filename[], int matrix_order)
+int* reduction_seq(const char filename[], int matrix_order)
 {
   int **x;
   int* y;
