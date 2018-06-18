@@ -30,7 +30,7 @@ void print_vector(int* vector, int D)
 	printf("\n");
 }
 
-int get_n_mat(char filename[])
+int get_n_mat(const char filename[])
 {
   int n_mat;
 
