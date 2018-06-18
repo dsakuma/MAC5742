@@ -13,6 +13,8 @@ int main(int argc, char *argv[])
 {
   const char* filename;
   const char* description;
+  int *y_cuda;
+  int *y_seq ;
   struct timeval t0, t1, t2, t3;
 
   /* Teste 1: Redução de 10 mil matrizes */
