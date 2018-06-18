@@ -32,17 +32,19 @@ void print_test_result(int test_number, int result)
 int main(int argc, char *argv[])
 {
   int result;
+  char* filename;
+  int *y_cuda;
+  int *y_seq ;
 
   /* Test 1: Quantidade ímpar de matrizes */
   //given
-  char* filename = "data/teste_impar.txt";
+  filename = "data/teste_impar.txt";
   //when
-  int *y_cuda = reduction_cuda(filename, MATRIX_ORDER);
-  int *y_seq = reduction_seq(filename, MATRIX_ORDER);
+  y_cuda = reduction_cuda(filename, MATRIX_ORDER);
+  y_seq = reduction_seq(filename, MATRIX_ORDER);
   //then
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(1, result);
-
 
 
   return 0;
