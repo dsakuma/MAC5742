@@ -45,7 +45,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	{
     int idx = 2*s*tid;
     if(tid == 2 && index ==1)
-      printf("index=%d (bloco), tid=%d (n_mat), part_min=%d\n", index, tid, mintile[tid]);
+      printf("index=%d (bloco), tid=%d (n_mat), part_min=%d\n", index, tid, mintile[idx]);
 		if (idx < blockDim.x-1)
 		{
       if(tid == 2 && index ==1)
