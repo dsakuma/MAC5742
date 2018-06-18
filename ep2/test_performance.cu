@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
   // //then
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
-  print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3))
+  print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t2, t3));
 
   return 0;
 }
