@@ -11,7 +11,7 @@ generate_matrix_list: generate_matrix_list.cu
 	$(CC) $(CFLAGS) -o $@ $^
 
 test: test.cu reduction_cuda.cu reduction_seq.cu functions.cu
-	$(CC) $(CFLAGS) -o $@ $^ -Wno-write-strings
+	$(CC) $(CFLAGS) -o $@ $^
 
 .PHONY: clean
 clean:
