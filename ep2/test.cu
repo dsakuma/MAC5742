@@ -18,13 +18,13 @@ int assert_vector(int* a, int* b, int size)
   return 0;
 }
 
-void print_test_result(int test_number, int result)
+void print_test_result(char description[], int result)
 {
     if(result == 1){
-      printf("Test %d failed!\n", test_number);
+      printf("Test [%s]: failed!\n", description);
       return;
     }
-    printf("Test %d passed!\n", test_number);
+    printf("Test [%s]: passed!\n", description);
     return;
 }
 
@@ -32,10 +32,12 @@ int main(int argc, char *argv[])
 {
   int result;
   char* filename;
+  char* description;
   int *y_cuda;
   int *y_seq ;
 
   /* Test 1: Quantidade ímpar de matrizes */
+  description = "Quantidade ímpar de matrizes"
   //given
   filename = "data/teste_impar.txt";
   //when
@@ -43,9 +45,10 @@ int main(int argc, char *argv[])
   y_seq = reduction_seq(filename, MATRIX_ORDER);
   //then
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
-  print_test_result(1, result);
+  print_test_result(description, result);
 
   /* Test 2: Quantidade par de matrizes */
+  description = "Quantidade par de matrizes"
   //given
   filename = "data/teste_par.txt";
   //when
@@ -53,7 +56,7 @@ int main(int argc, char *argv[])
   y_seq = reduction_seq(filename, MATRIX_ORDER);
   //then
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
-  print_test_result(1, result);
+  print_test_result(description, result);
 
   return 0;
 }
