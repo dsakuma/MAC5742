@@ -47,3 +47,22 @@ int get_n_mat(const char filename[])
   fclose(fp);
   return n_mat;
 }
+
+int assert_vector(int* a, int* b, int size)
+{
+  for(int i=0; i<size; i++){
+    if(a[i] != b[i])
+      return 1;
+  }
+  return 0;
+}
+
+void print_test_result(const char description[], int result)
+{
+    if(result == 1){
+      printf("Teste: %s [Falhou]\n", description);
+      return;
+    }
+    printf("Teste: %s [OK]\n", description);
+    return;
+}
