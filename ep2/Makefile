@@ -1,5 +1,5 @@
 CC      = nvcc
-CFLAGS  = -Xptxas --opt-level=3 -arch sm_30
+CFLAGS  = -Xptxas --opt-level=3 -arch sm_30 -Wno-write-strings
 
 main: main.cu reduction_cuda.cu reduction_seq.cu functions.cu
 	$(CC) $(CFLAGS) -o $@ $^
@@ -12,7 +12,6 @@ generate_matrix_list: generate_matrix_list.cu
 
 test: test.cu reduction_cuda.cu reduction_seq.cu functions.cu
 	$(CC) $(CFLAGS) -o $@ $^
-	./test
 
 .PHONY: clean
 clean:
