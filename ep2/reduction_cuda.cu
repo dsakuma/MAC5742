@@ -21,7 +21,7 @@ __cuda_safe_call (cudaError err, const char *filename, const int line_number)
 
 __global__ void min_kernel(int *result, int **input, int n_mat)
 {
-	__shared__ int mintile[1000];
+	__shared__ int mintile[3];
 
 	unsigned int tid = threadIdx.x;
 	unsigned int index = blockIdx.x;
@@ -53,7 +53,7 @@ int* reduction_cuda(const char filename[], int D)
 {
   int **x;
   int *y;
-  int n_els = D*D*D;
+  int n_els = D*D;
   int n_mat;
 
   FILE *fp;
