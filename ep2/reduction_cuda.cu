@@ -28,8 +28,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	mintile[tid] = input[index][tid];
 
   printf("index=%d (bloco), tid=%d (n_mat), part_min=%d\n", index, tid, mintile[tid]);
-  if(tid == 0 && index ==1)
-    printf("mintile[tid]=%d\n", mintile[tid]);
+
 
   // if(mintile[tid] > 0)
   // {
@@ -52,6 +51,8 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
         mintile[idx] = mintile[idx + s];
       }
 		}
+    if(tid == 0 && index ==1)
+      printf("mintile[tid]=%d\n", mintile[tid]);
 		__syncthreads();
     // if(mintile[tid] > 0)
     // {
