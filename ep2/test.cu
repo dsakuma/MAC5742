@@ -31,6 +31,8 @@ void print_test_result(int test_number, int result)
 
 int main(int argc, char *argv[])
 {
+  int result;
+  
   /* Test 1: Quantidade ímpar de matrizes */
   //given
   char* filename = "data/teste_impar.txt";
