@@ -6,8 +6,7 @@
 #include "functions.h"
 #include "reduction_cuda.h"
 
-#define BLOCKSIZE 32
-#define BLOCKSIZE_Z 1024    // avoid bus error when number of threads > 1024
+#define BLOCKSIZE 256
 
 #define CUDA_SAFE_CALL(err) __cuda_safe_call(err, __FILE__, __LINE__)
 
@@ -22,124 +21,109 @@ __cuda_safe_call (cudaError err, const char *filename, const int line_number)
     }
 }
 
-__global__ void partial_min(int **result, int **input)
+__global__ void min_reduction(int **result, int **input, int n_mat)
 {
 	__shared__ int mintile[BLOCKSIZE];
 
-	unsigned int tid = threadIdx.x;
-	unsigned int index_x = blockIdx.x;
-  unsigned int index_y = blockIdx.y;
-  unsigned int index_z = blockIdx.z;
-	mintile[tid] = input[index_x][BLOCKSIZE_Z*index_z + BLOCKSIZE*index_y + tid];
-
-	if(tid==0)
-		//printf("index=%d (bloco), tid=%d (n_mat), mintile=%d, blockDim.x=%d\n", index_x, tid, mintile[tid], blockDim.x);
-
-  	__syncthreads();
-
-	for (unsigned int s = 1; s < blockDim.x; s *= 2)
-	{
-        int idx = 2*s*tid;
-		if (idx+s < blockDim.x)
-		{
-			if (mintile[idx + s] < mintile[idx])
-            {
-                mintile[idx] = mintile[idx + s];
-            }
-		}
-		__syncthreads();
-	}
-
-	if (tid == 0)
-	{	
-		//printf("result[%d][%d]=%d\n", index_x, (index_z+1)*index_y, mintile[0]);
-		result[index_x][index_z*BLOCKSIZE + index_y] = mintile[0];
-	}
-}
-
-
-__global__ void final_min(int *result, int **input)
-{
-    __shared__ int mintile[BLOCKSIZE_Z];
-
+    unsigned int n_elements = n_mat;
     unsigned int tid = threadIdx.x;
-    unsigned int index = blockIdx.x;
-    mintile[tid] = input[index][tid];
-
-    __syncthreads();
-
-    // strided index and non-divergent branch
-    for (unsigned int s = 1; s < blockDim.x; s *= 2)
+    unsigned int index_x = blockIdx.x;
+    unsigned int index_y = blockIdx.y * blockDim.y;
+    unsigned int last_pos;
+    
+    // for(int n_elements = n_mat; n_elements > BLOCKSIZE; n_elements /= ceil(n_elements/(float)BLOCKSIZE))
+    while(n_elements > 1)
     {
-        int idx = 2*s*tid;
-        if (idx+s < blockDim.x)
+        for(int i = index_y + tid; i < n_elements; i += BLOCKSIZE)
         {
-            if (mintile[idx + s] < mintile[idx])
-            {
-                mintile[idx] = mintile[idx + s];
-            }
-        }
-        __syncthreads();
-    }
+        	mintile[tid] = input[index_x][i];
 
-    if (tid == 0)
-    {
-        result[index] = mintile[0];
+            __syncthreads();
+
+        	// if(tid==0)
+        	// 	printf("index_x=%d, index_y=%d, tid=%d, mintile=%d, blockDim.x=%d, blockDim.y=%d, gridDim.x=%d, gridDim.y=%d\n",
+         //            index_x, index_y, tid, mintile[tid], blockDim.x, blockDim.y, gridDim.x, gridDim.y);
+
+            // if(blockIdx.y == gridDim.y-1) {
+            //     last_pos = n_elements < BLOCKSIZE ? n_elements : BLOCKSIZE; // ultimo bloco em y
+            // } else {
+            //     last_pos = stride*BLOCKSIZE;
+            // }
+
+            last_pos = n_elements < BLOCKSIZE ? n_elements : BLOCKSIZE;
+
+        	for (unsigned int s = 1; s < last_pos; s *= 2)
+        	{
+                int idx = 2*s*tid;
+        		if (idx+s < last_pos)
+        		{
+        			if (mintile[idx+s] < mintile[idx])
+                        mintile[idx] = mintile[idx+s];
+        		}
+        		__syncthreads();
+        	}
+
+        	if (tid == 0)
+        	{	
+        		// printf("last_pos=%d, i=%d, mintile[0]=%d\n", last_pos, i, mintile[0]);
+        		input[index_x][index_y] = mintile[0];
+        	}
+        }
+        n_elements = ceil(n_elements/(float)BLOCKSIZE);
     }
 }
 
 
 int* reduction_cuda(const char filename[], int D)
 {
-  int **x;
-  int **y;
-  int *res;
-  int n_els = D*D;
-  int n_mat, blocks_y, blocks_z, total_blocks;
+    int **x, **y, *res;
+    int n_mat, ysize, numSMs;
+    int n_els = D*D;
 
-  FILE *fp;
-  int val1, val2, val3;
+    FILE *fp;
+    int val1, val2, val3;
 
-  CUDA_SAFE_CALL(cudaMallocManaged(&x, n_els * sizeof(int*)));
-  CUDA_SAFE_CALL(cudaMallocManaged(&y, n_els * sizeof(int*)));
-  CUDA_SAFE_CALL(cudaMallocManaged(&res, n_els * sizeof(int)));
+    CUDA_SAFE_CALL(cudaMallocManaged(&x, n_els * sizeof(int*)));
+    CUDA_SAFE_CALL(cudaMallocManaged(&y, n_els * sizeof(int*)));
 
-  fp = fopen(filename, "r");
-  fscanf(fp, "%d", &n_mat);
-  blocks_z = ceil(n_mat/(float) BLOCKSIZE_Z);
-  blocks_y = ceil(n_mat/(float) (blocks_z*BLOCKSIZE));
-  total_blocks = blocks_y*blocks_z;
+    fp = fopen(filename, "r");
+    fscanf(fp, "%d", &n_mat);
+    ysize = ceil(n_mat/(float)BLOCKSIZE);
 
-  printf("blocks_z: %d, blocks_y: %d, total: %d\n", blocks_z, blocks_y, total_blocks);  
-
-  for(int i=0; i < n_els; i++){
-    CUDA_SAFE_CALL(cudaMallocManaged(&x[i], n_mat * sizeof(int)));
-    CUDA_SAFE_CALL(cudaMallocManaged(&y[i], total_blocks * sizeof(int)));
-  }
-
-  fscanf(fp, "%*s"); // skip line
-
-  for(int i=0; i < n_mat; i++)
-  {
-    for(int j=0; j < D; j++)
+    for(int i=0; i < n_els; i++)
     {
-        fscanf(fp, "%d %d %d", &val1, &val2, &val3);
-        x[D*j][i] = val1;
-        x[D*j+1][i] = val2;
-        x[D*j+2][i] = val3;
+        CUDA_SAFE_CALL(cudaMallocManaged(&x[i], n_mat * sizeof(int)));
+        CUDA_SAFE_CALL(cudaMallocManaged(&y[i], ysize * sizeof(int)));
     }
-      fscanf(fp, "%*s");  // skip line
-  }
 
-  dim3 numBlocks(n_els, blocks_y, blocks_z);
-  dim3 threadsPerBlock(BLOCKSIZE);
+    fscanf(fp, "%*s"); // skip line
 
-  partial_min<<<numBlocks, threadsPerBlock>>>(y, x); //<<<number_of_blocks, block_size>>>
-  final_min<<<n_els, total_blocks>>>(res, y);
+    for(int i=0; i < n_mat; i++)
+    {
+        for(int j=0; j < D; j++)
+        {
+            fscanf(fp, "%d %d %d", &val1, &val2, &val3);
+            x[D*j][i] = val1;
+            x[D*j+1][i] = val2;
+            x[D*j+2][i] = val3;
+        }
+        fscanf(fp, "%*s");  // skip line
+    }
 
-  cudaDeviceSynchronize();
+    cudaDeviceGetAttribute(&numSMs, cudaDevAttrMultiProcessorCount, 0);
+    dim3 numBlocks(n_els, 32*numSMs);
+    dim3 threadsPerBlock(BLOCKSIZE);
 
-  //print_matrix(y, n_els, total_blocks);
-  
-  return res;
+    printf("n_els=%d, numSMs=%d, BLOCKSIZE=%d\n", n_els, numSMs, BLOCKSIZE);
+
+    // a funcao sobrescreve x e nao usa y
+    min_reduction<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
+
+    cudaDeviceSynchronize();
+
+    res = (int*) calloc(n_els, sizeof(int));
+    for(int i=0; i < n_els; i++)
+        res[i] = x[i][0];
+
+    return res;
 }
