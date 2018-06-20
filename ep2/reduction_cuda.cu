@@ -16,7 +16,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	unsigned int index = blockIdx.x;
 	mintile[tid] = input[index][tid];
 
-  // printf("index=%d (bloco), tid=%d (n_mat), part_min=%d, blockDim.x-1=%d\n", index, tid, mintile[tid], blockDim.x);
+  printf("index=%d (bloco), tid=%d (n_mat), part_min=%d, blockDim.x-1=%d\n", index, tid, mintile[tid], blockDim.x);
 
   __syncthreads();
 
@@ -79,10 +79,10 @@ int* reduction_cuda(const char filename[], int D)
       fscanf(fp, "%*s");  // skip line
   }
 
-  printf("nmat->%d\n", n_mat);
-  printf("threads->%d\n", THREADS_PER_BLOCK);
-  printf("ceil->%d\n", (int)ceil(n_mat/(float)THREADS_PER_BLOCK));
-  dim3 numBlocks(n_els, ceil(n_mat/THREADS_PER_BLOCK));
+  // printf("nmat->%d\n", n_mat);
+  // printf("threads->%d\n", THREADS_PER_BLOCK);
+  // printf("ceil->%d\n", (int)ceil(n_mat/(float)THREADS_PER_BLOCK));
+  dim3 numBlocks(n_els, (int)ceil(n_mat/(float)THREADS_PER_BLOCK));
   dim3 threadsPerBlock(THREADS_PER_BLOCK);
 
   min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
