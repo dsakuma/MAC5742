@@ -79,6 +79,8 @@ int* reduction_cuda(const char filename[], int D)
       fscanf(fp, "%*s");  // skip line
   }
 
+  printf("nmat->%d", n_mat);
+  printf("threads->%d", THREADS_PER_BLOCK);
   printf("ceil->%d", ceil(n_mat/THREADS_PER_BLOCK));
   dim3 numBlocks(n_els, ceil(n_mat/THREADS_PER_BLOCK));
   dim3 threadsPerBlock(THREADS_PER_BLOCK);
