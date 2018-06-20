@@ -8,19 +8,6 @@
 
 #define BLOCKSIZE 256
 
-#define CUDA_SAFE_CALL(err) __cuda_safe_call(err, __FILE__, __LINE__)
-
-inline void
-__cuda_safe_call (cudaError err, const char *filename, const int line_number)
-{
-  if (err != cudaSuccess)
-    {
-      printf ("CUDA error %i at %s:%i: %s\n",
-          err, filename, line_number, cudaGetErrorString (err));
-      exit (-1);
-    }
-}
-
 __global__ void min_reduction(int **result, int **input, int n_mat)
 {
 	__shared__ int mintile[BLOCKSIZE];
@@ -83,8 +70,8 @@ int* reduction_cuda(const char filename[], int D)
     FILE *fp;
     int val1, val2, val3;
 
-    CUDA_SAFE_CALL(cudaMallocManaged(&x, n_els * sizeof(int*)));
-    CUDA_SAFE_CALL(cudaMallocManaged(&y, n_els * sizeof(int*)));
+    cudaMallocManaged(&x, n_els * sizeof(int*));
+    cudaMallocManaged(&y, n_els * sizeof(int*));
 
     fp = fopen(filename, "r");
     fscanf(fp, "%d", &n_mat);
@@ -92,8 +79,8 @@ int* reduction_cuda(const char filename[], int D)
 
     for(int i=0; i < n_els; i++)
     {
-        CUDA_SAFE_CALL(cudaMallocManaged(&x[i], n_mat * sizeof(int)));
-        CUDA_SAFE_CALL(cudaMallocManaged(&y[i], ysize * sizeof(int)));
+        cudaMallocManaged(&x[i], n_mat * sizeof(int));
+        cudaMallocManaged(&y[i], ysize * sizeof(int));
     }
 
     fscanf(fp, "%*s"); // skip line
