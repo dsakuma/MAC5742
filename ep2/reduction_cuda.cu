@@ -13,10 +13,13 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	__shared__ int mintile[9];
 
 	unsigned int tid = threadIdx.x;
-	unsigned int index = blockIdx.x;
+	unsigned int index_x = blockIdx.x;
+  unsigned int index_y = blockIdx.y;
+
 	mintile[tid] = input[index][tid];
 
-  printf("index=%d (bloco), tid=%d (n_mat), part_min=%d, blockDim.x-1=%d\n", index, tid, mintile[tid], blockDim.x);
+  printf("index_x=%d (pos of mat),  index_y=%d (which partition), tid=%d (max 256), mintile[tid]=%d\n",
+          index_x, index_y, tid, mintile[tid]);
 
   __syncthreads();
 
