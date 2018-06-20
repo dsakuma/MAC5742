@@ -16,7 +16,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	unsigned int index_x = blockIdx.x;
   unsigned int index_y = blockIdx.y;
 
-	mintile[tid] = input[index][tid];
+	mintile[tid] = input[index_x][tid];
 
   printf("index_x=%d (pos of mat),  index_y=%d (which partition), tid=%d (max 256), mintile[tid]=%d\n",
           index_x, index_y, tid, mintile[tid]);
