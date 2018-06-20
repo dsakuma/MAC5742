@@ -25,7 +25,7 @@ int* reduction_cuda(const char filename[], int D)
     // allocate GPU memory
     cudaMalloc((void **) &d_in, ARRAY_BYTES);
     cudaMalloc((void **) &d_intermediate, ARRAY_BYTES); // overallocated
-    cudaMalloc((void **) &d_out, sizeof(float));`
+    cudaMalloc((void **) &d_out, sizeof(float));
 
     return y;
 }
