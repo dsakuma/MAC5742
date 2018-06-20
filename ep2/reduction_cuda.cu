@@ -30,7 +30,9 @@ int* reduction_cuda(const char filename[], int D)
     // transfer the input array to the GPU
     cudaMemcpy(d_in, h_in, ARRAY_BYTES, cudaMemcpyHostToDevice);
 
-    
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
 
     return y;
 }
