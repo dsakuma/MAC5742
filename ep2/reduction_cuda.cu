@@ -24,28 +24,28 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
   __syncthreads();
 
 	// strided index and non-divergent branch
-	for (unsigned int s = 1; s < blockDim.x; s *= 2)
-	{
-    int idx = 2*s*tid;
-    // if(tid == 2 && index ==1)
-    //   printf("index=%d (bloco), tid=%d (n_mat), idx=%d, blockDim.x-1=%d\n", index, tid, idx,blockDim.x);
-		if (idx+s < blockDim.x)
-		{
-      // if(tid == 2 && index ==1)
-      //   printf("mintile[idx]=%d, mintile[idx+s]=%d\n", mintile[idx], mintile[idx + s]);
-
-			if (mintile[idx + s] < mintile[idx])
-      {
-        mintile[idx] = mintile[idx + s];
-      }
-		}
+	// for (unsigned int s = 1; s < blockDim.x; s *= 2)
+	// {
+  //   int idx = 2*s*tid;
+  //   // if(tid == 2 && index ==1)
+  //   //   printf("index=%d (bloco), tid=%d (n_mat), idx=%d, blockDim.x-1=%d\n", index, tid, idx,blockDim.x);
+	// 	if (idx+s < blockDim.x)
+	// 	{
+  //     // if(tid == 2 && index ==1)
+  //     //   printf("mintile[idx]=%d, mintile[idx+s]=%d\n", mintile[idx], mintile[idx + s]);
+  //
+	// 		if (mintile[idx + s] < mintile[idx])
+  //     {
+  //       mintile[idx] = mintile[idx + s];
+  //     }
+	// 	}
 		__syncthreads();
 	}
 
-	if (tid == 0)
-	{
-		result[index] = mintile[0];
-	}
+	// if (tid == 0)
+	// {
+	// 	result[index] = mintile[0];
+	// }
 }
 
 int* reduction_cuda(const char filename[], int D)
