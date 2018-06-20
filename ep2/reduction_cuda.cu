@@ -81,7 +81,7 @@ int* reduction_cuda(const char filename[], int D)
 
   printf("nmat->%d\n", n_mat);
   printf("threads->%d\n", THREADS_PER_BLOCK);
-  printf("ceil->%f\n", ceil(n_mat/(float)THREADS_PER_BLOCK));
+  printf("ceil->%d\n", ceil(n_mat/(float)THREADS_PER_BLOCK));
   dim3 numBlocks(n_els, ceil(n_mat/THREADS_PER_BLOCK));
   dim3 threadsPerBlock(THREADS_PER_BLOCK);
 
