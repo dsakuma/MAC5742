@@ -84,7 +84,31 @@ int main(int argc, char *argv[])
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
 
-  /* Teste 6: 10k matrizes */
+  /* Teste 6: 1024 matrizes */
+  description = "1024 matrizes (n max de threads por bloco)";
+  //given
+  filename = "data/teste_1024.txt";
+  write_matrix_list(1024, filename, MATRIX_ORDER);
+  //when
+  y_cuda = reduction_cuda(filename, MATRIX_ORDER);
+  y_seq = reduction_seq(filename, MATRIX_ORDER);
+  //then
+  result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
+  print_test_result(description, result);
+
+  /* Teste 7: 1025 matrizes */
+  description = "1025 matrizes (ultrapassa n max de threads por bloco)";
+  //given
+  filename = "data/teste_1025.txt";
+  write_matrix_list(1025, filename, MATRIX_ORDER);
+  //when
+  y_cuda = reduction_cuda(filename, MATRIX_ORDER);
+  y_seq = reduction_seq(filename, MATRIX_ORDER);
+  //then
+  result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
+  print_test_result(description, result);
+
+  /* Teste 8: 10k matrizes */
   description = "Dez mil matrizes (usa bastante memória da gpu)";
   //given
   filename = "data/teste_10k.txt";
