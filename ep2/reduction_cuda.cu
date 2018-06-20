@@ -6,23 +6,26 @@
 int* reduction_cuda(const char filename[], int D)
 {
     int *y;
-    int deviceCount;
-    cudaGetDeviceCount(&deviceCount);
-    if (deviceCount == 0) {
-        fprintf(stderr, "error: no devices supporting CUDA.\n");
-        exit(EXIT_FAILURE);
-    }
-    int dev = 0;
-    cudaSetDevice(dev);
 
-    cudaDeviceProp devProps;
-    if (cudaGetDeviceProperties(&devProps, dev) == 0)
-    {
-        printf("Using device %d:\n", dev);
-        printf("%s; global mem: %dB; compute v%d.%d; clock: %d kHz\n",
-               devProps.name, (double)devProps.totalGlobalMem,
-               (int)devProps.major, (int)devProps.minor,
-               (int)devProps.clockRate);
+    const int ARRAY_SIZE = 1 << 20;
+    const int ARRAY_BYTES = ARRAY_SIZE * sizeof(float);
+
+    // generate the input array on the host
+    float h_in[ARRAY_SIZE];
+    float sum = 0.0f;
+    for(int i = 0; i < ARRAY_SIZE; i++) {
+        // generate random float in [-1.0f, 1.0f]
+        h_in[i] = -1.0f + (float)random()/((float)RAND_MAX/2.0f);
+        sum += h_in[i];
     }
+
+    // declare GPU memory pointers
+    float * d_in, * d_intermediate, * d_out;
+
+    // allocate GPU memory
+    cudaMalloc((void **) &d_in, ARRAY_BYTES);
+    cudaMalloc((void **) &d_intermediate, ARRAY_BYTES); // overallocated
+    cudaMalloc((void **) &d_out, sizeof(float));`
+
     return y;
 }
