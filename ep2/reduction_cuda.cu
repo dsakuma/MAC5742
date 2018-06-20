@@ -20,9 +20,9 @@ int* reduction_cuda(const char filename[], int D)
     {
         printf("Using device %d:\n", dev);
         printf("%s; global mem: %dB; compute v%d.%d; clock: %d kHz\n",
-               devProps.name, (int)devProps.totalGlobalMem,
+               devProps.name, (double)devProps.totalGlobalMem,
                (int)devProps.major, (int)devProps.minor,
                (int)devProps.clockRate);
-    }    
+    }
     return y;
 }
