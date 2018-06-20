@@ -27,5 +27,10 @@ int* reduction_cuda(const char filename[], int D)
     cudaMalloc((void **) &d_intermediate, ARRAY_BYTES); // overallocated
     cudaMalloc((void **) &d_out, sizeof(float));
 
+    // transfer the input array to the GPU
+    cudaMemcpy(d_in, h_in, ARRAY_BYTES, cudaMemcpyHostToDevice);
+
+    
+
     return y;
 }
