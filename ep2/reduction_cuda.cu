@@ -6,6 +6,8 @@
 #include "functions.h"
 #include "reduction_cuda.h"
 
+#define THREADS_PER_BLOCK 256
+
 __global__ void min_kernel(int *result, int **input, int n_mat)
 {
 	__shared__ int mintile[9];
@@ -77,8 +79,9 @@ int* reduction_cuda(const char filename[], int D)
       fscanf(fp, "%*s");  // skip line
   }
 
-  dim3 numBlocks(D*D);
-  dim3 threadsPerBlock(n_mat);
+  printf("%d", ceil(n_mat/THREADS_PER_BLOCK));
+  dim3 numBlocks(n_els, ceil(n_mat/THREADS_PER_BLOCK));
+  dim3 threadsPerBlock(THREADS_PER_BLOCK);
 
   min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
 
