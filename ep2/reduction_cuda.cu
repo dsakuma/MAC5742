@@ -8,24 +8,6 @@
 
 #define THREADS_PER_BLOCK 256
 
-// struct Lock{
-//   int *mutex;
-//   Lock(void){
-//     int state = 0;
-//     cudaMalloc((void**) &mutex, sizeof(int));
-//     cudaMemcpy(mutex, &state, sizeof(int), cudaMemcpyHostToDevice);
-//   }
-//   ~Lock(void){
-//     cudaFree(mutex);
-//   }
-//   __device__ void lock(uint compare){
-//     while(atomicCAS(mutex, compare, 0xFFFFFFFF) != compare);    //0xFFFFFFFF is just a very large number. The point is no block index can be this big (currently).
-//   }
-//   __device__ void unlock(uint val){
-//     atomicExch(mutex, val+1);
-//   }
-// };
-
 __global__ void min_kernel(int *result, int **input, int n_mat)
 {
 	__shared__ int mintile[THREADS_PER_BLOCK];
@@ -85,22 +67,27 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 int* reduction_cuda(const char filename[], int D)
 {
   int **x;
-  int *y;
+  int **y;
   int n_els = D*D;
   int n_mat;
+	int n_partitions;
   // Lock myLock;
 
   FILE *fp;
   int val1, val2, val3;
 
   cudaMallocManaged(&x, n_els * sizeof(int*));
-  cudaMallocManaged(&y, n_els * sizeof(int));
+  cudaMallocManaged(&y, n_els * sizeof(int*));
 
   fp = fopen(filename, "r");
   fscanf(fp, "%d", &n_mat);
 
   for(int i=0; i < n_els; i++){
     cudaMallocManaged(&x[i], n_mat * sizeof(int));
+  }
+
+	for(int i=0; i < n_els; i++){
+    cudaMallocManaged(&y[i], n_mat * sizeof(int));
   }
 
   fscanf(fp, "%*s"); // skip line
@@ -118,22 +105,28 @@ int* reduction_cuda(const char filename[], int D)
   }
 
   //teste
-  y[0] = 999999999;
-  y[1] = 999999999;
-  y[2] = 999999999;
-  y[3] = 999999999;
-  y[4] = 999999999;
-  y[5] = 999999999;
-  y[6] = 999999999;
-  y[7] = 999999999;
-  y[8] = 999999999;
+  // y[0] = 999999999;
+  // y[1] = 999999999;
+  // y[2] = 999999999;
+  // y[3] = 999999999;
+  // y[4] = 999999999;
+  // y[5] = 999999999;
+  // y[6] = 999999999;
+  // y[7] = 999999999;
+  // y[8] = 999999999;
   // printf("nmat->%d\n", n_mat);
   // printf("threads->%d\n", THREADS_PER_BLOCK);
   // printf("ceil->%d\n", (int)ceil(n_mat/(float)THREADS_PER_BLOCK));
-  dim3 numBlocks(n_els, (int)ceil(n_mat/(float)THREADS_PER_BLOCK));
-  dim3 threadsPerBlock(THREADS_PER_BLOCK);
 
-  min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
+	do{
+		num_partitions = (int)ceil(n_mat/(float)THREADS_PER_BLOCK);
+		dim3 numBlocks(n_els, num_partitions);
+		dim3 threadsPerBlock(THREADS_PER_BLOCK);
+		n_mat = num_partitions;
+
+		// min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
+	}while(num_partitions > 1)
+
 
   cudaDeviceSynchronize();
   return y;
