@@ -38,9 +38,9 @@ __global__ void min_kernel(int **result, int **input, int n_mat)
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
     int idx = tid;
-    if(index_x ==0)
-      printf("index_x=%d (elem of mat), index_y=%d (partition), tid=%d (max 256), idx=%d, blockDim.x=%d, s=%d, start=%d\n",
-              index_x, index_y, tid, idx,blockDim.x, s, start);
+    // if(index_x ==0)
+    //   printf("index_x=%d (elem of mat), index_y=%d (partition), tid=%d (max 256), idx=%d, blockDim.x=%d, s=%d, start=%d\n",
+    //           index_x, index_y, tid, idx,blockDim.x, s, start);
 
     // if(index_x ==0 && index_y==0)
     //   printf("+++ idx+s=%d, blockDim.x=%d, n_mat=%d", idx+s, blockDim.x, n_mat);
@@ -122,7 +122,7 @@ int* reduction_cuda(const char filename[], int D)
 		n_partitions = (int)ceil(n_mat/(float)THREADS_PER_BLOCK);
 		dim3 numBlocks(n_els, n_partitions);
 		dim3 threadsPerBlock(THREADS_PER_BLOCK);
-		printf("Chamando o kernel: n_els=%d, n_partitions=%d, n_mat=%d\n", n_els, n_partitions, n_mat);
+		// printf("Chamando o kernel: n_els=%d, n_partitions=%d, n_mat=%d\n", n_els, n_partitions, n_mat);
 		min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
 		cudaDeviceSynchronize();
 		n_mat = n_partitions;
