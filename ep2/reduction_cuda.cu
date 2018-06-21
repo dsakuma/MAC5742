@@ -126,6 +126,15 @@ int* reduction_cuda(const char filename[], int D)
 		min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
 		cudaDeviceSynchronize();
 		n_mat = n_partitions;
+
+		for(int i=0; i < n_els; i++)
+		{
+			for(int j=0; j < n_mat; j++)
+			{
+					x[i][j] = y[i][j];
+			}
+		}
+
 	}while(n_partitions > 1);
 
 
