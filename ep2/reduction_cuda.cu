@@ -49,7 +49,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 
 	if (tid == 0)
 	{
-		result[index] = mintile[0];
+		result[index_x] = mintile[0];
 	}
 }
 
