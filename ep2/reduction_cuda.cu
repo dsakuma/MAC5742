@@ -17,6 +17,10 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
   unsigned int index_y = blockIdx.y;
 
   unsigned int start = (index_y*THREADS_PER_BLOCK)+tid;
+
+  if(start >= n_mat)
+    return;
+
 	mintile[tid] = input[index_x][start];
 
   printf("index_x=%d (elem of mat),  index_y=%d (which partition), tid=%d (max 256), mintile[tid]=%d\n",
