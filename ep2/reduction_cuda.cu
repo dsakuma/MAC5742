@@ -8,7 +8,7 @@
 
 #define THREADS_PER_BLOCK 256
 
-__global__ void min_kernel(int *result, int **input, int n_mat)
+__global__ void min_kernel(int **result, int **input, int n_mat)
 {
 	__shared__ int mintile[THREADS_PER_BLOCK];
 
@@ -59,8 +59,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 
 	if (tid == 0)
 	{
-    if(mintile[0] < result[index_x])
-		  result[index_x] = mintile[0];
+		 result[index_x][index_y] = mintile[0];
 	}
 }
 
@@ -123,10 +122,9 @@ int* reduction_cuda(const char filename[], int D)
 		n_partitions = (int)ceil(n_mat/(float)THREADS_PER_BLOCK);
 		dim3 numBlocks(n_els, n_partitions);
 		dim3 threadsPerBlock(THREADS_PER_BLOCK);
+		printf("Chamando o kernel\n");
+		min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
 		n_mat = n_partitions;
-		printf("aaa\n");
-
-		// min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
 	}while(n_partitions > 1);
 
 
