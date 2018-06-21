@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
 
-  /* Teste 5: 65 matrizes */
+  /* Teste 6: 65 matrizes */
   description = "65 matrizes (acontece bus error)";
   //given
   filename = "data/teste_65.txt";
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
 
-  /* Teste 6: 1024 matrizes */
+  /* Teste 7: 1024 matrizes */
   description = "1024 matrizes (n max de threads por bloco)";
   //given
   filename = "data/teste_1024.txt";
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
 
-  /* Teste 7: 1025 matrizes */
+  /* Teste 8: 1025 matrizes */
   description = "1025 matrizes (ultrapassa n max de threads por bloco)";
   //given
   filename = "data/teste_1025.txt";
@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
 
-  /* Teste 8: 10k matrizes */
+  /* Teste 9: 10k matrizes */
   description = "10k matrizes (usa bastante memória da gpu)";
   //given
   filename = "data/teste_10k.txt";
