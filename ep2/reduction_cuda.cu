@@ -26,7 +26,7 @@
 //   }
 // };
 
-__global__ void min_kernel(int *result, int **input, int n_mat, Lock myLock)
+__global__ void min_kernel(int *result, int **input, int n_mat)
 {
 	__shared__ int mintile[THREADS_PER_BLOCK];
 
@@ -88,7 +88,7 @@ int* reduction_cuda(const char filename[], int D)
   int *y;
   int n_els = D*D;
   int n_mat;
-  Lock myLock;
+  // Lock myLock;
 
   FILE *fp;
   int val1, val2, val3;
@@ -133,7 +133,7 @@ int* reduction_cuda(const char filename[], int D)
   dim3 numBlocks(n_els, (int)ceil(n_mat/(float)THREADS_PER_BLOCK));
   dim3 threadsPerBlock(THREADS_PER_BLOCK);
 
-  min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat, myLock); //<<<number_of_blocks, block_size>>>
+  min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
 
   cudaDeviceSynchronize();
   return y;
