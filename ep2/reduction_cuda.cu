@@ -16,36 +16,41 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	unsigned int index_x = blockIdx.x;
   unsigned int index_y = blockIdx.y;
 
-	mintile[tid] = input[index_x][tid];
+  unsigned int start = (index_y*THREADS_PER_BLOCK)+tid;
+	mintile[tid] = input[index_x][start];
 
-  printf("index_x=%d (pos of mat),  index_y=%d (which partition), tid=%d (max 256), mintile[tid]=%d\n",
+  printf("index_x=%d (elem of mat),  index_y=%d (which partition), tid=%d (max 256), mintile[tid]=%d\n",
           index_x, index_y, tid, mintile[tid]);
+  //x-> elemento
+  //y-> particao
+  //idx -> start
+  //idx+s -> end
 
   __syncthreads();
 
-	// // strided index and non-divergent branch
-	// for (unsigned int s = 1; s < blockDim.x; s *= 2)
-	// {
-  //   int idx = 2*s*tid;
-  //   // if(tid == 2 && index ==1)
-  //   //   printf("index=%d (bloco), tid=%d (n_mat), idx=%d, blockDim.x-1=%d\n", index, tid, idx,blockDim.x);
-	// 	if (idx+s < blockDim.x)
-	// 	{
-  //     // if(tid == 2 && index ==1)
-  //     //   printf("mintile[idx]=%d, mintile[idx+s]=%d\n", mintile[idx], mintile[idx + s]);
-  //
-	// 		if (mintile[idx + s] < mintile[idx])
-  //     {
-  //       mintile[idx] = mintile[idx + s];
-  //     }
-	// 	}
-	// 	__syncthreads();
-	// }
-  //
-	// if (tid == 0)
-	// {
-	// 	result[index] = mintile[0];
-	// }
+	// strided index and non-divergent branch
+	for (unsigned int s = 1; s < blockDim.x; s *= 2)
+	{
+    int idx = 2*s*start;
+    // if(tid == 2 && index ==1)
+    //   printf("index=%d (bloco), tid=%d (n_mat), idx=%d, blockDim.x-1=%d\n", index, tid, idx,blockDim.x);
+		if (idx+s < blockDim.x)
+		{
+      // if(tid == 2 && index ==1)
+      //   printf("mintile[idx]=%d, mintile[idx+s]=%d\n", mintile[idx], mintile[idx + s]);
+
+			if (mintile[idx + s] < mintile[idx])
+      {
+        mintile[idx] = mintile[idx + s];
+      }
+		}
+		__syncthreads();
+	}
+
+	if (tid == 0)
+	{
+		result[index] = mintile[0];
+	}
 }
 
 int* reduction_cuda(const char filename[], int D)
