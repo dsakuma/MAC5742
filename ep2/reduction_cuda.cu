@@ -120,7 +120,7 @@ int* reduction_cuda(const char filename[], int D)
 
 	do{
 		n_partitions = (int)ceil(n_mat/(float)THREADS_PER_BLOCK);
-		dim3 numBlocks(n_els, num_partitions);
+		dim3 numBlocks(n_els, n_partitions);
 		dim3 threadsPerBlock(THREADS_PER_BLOCK);
 		n_mat = n_partitions;
 		printf("aaa\n");
