@@ -118,6 +118,7 @@ int* reduction_cuda(const char filename[], int D)
 
     // a funcao sobrescreve x e nao usa y
     min_reduction<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
+    // min_reduction<<<2,2>>>(y, x, n_mat);
 
     cudaDeviceSynchronize();
 
