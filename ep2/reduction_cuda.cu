@@ -8,7 +8,25 @@
 
 #define THREADS_PER_BLOCK 256
 
-__global__ void min_kernel(int *result, int **input, int n_mat)
+struct Lock{
+  int *mutex;
+  Lock(void){
+    int state = 0;
+    cudaMalloc((void**) &mutex, sizeof(int));
+    cudaMemcpy(mutex, &state, sizeof(int), cudaMemcpyHostToDevice);
+  }
+  ~Lock(void){
+    cudaFree(mutex);
+  }
+  __device__ void lock(uint compare){
+    while(atomicCAS(mutex, compare, 0xFFFFFFFF) != compare);    //0xFFFFFFFF is just a very large number. The point is no block index can be this big (currently).
+  }
+  __device__ void unlock(uint val){
+    atomicExch(mutex, val+1);
+  }
+};
+
+__global__ void min_kernel(int *result, int **input, int n_mat, Lock myLock)
 {
 	__shared__ int mintile[THREADS_PER_BLOCK];
 
@@ -47,11 +65,12 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
       // if(index_x ==0 && index_y==0)
       //   printf("index_x=%d (elem of mat), index_y=%d (partition), tid=%d (max 256), idx=%d, blockDim.x=%d, s=%d, mintile[idx]=%d, mintile[idx+s]=%d\n",
       //           index_x, index_y, tid, idx,blockDim.x, s, mintile[idx], mintile[idx + s]);
-
+      myLock.lock(index_x);
 			if (mintile[idx + s] < mintile[idx])
       {
         mintile[idx] = mintile[idx + s];
       }
+      myLock.unlock(index_x);
 		}
 		__syncthreads();
 	}
@@ -69,6 +88,7 @@ int* reduction_cuda(const char filename[], int D)
   int *y;
   int n_els = D*D;
   int n_mat;
+  Lock myLock;
 
   FILE *fp;
   int val1, val2, val3;
@@ -113,7 +133,7 @@ int* reduction_cuda(const char filename[], int D)
   dim3 numBlocks(n_els, (int)ceil(n_mat/(float)THREADS_PER_BLOCK));
   dim3 threadsPerBlock(THREADS_PER_BLOCK);
 
-  min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
+  min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat, myLock); //<<<number_of_blocks, block_size>>>
 
   cudaDeviceSynchronize();
   return y;
