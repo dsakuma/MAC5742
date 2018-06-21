@@ -49,7 +49,8 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 
 	if (tid == 0)
 	{
-		result[index_x] = mintile[0];
+    if(mintile[0] < result[index_x])
+		  result[index_x] = mintile[0];
 	}
 }
 
@@ -87,6 +88,16 @@ int* reduction_cuda(const char filename[], int D)
       fscanf(fp, "%*s");  // skip line
   }
 
+  //teste
+  y[0] = 999;
+  y[1] = 999;
+  y[2] = 999;
+  y[3] = 999;
+  y[4] = 999;
+  y[5] = 999;
+  y[6] = 999;
+  y[7] = 999;
+  y[8] = 999;
   // printf("nmat->%d\n", n_mat);
   // printf("threads->%d\n", THREADS_PER_BLOCK);
   // printf("ceil->%d\n", (int)ceil(n_mat/(float)THREADS_PER_BLOCK));
