@@ -68,6 +68,7 @@ int* reduction_cuda(const char filename[], int D)
 {
   int **x;
   int **y;
+	int *res;
   int n_els = D*D;
   int n_mat;
 	int n_partitions;
@@ -130,5 +131,11 @@ int* reduction_cuda(const char filename[], int D)
 
 
   cudaDeviceSynchronize();
-  return y;
+  // return y;
+
+	res = (int*) calloc(n_els, sizeof(int));
+	for(int i=0; i < n_els; i++)
+			res[i] = y[i][0];
+
+	return res;
 }
