@@ -24,10 +24,8 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	mintile[tid] = input[index_x][start];
 
   // if(index_x ==0 )
-  // printf("index_x=%d (elem of mat),  index_y=%d (which partition), tid=%d (max 256), mintile[tid]=%d\n",
+  // printf("index_x=%d (elem of mat),  index_y=%d (partition), tid=%d (max 256), mintile[tid]=%d\n",
   //         index_x, index_y, tid, mintile[tid]);
-  //x-> elemento
-  //y-> particao
   //idx -> start
   //idx+s -> end
 
@@ -38,7 +36,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	{
     int idx = 2*s*tid;
     // if(index_x ==0 && index_y==0)
-      // printf("index_x=%d (elem of mat), index_y=%d (which partition), tid=%d (max 256), idx=%d, blockDim.x=%d, s=%d\n",
+      // printf("index_x=%d (elem of mat), index_y=%d (partition), tid=%d (max 256), idx=%d, blockDim.x=%d, s=%d\n",
               // index_x, index_y, tid, idx,blockDim.x, s);
 
     // if(index_x ==0 && index_y==0)
@@ -47,7 +45,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 		if (idx+s < blockDim.x  && start+s < n_mat)
 		{
       // if(index_x ==0 && index_y==0)
-      //   printf("index_x=%d (elem of mat), index_y=%d (which partition), tid=%d (max 256), idx=%d, blockDim.x=%d, s=%d, mintile[idx]=%d, mintile[idx+s]=%d\n",
+      //   printf("index_x=%d (elem of mat), index_y=%d (partition), tid=%d (max 256), idx=%d, blockDim.x=%d, s=%d, mintile[idx]=%d, mintile[idx+s]=%d\n",
       //           index_x, index_y, tid, idx,blockDim.x, s, mintile[idx], mintile[idx + s]);
 
 			if (mintile[idx + s] < mintile[idx])
