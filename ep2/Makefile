@@ -15,4 +15,4 @@ test_performance: test_performance.cu reduction_cuda.cu reduction_seq.cu functio
 
 .PHONY: clean
 clean:
-	rm -f *.o main test test_performance
+	rm -f *.o main test test_performance generate_matrix_list
