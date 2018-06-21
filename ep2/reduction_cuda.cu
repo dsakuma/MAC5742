@@ -18,7 +18,7 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 
   unsigned int start = (index_y*THREADS_PER_BLOCK)+tid;
 
-  if(start > n_mat)
+  if(start >= n_mat)
     return;
 
 	mintile[tid] = input[index_x][start];
