@@ -36,8 +36,8 @@ __global__ void min_kernel(int *result, int **input, int n_mat)
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
     int idx = 2*s*tid;
-    if(tid == 0 && index_x ==0)
-      printf("index_x=%d (elem of mat), tid=%d (max 256), idx=%d, blockDim.x=%d, s=%d\n", index_x, tid, idx,blockDim.x, s);
+    // if(tid == 0 && index_x ==0)
+      // printf("index_x=%d (elem of mat), tid=%d (max 256), idx=%d, blockDim.x=%d, s=%d\n", index_x, tid, idx,blockDim.x, s);
 		if (idx+s < blockDim.x && idx+s < n_mat)
 		{
       // if(tid == 2 && index ==1)
