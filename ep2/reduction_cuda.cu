@@ -6,7 +6,7 @@
 #include "functions.h"
 #include "reduction_cuda.h"
 
-#define THREADS_PER_BLOCK 2
+#define THREADS_PER_BLOCK 256
 
 __global__ void min_kernel(int *result, int **input, int n_mat)
 {
@@ -89,15 +89,15 @@ int* reduction_cuda(const char filename[], int D)
   }
 
   //teste
-  y[0] = 9999999;
-  y[1] = 9999999;
-  y[2] = 9999999;
-  y[3] = 9999999;
-  y[4] = 9999999;
-  y[5] = 9999999;
-  y[6] = 9999999;
-  y[7] = 9999999;
-  y[8] = 9999999;
+  y[0] = 999999999;
+  y[1] = 999999999;
+  y[2] = 999999999;
+  y[3] = 999999999;
+  y[4] = 999999999;
+  y[5] = 999999999;
+  y[6] = 999999999;
+  y[7] = 999999999;
+  y[8] = 999999999;
   // printf("nmat->%d\n", n_mat);
   // printf("threads->%d\n", THREADS_PER_BLOCK);
   // printf("ceil->%d\n", (int)ceil(n_mat/(float)THREADS_PER_BLOCK));
