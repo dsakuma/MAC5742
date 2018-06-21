@@ -104,20 +104,6 @@ int* reduction_cuda(const char filename[], int D)
       fscanf(fp, "%*s");  // skip line
   }
 
-  //teste
-  // y[0][0] = 999999999;
-  // y[1][0] = 999999999;
-  // y[2][0] = 999999999;
-  // y[3][0] = 999999999;
-  // y[4][0] = 999999999;
-  // y[5][0] = 999999999;
-  // y[6][0] = 999999999;
-  // y[7][0] = 999999999;
-  // y[8][0] = 999999999;
-  // printf("nmat->%d\n", n_mat);
-  // printf("threads->%d\n", THREADS_PER_BLOCK);
-  // printf("ceil->%d\n", (int)ceil(n_mat/(float)THREADS_PER_BLOCK));
-
 	do{
 		n_partitions = (int)ceil(n_mat/(float)THREADS_PER_BLOCK);
 		dim3 numBlocks(n_els, n_partitions);
@@ -130,15 +116,11 @@ int* reduction_cuda(const char filename[], int D)
 		for(int i=0; i < n_els; i++)
 		{
 			for(int j=0; j < n_mat; j++)
-			{
 					x[i][j] = y[i][j];
-			}
 		}
 
 	}while(n_partitions > 1);
 
-
-  // return y;
 
 	res = (int*) calloc(n_els, sizeof(int));
 	for(int i=0; i < n_els; i++)

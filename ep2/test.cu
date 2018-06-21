@@ -73,11 +73,11 @@ int main(int argc, char *argv[])
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
 
-  /* Teste 6: 65 matrizes */
-  description = "65 matrizes (acontece bus error)";
+  /* Teste 6: 255 matrizes */
+  description = "255 matrizes (n de threads por bloco - 1)";
   //given
-  filename = "data/teste_65.txt";
-  write_matrix_list(65, filename, MATRIX_ORDER);
+  filename = "data/teste_255.txt";
+  write_matrix_list(255, filename, MATRIX_ORDER);
   //when
   y_cuda = reduction_cuda(filename, MATRIX_ORDER);
   y_seq = reduction_seq(filename, MATRIX_ORDER);
@@ -85,11 +85,11 @@ int main(int argc, char *argv[])
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
 
-  /* Teste 7: 1024 matrizes */
-  description = "1024 matrizes (n max de threads por bloco)";
+  /* Teste 7: 256 matrizes */
+  description = "256 matrizes (n de threads por bloco)";
   //given
-  filename = "data/teste_1024.txt";
-  write_matrix_list(1024, filename, MATRIX_ORDER);
+  filename = "data/teste_256.txt";
+  write_matrix_list(256, filename, MATRIX_ORDER);
   //when
   y_cuda = reduction_cuda(filename, MATRIX_ORDER);
   y_seq = reduction_seq(filename, MATRIX_ORDER);
@@ -97,11 +97,11 @@ int main(int argc, char *argv[])
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
 
-  /* Teste 8: 1025 matrizes */
-  description = "1025 matrizes (ultrapassa n max de threads por bloco)";
+  /* Teste 8: 257 matrizes */
+  description = "257 matrizes (n de threads por bloco + 1)";
   //given
-  filename = "data/teste_1025.txt";
-  write_matrix_list(1025, filename, MATRIX_ORDER);
+  filename = "data/teste_257.txt";
+  write_matrix_list(257, filename, MATRIX_ORDER);
   //when
   y_cuda = reduction_cuda(filename, MATRIX_ORDER);
   y_seq = reduction_seq(filename, MATRIX_ORDER);
