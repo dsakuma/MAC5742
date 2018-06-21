@@ -10,7 +10,7 @@
 
 __global__ void min_kernel(int *result, int **input, int n_mat)
 {
-	__shared__ int mintile[9];
+	__shared__ int mintile[256];
 
 	unsigned int tid = threadIdx.x;
 	unsigned int index_x = blockIdx.x;
