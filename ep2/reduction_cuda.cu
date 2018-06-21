@@ -113,9 +113,9 @@ int* reduction_cuda(const char filename[], int D)
 		cudaDeviceSynchronize();
 		n_mat = n_partitions;
 
-		tmp = &x;
-		x = &y;
-		y = &tmp;
+		tmp = x;
+		x = y;
+		y = tmp;
 
 		// for(int i=0; i < n_els; i++)
 		// {
