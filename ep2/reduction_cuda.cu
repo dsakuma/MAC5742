@@ -124,11 +124,11 @@ int* reduction_cuda(const char filename[], int D)
 		dim3 threadsPerBlock(THREADS_PER_BLOCK);
 		printf("Chamando o kernel\n");
 		min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
+		cudaDeviceSynchronize();
 		n_mat = n_partitions;
 	}while(n_partitions > 1);
 
 
-  cudaDeviceSynchronize();
   // return y;
 
 	res = (int*) calloc(n_els, sizeof(int));
