@@ -49,6 +49,9 @@ int main(int argc, char *argv[])
   //then
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
+  print_vector(y_cuda, MATRIX_ORDER);
+  print_vector(y_seq, MATRIX_ORDER);
+
 
   /* Teste 4: Quantidade par de matrizes */
   description = "Quantidade par de matrizes";
