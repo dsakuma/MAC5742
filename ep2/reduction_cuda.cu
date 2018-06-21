@@ -126,7 +126,7 @@ int* reduction_cuda(const char filename[], int D)
 		printf("aaa\n");
 
 		// min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
-	}while(num_partitions > 1);
+	}while(n_partitions > 1);
 
 
   cudaDeviceSynchronize();
