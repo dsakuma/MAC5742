@@ -6,7 +6,7 @@
 #include "functions.h"
 #include "reduction_cuda.h"
 
-#define THREADS_PER_BLOCK 256
+#define THREADS_PER_BLOCK 1024
 
 __global__ void min_kernel(int **result, int **input, int n_mat)
 {
