@@ -55,13 +55,34 @@ Para rodar o utilitário de histograma
 4. Descrição do problema/solução
 -----------------------
 
-Neste exercício-programa, foi desenvolvido um programa em CUDA (versão 9) C/C++ para realizar uma operação de redução de um conjunto de matrizes. A redução é uma abordagem de divisão e conquista, na qual o problema é particionado e resolvido em partes, que depois são combinadas para encontrar a solução final. Aqui, fizemos a redução das matrizes a fim de encontrar os mínimos.
+Neste exercício-programa, foi desenvolvido um programa em CUDA (versão 9) C/C++ para realizar uma
+operação de redução de um conjunto de matrizes. A redução é uma abordagem de divisão e conquista,
+na qual o problema é particionado e resolvido em partes, que depois são combinadas para encontrar
+a solução final. Aqui, fizemos a redução das matrizes a fim de encontrar os mínimos.
 
-O programa recebe como entrada um arquivo .txt contendo n matrizes de tamanho 3 x 3 (equivalente a vetores unidimensionais de tamanho 9). É alocada uma matriz de tamanho 9 x n para receber os valores de entrada. Em cada linha i, são inseridos os elementos da posição i das n matrizes. Assim, o problema se torna a redução de 9 vetores de tamanho n, que resulta num único vetor de tamanho 9 contendo os valores mínimos finais.
+O programa recebe como entrada um arquivo .txt contendo n matrizes de tamanho 3 x 3 (equivalente
+a vetores unidimensionais de tamanho 9). É alocada uma matriz de tamanho 9 x n para receber os
+valores de entrada. Em cada linha i, são inseridos os elementos da posição i das n matrizes. Assim,
+o problema se torna a redução de 9 vetores de tamanho n, que resulta num único vetor de tamanho 9
+contendo os valores mínimos finais.
 
-O mínimo de cada vetor pode ser encontrado com uma busca em árvore, comparando elementos dois a dois e retornando o mínimo parcial entre eles. Para evitar divergência de branch, o mínimo entre dois inteiros não-negativos x e y pode ser computado com 0.5(abs(x+y) - abs(x-y)). A cada iteração da busca, a quantidade de elementos é reduzida pela metade, até que reste um único elemento, o mínimo global. Esta abordagem é intrinsicamente paralelizável: para um vetor de tamanho n, podem ser disparadas n/2 threads em paralelo.
+O mínimo de cada vetor pode ser encontrado com uma busca em árvore, comparando elementos dois a
+dois e retornando o mínimo parcial entre eles. Para evitar divergência de branch, o mínimo entre
+dois inteiros não-negativos x e y pode ser computado com 0.5(abs(x+y) - abs(x-y)). A cada iteração
+da busca, a quantidade de elementos é reduzida pela metade, até que reste um único elemento, o
+mínimo global. Esta abordagem é intrinsicamente paralelizável: para um vetor de tamanho n, podem
+ser disparadas n/2 threads em paralelo.
 
-Tendo o problema modelado, é necessário então estudar um pouco da arquitetura das GPUs da NVIDIA. As threads dentro da GPU ficam organizadas em blocos. Cada bloco tem uma memória compartilhada própria (que não é acessada pelos demais blocos) e pode disparar até 1024 threads, porém a prática mais comum e que costuma desempenhar melhor é usar 256 threads. Adotamos essa quantidade - ela permite um bom desempenho sem causar muito overhead de criação de threads. Assim, se um vetor tem tamanho maior que 256, é necessário particioná-lo e reduzi-lo em mais de um bloco de forma independente. O kernel de redução é inicializado com um grid de 9 blocos na direção x e ceil(n/256) blocos na direção y, onde n é a dimensão dos vetores (quantidade de matrizes). Cada bloco retorna um mínimo parcial e o kernel é chamado recursivamente na CPU. Como CUDA não tem sincronização global, essa recursão funciona como uma barreira de sincronização entre os blocos.
+Tendo o problema modelado, é necessário então estudar um pouco da arquitetura das GPUs da NVIDIA.
+As threads dentro da GPU ficam organizadas em blocos. Cada bloco tem uma memória compartilhada
+própria (que não é acessada pelos demais blocos) e pode disparar até 1024 threads, porém a prática
+mais comum e que costuma desempenhar melhor é usar 256 threads. Adotamos essa quantidade - ela
+permite um bom desempenho sem causar muito overhead de criação de threads. Assim, se um vetor tem
+tamanho maior que 256, é necessário particioná-lo e reduzi-lo em mais de um bloco de forma
+independente. O kernel de redução é inicializado com um grid de 9 blocos na direção x e
+ceil(n/256) blocos na direção y, onde n é a dimensão dos vetores (quantidade de matrizes). Cada
+bloco retorna um mínimo parcial e o kernel é chamado recursivamente na CPU. Como CUDA não tem
+sincronização global, essa recursão funciona como uma barreira de sincronização entre os blocos.
 
 xx
 
@@ -71,6 +92,26 @@ xx
 placas:
 GeForce GTX Titan X
 Tesla K40c
+
+Teste: Redução de 1M matrizes
+Tempo Cuda: 1039077 us
+Tempo Sequencial: 1009755 us
+A implementação Sequencial foi mais rápida em: 29322 us
+
+Teste: Redução de 2M matrizes
+Tempo Cuda: 1933528 us
+Tempo Sequencial: 1925806 us
+A implementação Sequencial foi mais rápida em: 7722 us
+
+Teste: Redução de 5M matrizes
+Tempo Cuda: 4849801 us
+Tempo Sequencial: 4883339 us
+A implementação Cuda foi mais rápida em: 33538 us
+
+Teste: Redução de 10M matrizes
+Tempo Cuda: 9750946 us
+Tempo Sequencial: 9631444 us
+A implementação Sequencial foi mais rápida em: 119502 us
 
 
 6. Conclusões
