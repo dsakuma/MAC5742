@@ -8,23 +8,23 @@
 
 #define THREADS_PER_BLOCK 256
 
-struct Lock{
-  int *mutex;
-  Lock(void){
-    int state = 0;
-    cudaMalloc((void**) &mutex, sizeof(int));
-    cudaMemcpy(mutex, &state, sizeof(int), cudaMemcpyHostToDevice);
-  }
-  ~Lock(void){
-    cudaFree(mutex);
-  }
-  __device__ void lock(uint compare){
-    while(atomicCAS(mutex, compare, 0xFFFFFFFF) != compare);    //0xFFFFFFFF is just a very large number. The point is no block index can be this big (currently).
-  }
-  __device__ void unlock(uint val){
-    atomicExch(mutex, val+1);
-  }
-};
+// struct Lock{
+//   int *mutex;
+//   Lock(void){
+//     int state = 0;
+//     cudaMalloc((void**) &mutex, sizeof(int));
+//     cudaMemcpy(mutex, &state, sizeof(int), cudaMemcpyHostToDevice);
+//   }
+//   ~Lock(void){
+//     cudaFree(mutex);
+//   }
+//   __device__ void lock(uint compare){
+//     while(atomicCAS(mutex, compare, 0xFFFFFFFF) != compare);    //0xFFFFFFFF is just a very large number. The point is no block index can be this big (currently).
+//   }
+//   __device__ void unlock(uint val){
+//     atomicExch(mutex, val+1);
+//   }
+// };
 
 __global__ void min_kernel(int *result, int **input, int n_mat, Lock myLock)
 {
@@ -65,12 +65,12 @@ __global__ void min_kernel(int *result, int **input, int n_mat, Lock myLock)
       // if(index_x ==0 && index_y==0)
       //   printf("index_x=%d (elem of mat), index_y=%d (partition), tid=%d (max 256), idx=%d, blockDim.x=%d, s=%d, mintile[idx]=%d, mintile[idx+s]=%d\n",
       //           index_x, index_y, tid, idx,blockDim.x, s, mintile[idx], mintile[idx + s]);
-      myLock.lock(index_x);
+      // myLock.lock(index_x);
 			if (mintile[idx + s] < mintile[idx])
       {
         mintile[idx] = mintile[idx + s];
       }
-      myLock.unlock(index_x);
+      // myLock.unlock(index_x);
 		}
 		__syncthreads();
 	}
