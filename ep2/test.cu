@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
   description = "Uma matriz";
   //given
   filename = "data/teste_1.txt";
+  write_matrix_list(1, filename, MATRIX_ORDER);
   //when
   y_cuda = reduction_cuda(filename, MATRIX_ORDER);
   y_seq = reduction_seq(filename, MATRIX_ORDER);
@@ -32,6 +33,7 @@ int main(int argc, char *argv[])
   description = "Duas matrizes";
   //given
   filename = "data/teste_2.txt";
+  write_matrix_list(2, filename, MATRIX_ORDER);
   //when
   y_cuda = reduction_cuda(filename, MATRIX_ORDER);
   y_seq = reduction_seq(filename, MATRIX_ORDER);
@@ -43,6 +45,7 @@ int main(int argc, char *argv[])
   description = "Quantidade ímpar de matrizes";
   //given
   filename = "data/teste_impar.txt";
+  write_matrix_list(3, filename, MATRIX_ORDER);
   //when
   y_cuda = reduction_cuda(filename, MATRIX_ORDER);
   y_seq = reduction_seq(filename, MATRIX_ORDER);
@@ -55,6 +58,7 @@ int main(int argc, char *argv[])
   description = "Quantidade par de matrizes";
   //given
   filename = "data/teste_par.txt";
+  write_matrix_list(4, filename, MATRIX_ORDER);
   //when
   y_cuda = reduction_cuda(filename, MATRIX_ORDER);
   y_seq = reduction_seq(filename, MATRIX_ORDER);
@@ -66,6 +70,7 @@ int main(int argc, char *argv[])
   description = "Dez matrizes (a última thread não tem com o que comparar)";
   //given
   filename = "data/teste_10.txt";
+  write_matrix_list(10, filename, MATRIX_ORDER);
   //when
   y_cuda = reduction_cuda(filename, MATRIX_ORDER);
   y_seq = reduction_seq(filename, MATRIX_ORDER);
@@ -121,7 +126,19 @@ int main(int argc, char *argv[])
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
 
-  /* Teste 10: 1M matrizes */
+  /* Teste 9: 100k matrizes */
+  description = "10k matrizes (usa bastante memória da gpu)";
+  //given
+  filename = "data/teste_100k.txt";
+  write_matrix_list(100000, filename, MATRIX_ORDER);
+  //when
+  y_cuda = reduction_cuda(filename, MATRIX_ORDER);
+  y_seq = reduction_seq(filename, MATRIX_ORDER);
+  //then
+  result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
+  print_test_result(description, result);
+
+  /* Teste 11: 1M matrizes */
   description = "1M matrizes (usa bastante memória da gpu)";
   //given
   filename = "data/teste_1M.txt";
@@ -133,7 +150,7 @@ int main(int argc, char *argv[])
   result = assert_vector(y_cuda, y_seq, MATRIX_ORDER*MATRIX_ORDER);
   print_test_result(description, result);
 
-  /* Teste 11: 10M matrizes */
+  /* Teste 12: 10M matrizes */
   description = "10M matrizes (usa bastante memória da gpu)";
   //given
   filename = "data/teste_10M.txt";
