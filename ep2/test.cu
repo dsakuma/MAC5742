@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
   print_test_result(description, result);
 
   /* Teste 11: 10M matrizes */
-  description = "1M matrizes (usa bastante memória da gpu)";
+  description = "10M matrizes (usa bastante memória da gpu)";
   //given
   filename = "data/teste_10M.txt";
   write_matrix_list(10000000, filename, MATRIX_ORDER);
