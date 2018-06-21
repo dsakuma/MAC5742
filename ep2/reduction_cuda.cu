@@ -119,14 +119,14 @@ int* reduction_cuda(const char filename[], int D)
   // printf("ceil->%d\n", (int)ceil(n_mat/(float)THREADS_PER_BLOCK));
 
 	do{
-		num_partitions = (int)ceil(n_mat/(float)THREADS_PER_BLOCK);
+		n_partitions = (int)ceil(n_mat/(float)THREADS_PER_BLOCK);
 		dim3 numBlocks(n_els, num_partitions);
 		dim3 threadsPerBlock(THREADS_PER_BLOCK);
-		n_mat = num_partitions;
+		n_mat = n_partitions;
 		printf("aaa\n");
 
 		// min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
-	}while(num_partitions > 1)
+	}while(num_partitions > 1);
 
 
   cudaDeviceSynchronize();
