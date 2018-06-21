@@ -34,7 +34,6 @@ __global__ void min_kernel(int **result, int **input, int n_mat)
 
   __syncthreads();
 
-	// strided index and non-divergent branch
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
     int idx = tid;
@@ -120,7 +119,6 @@ int* reduction_cuda(const char filename[], int D)
 		}
 
 	}while(n_partitions > 1);
-
 
 	res = (int*) calloc(n_els, sizeof(int));
 	for(int i=0; i < n_els; i++)
