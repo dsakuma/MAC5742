@@ -24,8 +24,8 @@ __global__ void min_kernel(int **result, int **input, int n_mat)
 	mintile[tid] = input[index_x][start];
 
   // if(index_x ==0 )
-  // printf("index_x=%d (elem of mat),  index_y=%d (partition), tid=%d (max 256), mintile[tid]=%d\n",
-  //         index_x, index_y, tid, mintile[tid]);
+  printf("index_x=%d (elem of mat),  index_y=%d (partition), tid=%d (max 256), mintile[tid]=%d\n",
+          index_x, index_y, tid, mintile[tid]);
   //idx -> start
   //idx+s -> end
 
