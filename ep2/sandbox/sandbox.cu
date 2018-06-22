@@ -8,13 +8,19 @@
 
 int main(int argc, char *argv[])
 {
-    int* x;
-    int* y;
-    int* tmp;
+  int a;
+  int *pt;
 
-    printf("The value of x is: %p\n", (void *)*x);
-    printf("The value of y is: %p\n", (void *)*y);
-    printf("The value of tmp is: %p\n", (void *)*tmp);
+  printf("Pointer Example Program : Print Pointer Address\n");
+  a = 10;
+  pt = &a;
 
-    return 0;
+  printf("\n[a  ]:Value of A = %d", a);
+  printf("\n[*pt]:Value of A = %d", *pt);
+  printf("\n[&a ]:Address of A = %p", &a);
+  printf("\n[pt ]:Address of A = %p", pt);
+  printf("\n[&pt]:Address of pt = %p", &pt);
+  printf("\n[pt ]:Value of pt = %p", pt);
+
+  return 0;
 }
