@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
   description = "Redução de 512 matrizes";
   //given
   filename = "data/teste_512.txt";
-  write_matrix_list(1<<9, filename, MATRIX_ORDER);
+  write_matrix_list(512, filename, MATRIX_ORDER);
   //when
   gettimeofday(&t0, NULL);
   reduction_cuda(filename, MATRIX_ORDER);
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
   description = "Redução de 2048 matrizes";
   //given
   filename = "data/teste_2k.txt";
-  write_matrix_list(1<<11, filename, MATRIX_ORDER);
+  write_matrix_list(2048, filename, MATRIX_ORDER);
   //when
   gettimeofday(&t0, NULL);
   reduction_cuda(filename, MATRIX_ORDER);
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
   description = "Redução de 8192 matrizes";
   //given
   filename = "data/teste_8k.txt";
-  write_matrix_list(1<<13, filename, MATRIX_ORDER);
+  write_matrix_list(8192, filename, MATRIX_ORDER);
   //when
   gettimeofday(&t0, NULL);
   reduction_cuda(filename, MATRIX_ORDER);
