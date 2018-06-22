@@ -23,6 +23,8 @@ __global__ void min_kernel(int **result, int **input, int n_mat)
 
 	mintile[tid] = input[index_x][start];
 
+	__syncthreads();
+
 	if(tid%2 != 0)
 		return;
 
@@ -32,7 +34,6 @@ __global__ void min_kernel(int **result, int **input, int n_mat)
   //idx -> start
   //idx+s -> end
 
-  __syncthreads();
 
 	for (unsigned int s = 1; s < blockDim.x; s *= 2)
 	{
