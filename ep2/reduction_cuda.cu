@@ -69,7 +69,7 @@ int* reduction_cuda(const char filename[], int D)
 			x[D*j+2][i] = val3;
 		}
 		fscanf(fp, "%*s");  // skip line
-  }
+	}
 
 	/* cuda reduction */
 	do {
