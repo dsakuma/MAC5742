@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
   a = 10;
   b = 11;
   ptx = &a;
-  pty = &y;
+  pty = &b;
 
   pttmp = ptx;
   ptx = pty;
