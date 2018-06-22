@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
   pttmp = ptx;
   ptx = pty;
-  pty = ptmp;
+  pty = pttmp;
 
 
   // printf("\n[a  ]:Value of A = %d", a);
