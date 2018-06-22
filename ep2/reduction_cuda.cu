@@ -6,7 +6,7 @@
 #include "functions.h"
 #include "reduction_cuda.h"
 
-#define THREADS_PER_BLOCK 256
+#define THREADS_PER_BLOCK 1024
 
 void matriscopy (void * destmat, void * srcmat, int rowcount, int columncount)
 {
