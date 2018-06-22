@@ -19,9 +19,7 @@ Daniel Sakuma (5619562)
 |-- functions.c             - funções auxiliares
 |-- functions.h
 |-- main.c                  - o programa de redução de matrizes
-|-- Makefile
-`-- utils
-    `-- ascii-histogram.js  - gerador de histogramas em ascii.
+`-- Makefile
 
 
 3. Como compilar e rodar
@@ -46,10 +44,6 @@ Para gerar uma lista de matrizes:
 
   $ ./make generate_matrix_list
   ./generate_matrix <qtd_matrizes> <caminho_lista_matrizes>
-
-Para rodar o utilitário de histograma
-
-  $ node utils/ascii-histogram.js
 
 
 4. Descrição do problema/solução
@@ -142,9 +136,17 @@ A implementação Sequencial foi mais rápida em: 429323 us
 7. Conclusões
 -------------
 
-Discutir dificuldades e possíveis melhorias no código
+A maior dificuldade neste exercício-programa foi entender a arquitetura da GPU e
+como executar os blocos de código operam. Além disso, erros no kernel podem passar
+despercebidos, uma vez que alguns erros não são notificados pela GPU, e o processamento
+é finalizado executando a computação errada.
 
-cudaMallocManaged
+Talvez, devido a implementação, não houve ganhos em utilizar a GPU. Na lógica que utilizada,
+para cada vetor de tamanho n, inicializamos n threads. Com algumas alterações no código,
+a redução poderia ser resolvido com n/2 threads.
 
-na lógica que utilizamos, para cada vetor de tamanho n, inicializamos n threads.
-E com algumas alterações no código, poderia ser resolvido com n/2 threads.
+Outra melhoria seria ter o mínimo computado com 0.5(abs(x+y) - abs(x-y)), que eita a divergência
+de branch.
+
+Um outro possível teste, seria deixar de  utilizar o cudaMallocManaged, que facilita o
+desenvolvimento utilizando o Unified Memory, e passar a gerenciar a memória manualmente.
