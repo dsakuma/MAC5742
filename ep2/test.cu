@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
   print_test_result(description, result);
 
   /* Teste 5: 10 matrizes */
-  description = "Dez matrizes (a última thread não tem com o que comparar)";
+  description = "Dez matrizes";
   //given
   filename = "data/teste_10.txt";
   write_matrix_list(10, filename, MATRIX_ORDER);
