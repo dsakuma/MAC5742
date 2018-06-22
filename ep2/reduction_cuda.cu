@@ -111,7 +111,7 @@ int* reduction_cuda(const char filename[], int D)
       fscanf(fp, "%*s");  // skip line
   }
 
-	matriscopy(y, x, n_els, n_mat);
+	// matriscopy(y, x, n_els, n_mat);
 
 	do{
 		n_partitions = (int)ceil(n_mat/(float)THREADS_PER_BLOCK);
