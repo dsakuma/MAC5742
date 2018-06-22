@@ -98,7 +98,6 @@ Executamos o teste automatizado em dois modelos de GPU, a GeForce GTX Titan X e 
 Tesla K40c. Em todos os casos os valores obtidos na redução na GPU foram os mesmos
 dos obtidos na CPU.
 
-
 Para os testes de performance, utilizamos uma máquina com a GPU Tesla K40c e o processador
 Intel Core i7-4770. Abaixo segue o output da execução dos testes:
 
