@@ -9,14 +9,21 @@
 int main(int argc, char *argv[])
 {
   int a;
+  int b;
   int *ptx;
   int *pty;
   int *pttmp;
 
   printf("Pointer Example Program : Print Pointer Address\n");
   a = 10;
+  b = 11;
   ptx = &a;
+  pty = &y;
+
+  pttmp = ptx;
+  ptx = pty;
   pty = ptx;
+
 
   printf("\n[a  ]:Value of A = %d", a);
   printf("\n[*ptx]:Value of A = %d", *ptx);
