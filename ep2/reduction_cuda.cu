@@ -8,6 +8,11 @@
 
 #define THREADS_PER_BLOCK 128
 
+void matriscopy (void * destmat, void * srcmat, int rowcount, int columncount)
+{
+  memcpy(destmat,srcmat, rowcount*columncount*sizeof(int));
+}
+
 __global__ void min_kernel(int **result, int **input, int n_mat)
 {
 	__shared__ int mintile[THREADS_PER_BLOCK];
@@ -102,12 +107,11 @@ int* reduction_cuda(const char filename[], int D)
         x[D*j+1][i] = val2;
         x[D*j+2][i] = val3;
 
-				y[D*j][i] = val1;
-				y[D*j+1][i] = val2;
-				y[D*j+2][i] = val3;
     }
       fscanf(fp, "%*s");  // skip line
   }
+
+	matriscopy(y, x, n_els, n_mat);
 
 	do{
 		n_partitions = (int)ceil(n_mat/(float)THREADS_PER_BLOCK);
