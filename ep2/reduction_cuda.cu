@@ -105,10 +105,10 @@ int* reduction_cuda(const char filename[], int D)
       fscanf(fp, "%*s");  // skip line
   }
 
+	dim3 threadsPerBlock(THREADS_PER_BLOCK);
 	do{
 		n_partitions = (int)ceil(n_mat/(float)THREADS_PER_BLOCK);
 		dim3 numBlocks(n_els, n_partitions);
-		dim3 threadsPerBlock(THREADS_PER_BLOCK);
 		// printf("Chamando o kernel: n_els=%d, n_partitions=%d, n_mat=%d\n", n_els, n_partitions, n_mat);
 		min_kernel<<<numBlocks, threadsPerBlock>>>(y, x, n_mat); //<<<number_of_blocks, block_size>>>
 		cudaDeviceSynchronize();
