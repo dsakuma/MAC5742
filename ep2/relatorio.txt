@@ -32,7 +32,7 @@ Para compilar e executar o programa:
   $ ./make
   $ ./main <caminho_lista_matrizes>
 
-Para compilar e executar os testes:
+Para compilar e executar os teste automatizados:
 
   $ ./make test
   $ ./test
@@ -53,7 +53,7 @@ Para rodar o utilitário de histograma
 
 
 4. Descrição do problema/solução
------------------------
+--------------------------------
 
 Neste exercício-programa, foi desenvolvido um programa em CUDA (versão 9) C/C++ para realizar uma
 operação de redução de um conjunto de matrizes. A redução é uma abordagem de divisão e conquista,
@@ -84,37 +84,67 @@ ceil(n/256) blocos na direção y, onde n é a dimensão dos vetores (quantidade
 bloco retorna um mínimo parcial e o kernel é chamado recursivamente na CPU. Como CUDA não tem
 sincronização global, essa recursão funciona como uma barreira de sincronização entre os blocos.
 
-xx
 
-5. Resultados
+5. Testes automatizados
+-----------------------
+
+Foram implementados testes automatizados para comparação dos resultados do algoritmo de redução
+implementado em CUDA e da redução sequencial processada na CPU. Os testes focam em cobrir casos
+de fronteira, tanto do número de threads, quanto de blocos.
+
+Além disso, foi implementado um teste para comparar a performance entre o processamento na GPU
+e CPU. Os testes começam com 500k matrizes e dobram a cada testes até um máximo de 16M. A ideia
+foi buscar a partir de qual momento é mais vantajosa a utilização da GPU.
+
+
+6. Resultados
 -------------
 
-placas:
-GeForce GTX Titan X
-Tesla K40c
+Executamos o teste automatizado em dois modelos de GPU, a GeForce GTX Titan X e a
+Tesla K40c. Em todos os casos os valores obtidos na redução na GPU foram os mesmos
+dos obtidos na CPU.
+
+
+Para os testes de performance, utilizamos uma máquina com a GPU Tesla K40c e o processador
+Intel Core i7-4770. Abaixo segue o output da execução dos testes:
+
+Teste: Redução de 500k matrizes
+Tempo Cuda: 2338156 us
+Tempo Sequencial: 423987 us
+A implementação Sequencial foi mais rápida em: 1914169 us
 
 Teste: Redução de 1M matrizes
-Tempo Cuda: 1039077 us
-Tempo Sequencial: 1009755 us
-A implementação Sequencial foi mais rápida em: 29322 us
+Tempo Cuda: 861562 us
+Tempo Sequencial: 847149 us
+A implementação Sequencial foi mais rápida em: 14413 us
 
 Teste: Redução de 2M matrizes
-Tempo Cuda: 1933528 us
-Tempo Sequencial: 1925806 us
-A implementação Sequencial foi mais rápida em: 7722 us
+Tempo Cuda: 1724705 us
+Tempo Sequencial: 1692169 us
+A implementação Sequencial foi mais rápida em: 32536 us
 
-Teste: Redução de 5M matrizes
-Tempo Cuda: 4849801 us
-Tempo Sequencial: 4883339 us
-A implementação Cuda foi mais rápida em: 33538 us
+Teste: Redução de 4M matrizes
+Tempo Cuda: 3443721 us
+Tempo Sequencial: 3371158 us
+A implementação Sequencial foi mais rápida em: 72563 us
 
-Teste: Redução de 10M matrizes
-Tempo Cuda: 9750946 us
-Tempo Sequencial: 9631444 us
-A implementação Sequencial foi mais rápida em: 119502 us
+Teste: Redução de 8M matrizes
+Tempo Cuda: 6856060 us
+Tempo Sequencial: 6754169 us
+A implementação Sequencial foi mais rápida em: 101891 us
+
+Teste: Redução de 16M matrizes
+Tempo Cuda: 13899346 us
+Tempo Sequencial: 13470023 us
+A implementação Sequencial foi mais rápida em: 429323 us
 
 
-6. Conclusões
+7. Conclusões
 -------------
 
 Discutir dificuldades e possíveis melhorias no código
+
+cudaMallocManaged
+
+na lógica que utilizamos, para cada vetor de tamanho n, inicializamos n threads.
+E com algumas alterações no código, poderia ser resolvido com n/2 threads.
