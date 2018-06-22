@@ -12,9 +12,9 @@ int main(int argc, char *argv[])
     int* y;
     int* tmp;
 
-    printf("The value of x is: %p\n", *x);
-    printf("The value of y is: %p\n", *y);
-    printf("The value of tmp is: %p\n", *tmp);
+    printf("The value of x is: %p\n", (void *)*x);
+    printf("The value of y is: %p\n", (void *)*y);
+    printf("The value of tmp is: %p\n", (void *)*tmp);
 
     return 0;
 }
