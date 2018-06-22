@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
   printf("Pointer Example Program : Print Pointer Address\n");
   a = 10;
   ptx = &a;
+  pty = ptx;
 
   printf("\n[a  ]:Value of A = %d", a);
   printf("\n[*ptx]:Value of A = %d", *ptx);
