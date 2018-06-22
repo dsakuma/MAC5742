@@ -15,50 +15,7 @@ int main(int argc, char *argv[])
   const char* description;
   struct timeval t0, t1, t2;
 
-  // /* Teste 1: Redução de 512 matrizes */
-  // description = "Redução de 512 matrizes";
-  // //given
-  // filename = "data/teste_512.txt";
-  // write_matrix_list(512, filename, MATRIX_ORDER);
-  // //when
-  // gettimeofday(&t0, NULL);
-  // reduction_cuda(filename, MATRIX_ORDER);
-  // gettimeofday(&t1, NULL);
-  // reduction_seq(filename, MATRIX_ORDER);
-  // gettimeofday(&t2, NULL);
-  // //then
-  // print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t1, t2));
-  //
-  // /* Teste 2: Redução de 2048 matrizes */
-  // description = "Redução de 2048 matrizes";
-  // //given
-  // filename = "data/teste_2k.txt";
-  // write_matrix_list(2048, filename, MATRIX_ORDER);
-  // //when
-  // gettimeofday(&t0, NULL);
-  // reduction_cuda(filename, MATRIX_ORDER);
-  // gettimeofday(&t1, NULL);
-  // reduction_seq(filename, MATRIX_ORDER);
-  // gettimeofday(&t2, NULL);
-  // //then
-  // print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t1, t2));
-  //
-  // /* Teste 3: Redução de 8192 matrizes */
-  // description = "Redução de 8192 matrizes";
-  // //given
-  // filename = "data/teste_8k.txt";
-  // write_matrix_list(8192, filename, MATRIX_ORDER);
-  // //when
-  // gettimeofday(&t0, NULL);
-  // reduction_cuda(filename, MATRIX_ORDER);
-  // gettimeofday(&t1, NULL);
-  // reduction_seq(filename, MATRIX_ORDER);
-  // gettimeofday(&t2, NULL);
-  // //then
-  // print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t1, t2));
-  //
-
-  /* Teste 4: Redução de 500k matrizes */
+  /* Teste 1: Redução de 500k matrizes */
   description = "Redução de 500k matrizes";
   //given
   filename = "data/teste_500k.txt";
@@ -73,7 +30,7 @@ int main(int argc, char *argv[])
   print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t1, t2));
 
 
-  /* Teste 4: Redução de 1M matrizes */
+  /* Teste 2: Redução de 1M matrizes */
   description = "Redução de 1M matrizes";
   //given
   filename = "data/teste_1M.txt";
@@ -87,7 +44,7 @@ int main(int argc, char *argv[])
   //then
   print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t1, t2));
 
-  /* Teste 5: Redução de 2M matrizes */
+  /* Teste 3: Redução de 2M matrizes */
   description = "Redução de 2M matrizes";
   //given
   filename = "data/teste_2M.txt";
@@ -101,7 +58,7 @@ int main(int argc, char *argv[])
   //then
   print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t1, t2));
 
-  /* Teste 6: Redução de 4M matrizes */
+  /* Teste 4: Redução de 4M matrizes */
   description = "Redução de 4M matrizes";
   //given
   filename = "data/teste_4M.txt";
@@ -115,7 +72,7 @@ int main(int argc, char *argv[])
   //then
   print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t1, t2));
 
-  /* Teste 7: Redução de 8M matrizes */
+  /* Teste 5: Redução de 8M matrizes */
   description = "Redução de 8M matrizes";
   //given
   filename = "data/teste_8M.txt";
@@ -129,7 +86,7 @@ int main(int argc, char *argv[])
   //then
   print_performance_test_result(description, time_elapsed(t0, t1), time_elapsed(t1, t2));
 
-  /* Teste 7: Redução de 16M matrizes */
+  /* Teste 6: Redução de 16M matrizes */
   description = "Redução de 16M matrizes";
   //given
   filename = "data/teste_16M.txt";
