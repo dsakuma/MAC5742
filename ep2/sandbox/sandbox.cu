@@ -9,18 +9,20 @@
 int main(int argc, char *argv[])
 {
   int a;
-  int *pt;
+  int *ptx;
+  int *pty;
+  int *pttmp;
 
   printf("Pointer Example Program : Print Pointer Address\n");
   a = 10;
-  pt = &a;
+  ptx = &a;
 
   printf("\n[a  ]:Value of A = %d", a);
-  printf("\n[*pt]:Value of A = %d", *pt);
+  printf("\n[*ptx]:Value of A = %d", *ptx);
   printf("\n[&a ]:Address of A = %p", &a);
-  printf("\n[pt ]:Address of A = %p", pt);
-  printf("\n[&pt]:Address of pt = %p", &pt);
-  printf("\n[pt ]:Value of pt = %p", pt);
+  printf("\n[ptx ]:Address of A = %p", ptx);
+  printf("\n[&ptx]:Address of ptx = %p", &ptx);
+  printf("\n[ptx ]:Value of ptx = %p", ptx);
 
   return 0;
 }
