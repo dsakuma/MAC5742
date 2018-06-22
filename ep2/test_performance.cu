@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
   description = "Redução de 1M matrizes";
   //given
   filename = "data/teste_1M.txt";
-  write_matrix_list(1<<20, filename, MATRIX_ORDER);
+  write_matrix_list(1000000, filename, MATRIX_ORDER);
   //when
   gettimeofday(&t0, NULL);
   reduction_cuda(filename, MATRIX_ORDER);
