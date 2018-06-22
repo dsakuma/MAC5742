@@ -75,7 +75,9 @@ tamanho maior que 2*256 = 512, é necessário particioná-lo e reduzi-lo em mais
 independente. O kernel de redução foi inicializado com um grid de 9 blocos na direção x e
 ceil(n/256) blocos na direção y, onde n é a dimensão dos vetores (quantidade de matrizes). Cada
 bloco retorna um mínimo parcial e o kernel é chamado recursivamente na CPU. Como CUDA não tem
-sincronização global, essa recursão funciona como uma barreira de sincronização entre os blocos. Para facilitar a transmissão de dados entre CPU e GPU, optamos por usar a função cudaMallocManaged(), que aloca as variáveis numa memória unificada.
+sincronização global, essa recursão funciona como uma barreira de sincronização entre os blocos. Para
+facilitar a transmissão de dados entre CPU e GPU, optamos por usar a função cudaMallocManaged(),
+que aloca as variáveis numa memória unificada.
 
 
 5. Testes automatizados
@@ -98,37 +100,73 @@ Tesla K40c. Em todos os casos os valores obtidos na redução na GPU foram os me
 dos obtidos na CPU.
 
 Para os testes de performance, utilizamos uma máquina com a GPU Tesla K40c e o processador
-Intel Core i7-4770. Abaixo é mostrada a saída da execução dos testes de desempenho (que computam o tempo de execução total, incluindo a transmissão de dados entre CPU e GPU):
+Intel Core i7-4770. Abaixo é mostrada a saída da execução dos testes de desempenho (que computam
+o tempo de execução total, incluindo a transmissão de dados entre CPU e GPU):
 
-Teste: Redução de 500k matrizes
-Tempo Cuda: 2338156 us
-Tempo Sequencial: 423987 us
-A implementação Sequencial foi mais rápida em: 1914169 us
+  Teste: Redução de 500k matrizes
+  Tempo Cuda: 2338156 us
+  Tempo Sequencial: 423987 us
+  A implementação Sequencial foi mais rápida em: 1914169 us
 
-Teste: Redução de 1M matrizes
-Tempo Cuda: 861562 us
-Tempo Sequencial: 847149 us
-A implementação Sequencial foi mais rápida em: 14413 us
+  Teste: Redução de 1M matrizes
+  Tempo Cuda: 861562 us
+  Tempo Sequencial: 847149 us
+  A implementação Sequencial foi mais rápida em: 14413 us
 
-Teste: Redução de 2M matrizes
-Tempo Cuda: 1724705 us
-Tempo Sequencial: 1692169 us
-A implementação Sequencial foi mais rápida em: 32536 us
+  Teste: Redução de 2M matrizes
+  Tempo Cuda: 1724705 us
+  Tempo Sequencial: 1692169 us
+  A implementação Sequencial foi mais rápida em: 32536 us
 
-Teste: Redução de 4M matrizes
-Tempo Cuda: 3443721 us
-Tempo Sequencial: 3371158 us
-A implementação Sequencial foi mais rápida em: 72563 us
+  Teste: Redução de 4M matrizes
+  Tempo Cuda: 3443721 us
+  Tempo Sequencial: 3371158 us
+  A implementação Sequencial foi mais rápida em: 72563 us
 
-Teste: Redução de 8M matrizes
-Tempo Cuda: 6856060 us
-Tempo Sequencial: 6754169 us
-A implementação Sequencial foi mais rápida em: 101891 us
+  Teste: Redução de 8M matrizes
+  Tempo Cuda: 6856060 us
+  Tempo Sequencial: 6754169 us
+  A implementação Sequencial foi mais rápida em: 101891 us
 
-Teste: Redução de 16M matrizes
-Tempo Cuda: 13899346 us
-Tempo Sequencial: 13470023 us
-A implementação Sequencial foi mais rápida em: 429323 us
+  Teste: Redução de 16M matrizes
+  Tempo Cuda: 13899346 us
+  Tempo Sequencial: 13470023 us
+  A implementação Sequencial foi mais rápida em: 429323 us
+
+Para complementar a analise, foi coletado manualmente o tempo gasto apenas no
+loop de redução (sem considerar a transmissão de dados enter CPU e GPU):
+
+  Teste: Dez matrizes
+  GPU: 151 us
+  CPU: 1 us
+
+  Teste: 255 matrizes (n de threads por bloco - 1)
+  GPU: 136 us
+  CPU: 16 us
+
+  Teste: 256 matrizes (n de threads por bloco)
+  GPU: 132 us
+  CPU: 30 us
+
+  Teste: 257 matrizes (n de threads por bloco + 1)
+  GPU: 168 us
+  CPU: 15 us
+
+  Teste: 10k matrizes
+  GPU: 266 us
+  CPU: 396 us
+
+  Teste: 100k matrizes
+  GPU: 948 us
+  CPU: 3419 us
+
+  Teste: 1M matrizes
+  GPU: 5144 us
+  CPU: 25937 us
+
+  Teste: 10M matrizes
+  GPU: 129931 us
+  CPU: 258743 us
 
 
 7. Conclusões
@@ -139,10 +177,13 @@ como executar os blocos de código operam. Além disso, erros no kernel podem pa
 despercebidos, uma vez que alguns erros não são notificados pela GPU, e o processamento
 é finalizado executando a computação errada.
 
-Talvez, devido a implementação, não houve ganhos em utilizar a GPU. Na lógica que utilizada,
-para cada vetor de tamanho n, inicializamos n threads. Com algumas alterações no código,
-a redução poderia ser resolvido com n/2 threads.
+Talvez, devido a implementação, não houve ganhos em utilizar a GPU (considerando a
+transmissão de dados entre CPU e GPU). Na lógica que utilizada, para cada vetor
+de tamanho n, inicializamos n threads. Com algumas alterações no código, a redução
+poderia ser resolvido com n/2 threads.
 
 Um outro possível teste, seria deixar de  utilizar o cudaMallocManaged, que facilita o
 desenvolvimento utilizando o Unified Memory, e passar a gerenciar a memória manualmente.
 
+Considerando apenas o loop de redução, foi observado que o tempo de execução em GPU
+é menor quando o processamento ocorre sobre centenas de milhares de matrizes ou mais.
