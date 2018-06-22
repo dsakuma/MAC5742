@@ -24,8 +24,8 @@ int main(int argc, char *argv[])
 
     // printf("Cuda reduction result:\n");
     print_vector(y_cuda, MATRIX_ORDER);
-    printf("Sequential reduction result:\n");
-    print_vector(y_seq, MATRIX_ORDER);
+    // printf("Sequential reduction result:\n");
+    // print_vector(y_seq, MATRIX_ORDER);
 
     return 0;
 }
