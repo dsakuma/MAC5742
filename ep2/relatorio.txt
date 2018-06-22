@@ -49,7 +49,7 @@ Para gerar uma lista de matrizes:
 4. Descrição do problema/solução
 --------------------------------
 
-Neste exercício-programa, foi desenvolvido um programa em CUDA (versão 9) C/C++ para realizar uma
+Neste exercício-programa, foi desenvolvido um programa em CUDA C (versão 9) para realizar uma
 operação de redução de um conjunto de matrizes. A redução é uma abordagem de divisão e conquista,
 na qual o problema é particionado e resolvido em partes, que depois são combinadas para encontrar
 a solução final. Aqui, fizemos a redução das matrizes a fim de encontrar os mínimos.
@@ -70,13 +70,12 @@ ser disparadas n/2 threads em paralelo.
 Tendo o problema modelado, é necessário então estudar um pouco da arquitetura das GPUs da NVIDIA.
 As threads dentro da GPU ficam organizadas em blocos. Cada bloco tem uma memória compartilhada
 própria (que não é acessada pelos demais blocos) e pode disparar até 1024 threads, porém a prática
-mais comum e que costuma desempenhar melhor é usar 256 threads. Adotamos essa quantidade - ela
-permite um bom desempenho sem causar muito overhead de criação de threads. Assim, se um vetor tem
-tamanho maior que 256, é necessário particioná-lo e reduzi-lo em mais de um bloco de forma
-independente. O kernel de redução é inicializado com um grid de 9 blocos na direção x e
+mais comum e que costuma desempenhar melhor é usar 256 threads. Assim, se um vetor tem
+tamanho maior que 2*256 = 512, é necessário particioná-lo e reduzi-lo em mais de um bloco de forma
+independente. O kernel de redução foi inicializado com um grid de 9 blocos na direção x e
 ceil(n/256) blocos na direção y, onde n é a dimensão dos vetores (quantidade de matrizes). Cada
 bloco retorna um mínimo parcial e o kernel é chamado recursivamente na CPU. Como CUDA não tem
-sincronização global, essa recursão funciona como uma barreira de sincronização entre os blocos.
+sincronização global, essa recursão funciona como uma barreira de sincronização entre os blocos. Para facilitar a transmissão de dados entre CPU e GPU, optamos por usar a função cudaMallocManaged(), que aloca as variáveis numa memória unificada.
 
 
 5. Testes automatizados
@@ -87,19 +86,19 @@ implementado em CUDA e da redução sequencial processada na CPU. Os testes foca
 de fronteira, tanto do número de threads, quanto de blocos.
 
 Além disso, foi implementado um teste para comparar a performance entre o processamento na GPU
-e CPU. Os testes começam com 500k matrizes e dobram a cada testes até um máximo de 16M. A ideia
+e CPU. Os testes começam com 500k matrizes e dobram a cada teste até um máximo de 16M. A ideia
 foi buscar a partir de qual momento é mais vantajosa a utilização da GPU.
 
 
 6. Resultados
 -------------
 
-Executamos o teste automatizado em dois modelos de GPU, a GeForce GTX Titan X e a
+Executamos os testes automatizados em dois modelos de GPU, a GeForce GTX Titan X e a
 Tesla K40c. Em todos os casos os valores obtidos na redução na GPU foram os mesmos
 dos obtidos na CPU.
 
 Para os testes de performance, utilizamos uma máquina com a GPU Tesla K40c e o processador
-Intel Core i7-4770. Abaixo segue o output da execução dos testes:
+Intel Core i7-4770. Abaixo é mostrada a saída da execução dos testes de desempenho (que computam o tempo de execução total, incluindo a transmissão de dados entre CPU e GPU):
 
 Teste: Redução de 500k matrizes
 Tempo Cuda: 2338156 us
@@ -144,8 +143,6 @@ Talvez, devido a implementação, não houve ganhos em utilizar a GPU. Na lógic
 para cada vetor de tamanho n, inicializamos n threads. Com algumas alterações no código,
 a redução poderia ser resolvido com n/2 threads.
 
-Outra melhoria seria ter o mínimo computado com 0.5(abs(x+y) - abs(x-y)), que eita a divergência
-de branch.
-
 Um outro possível teste, seria deixar de  utilizar o cudaMallocManaged, que facilita o
 desenvolvimento utilizando o Unified Memory, e passar a gerenciar a memória manualmente.
+

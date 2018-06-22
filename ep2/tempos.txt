@@ -1,0 +1,29 @@
+Tempos de execução apenas do laço de redução, sem considerar transmissão de dados entre CPU e GPU
+
+Teste: Dez matrizes [OK]
+GPU: 151 us
+CPU: 1 us
+Teste: 255 matrizes (n de threads por bloco - 1) [OK]
+GPU: 136 us
+CPU: 16 us
+Teste: 256 matrizes (n de threads por bloco) [OK]
+GPU: 132 us
+CPU: 30 us
+Teste: 257 matrizes (n de threads por bloco + 1) [OK]
+GPU: 168 us
+CPU: 15 us
+Teste: 10k matrizes [OK]
+GPU: 266 us
+CPU: 396 us
+Teste: 100k matrizes [OK]
+GPU: 948 us
+CPU: 3419 us
+Teste: 1M matrizes [OK]
+GPU: 5144 us
+CPU: 25937 us
+Teste: 10M matrizes [OK]
+GPU: 129931 us
+CPU: 258743 us
+
+xxx
+nvprof com memoria unificada?
