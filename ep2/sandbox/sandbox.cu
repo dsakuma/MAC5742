@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
   printf("\n[ptx ]:Address of A = %p", ptx);
   printf("\n[&ptx]:Address of ptx = %p", &ptx);
   printf("\n[ptx ]:Value of ptx = %p", ptx);
+  printf("\n[ptx ]:Value of pty = %p", pty);
 
   return 0;
 }
